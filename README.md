@@ -1,6 +1,15 @@
 # 3ALevels
 
 CIao
+## Authors
+
+
+| **Name and Surname** | **Linkedin** | **GitHub** |
+|:--------------------:| :---: | :---: |
+|  `Antonio Grieco `   | [![name](https://github.com/nardoz-dev/projectName/blob/main/docs/sharedpictures/LogoIn.png)](https://www.linkedin.com/in/AntonioGrieco96) | [![name](https://github.com/nardoz-dev/projectName/blob/main/docs/sharedpictures/GitHubLogo.png)](https://github.com/AGrieco96) |
+| `Andrea Di Tommaso ` | [![name](https://github.com/nardoz-dev/projectName/blob/main/docs/sharedpictures/LogoIn.png)]() | [![name](https://github.com/nardoz-dev/projectName/blob/main/docs/sharedpictures/GitHubLogo.png)](https://github.com/Ditommy2) |
+|  `Andrea Nardocci `  | [![name](https://github.com/nardoz-dev/projectName/blob/main/docs/sharedpictures/LogoIn.png)](https://www.linkedin.com/in/andrea-nardocci) | [![name](https://github.com/nardoz-dev/projectName/blob/main/docs/sharedpictures/GitHubLogo.png)](https://github.com/nardoz-dev) |
+
 
 ## How to use Firebase and how to Import.
 
