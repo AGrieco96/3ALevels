@@ -5,11 +5,11 @@ CIao
 ## How to use Firebase and how to Import.
 
 ### Access : Access a Cloud Firestore instance from your Activity
-`` 
+```
 val db = Firebase.firestore
-``
+```
 ### Adding Data : 
-`` 
+```
 // Create a new user with a first and last name
  val user = hashMapOf(
  "first" to "Ada",
@@ -25,9 +25,9 @@ db.collection("users")
 .addOnFailureListener { 
     e -> Log.w(TAG, "Error adding document", e)
 }
- ``
+ ```
 ### Reading Data:
-`` 
+``` 
  db.collection("users")
 .get()
 .addOnSuccessListener { 
@@ -38,11 +38,11 @@ db.collection("users")
 .addOnFailureListener { 
     exception -> Log.w(TAG, "Error getting documents.", exception)
 }
- ``
+```
 
 ### Protect your data : 
 ### AuthenticationMode :
-``
+```
 // Allow read/write access on all documents to any user signed in to the application
 service cloud.firestore {
     match /databases/{database}/documents {
@@ -51,9 +51,9 @@ service cloud.firestore {
         }
     }
 }
-``
+```
 ### BlockedMode :
-``
+```
 // Deny read/write access to all users under any conditions
 service cloud.firestore {
     match /databases/{database}/documents {
@@ -62,9 +62,9 @@ service cloud.firestore {
         }
     }
 }
-``
+```
 ### TestMode : 
-``
+```
 // Allow read/write access to all users under any conditions
 // Warning: **NEVER** use this rule set in production; it allows
 // anyone to overwrite your entire database.
@@ -75,7 +75,7 @@ service cloud.firestore {
         }
     }
 }
-``
+```
 ### Link Utili 
 [VideoTutorial](https://www.youtube.com/watch?v=kDZYIhNkQoM)
 
