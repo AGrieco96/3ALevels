@@ -19,7 +19,7 @@ class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.accelerometer_activity)
+        setContentView(R.layout.gyroscope_activity)
 
         // Keeps phone in light mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -34,10 +34,10 @@ class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         // Specify the sensor you want to listen to
-        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also { accelerometer ->
+        sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)?.also { gyroscope ->
             sensorManager.registerListener(
                 this,
-                accelerometer,
+                gyroscope,
                 SensorManager.SENSOR_DELAY_FASTEST,
                 SensorManager.SENSOR_DELAY_FASTEST
             )
@@ -46,28 +46,24 @@ class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent?) {
         // Checks for the sensor we have registered
-        if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+        if (event?.sensor?.type == Sensor.TYPE_GYROSCOPE) {
             //Log.d("Main", "onSensorChanged: sides ${event.values[0]} front/back ${event.values[1]} ")
 
-            // Sides = Tilting phone left(10) and right(-10)
-            val sides = event.values[0]
 
-            // Up/Down = Tilting phone up(10), flat (0), upside-down(-10)
-            val upDown = event.values[1]
+            val xRotation = event.values[0]
+            val yRotation = event.values[1]
+            val zRotation = event.values[2]
 
             square.apply {
-                rotationX = upDown * 3f
-                rotationY = sides * 3f
-                rotation = -sides
-                translationX = sides * -10
-                translationY = upDown * 10
+                rotationX = xRotation * 3f
+                rotationY = yRotation * 3f
             }
 
             // Changes the colour of the square if it's completely flat
-            val color = if (upDown.toInt() == 0 && sides.toInt() == 0) Color.GREEN else Color.RED
-            square.setBackgroundColor(color)
+            //val color = if (upDown.toInt() == 0 && sides.toInt() == 0) Color.GREEN else Color.RED
+            //square.setBackgroundColor(color)
 
-            square.text = "up/down ${upDown.toInt()}\nleft/right ${sides.toInt()}"
+            square.text = "X Axis ${xRotation.toInt()}\n Y Axis ${yRotation.toInt()}"
         }
     }
 
