@@ -28,4 +28,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/secondButton"
+        android:layout_width="209dp"
+        android:layout_height="144dp"
+        android:layout_marginTop="468dp"
+        android:rotation="360"
+        android:rotationX="-343"
+        android:rotationY="25"
+        android:text="SecondActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.569"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

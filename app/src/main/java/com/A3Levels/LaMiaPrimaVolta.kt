@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 
 
+
 class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
@@ -23,7 +24,7 @@ class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
         // Keeps phone in light mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        square = findViewById(R.id.acc_square)
+        square = findViewById(R.id.my_square)
 
         setUpSensorStuff()
     }
