@@ -44,6 +44,10 @@ class LoginEmailActivity : AppCompatActivity() {
         binding.buttonLogin.setOnClickListener {
             login()
         }
+
+        binding.googleLoginButton.setOnClickListener {
+            goToGoogleSignIn()
+        }
     }
 
     private fun login() {
@@ -77,6 +81,11 @@ class LoginEmailActivity : AppCompatActivity() {
 
     private fun goToHome(){
         val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun goToGoogleSignIn(){
+        val intent = Intent(this, GoogleSignInActivity::class.java)
         startActivity(intent)
     }
 }
