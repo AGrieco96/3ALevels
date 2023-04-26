@@ -1,10 +1,11 @@
 package com.A3Levels.auth
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.A3Levels.MainActivity
 import com.A3Levels.databinding.RegisterEmailBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -50,12 +51,15 @@ class RegisterEmailActivity : AppCompatActivity() {
 
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
             if(task.isSuccessful){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                goToLogin()
+                val currentUser = auth.currentUser
                 finish()
+            } else {
+            // If sign in fails, display a message to the user.
+            Log.w(TAG, "signInWithEmail:failure", task.exception)
+            Toast.makeText(baseContext, "Authentication failed.",
+                Toast.LENGTH_SHORT).show()
             }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(applicationContext,exception.localizedMessage,Toast.LENGTH_LONG).show()
         }
     }
 
