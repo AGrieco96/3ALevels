@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate
 
 
 
+
 class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
 
     private lateinit var sensorManager: SensorManager

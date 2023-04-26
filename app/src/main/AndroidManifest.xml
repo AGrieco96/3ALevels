@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
+    <uses-permission android:name="android.permission.VIBRATE" tools:ignore="ManifestOrder" />
 
     <application
         android:allowBackup="true"
@@ -25,7 +26,7 @@
 
         <activity android:name=".LaMiaPrimaVolta"></activity>
 
-        <activity android:name=".SecondActivity"></activity>
+        <activity android:name=".BallActivity"></activity>
     </application>
 
 </manifest>
