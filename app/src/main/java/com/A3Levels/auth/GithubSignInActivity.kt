@@ -1,13 +1,17 @@
 package com.A3Levels.auth
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.A3Levels.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class GithubSignInActivity : AppCompatActivity() {
@@ -64,12 +68,10 @@ class GithubSignInActivity : AppCompatActivity() {
                 // ((OAuthCredential)authResult.getCredential()).getAccessToken().
                 // The OAuth secret can be retrieved by calling:
                 // ((OAuthCredential)authResult.getCredential()).getSecret().
-                goToHome()
-                Toast.makeText(
-                    baseContext, "User logged with Github",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+                val userFirebase = auth.currentUser
+                if(userFirebase != null) {
+                    addUserToDB(userFirebase)
+                }            }
             .addOnFailureListener {
                 // Handle failure.
             }
@@ -120,5 +122,25 @@ class GithubSignInActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun addUserToDB(currentUser : FirebaseUser) {
+        val db = Firebase.firestore
+
+        val user = hashMapOf(
+            "email" to currentUser.email,
+            "displayName" to currentUser.displayName
+        )
+
+        db.collection("users").document(currentUser.uid)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d(TAG, "DocumentSnapshot successfully written!")
+                goToHome()
+                Toast.makeText(
+                    baseContext, "User logged with Github",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+    }
 
 }

@@ -12,8 +12,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class GoogleSignInActivity : AppCompatActivity() {
@@ -46,11 +48,6 @@ class GoogleSignInActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
-                goToHome()
-                Toast.makeText(
-                    baseContext, "User logged with Google",
-                    Toast.LENGTH_SHORT
-                ).show()
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
@@ -65,7 +62,10 @@ class GoogleSignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-                    val user = auth.currentUser
+                    val userFirebase = auth.currentUser
+                    if(userFirebase != null) {
+                        addUserToDB(userFirebase)
+                    }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -83,8 +83,29 @@ class GoogleSignInActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun addUserToDB(currentUser : FirebaseUser) {
+        val db = Firebase.firestore
+
+        val user = hashMapOf(
+            "email" to currentUser.email,
+            "displayName" to currentUser.displayName
+            )
+
+        db.collection("users").document(currentUser.uid)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d(TAG, "DocumentSnapshot successfully written!")
+                goToHome()
+                Toast.makeText(
+                    baseContext, "User logged with Google",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+    }
+
     companion object {
-        private const val TAG = "GoogleActivity"
+        const val TAG = "GoogleActivity"
         private const val RC_SIGN_IN = 9002
     }
 }

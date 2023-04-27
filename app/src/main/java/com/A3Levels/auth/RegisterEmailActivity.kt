@@ -75,19 +75,20 @@ class RegisterEmailActivity : AppCompatActivity() {
             val db = Firebase.firestore
 
             val user = hashMapOf(
-                "email" to currentUser.email,
-                "uid" to currentUser.uid
+                "email" to currentUser.email
             )
 
-            db.collection("users")
-                .add(user)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                    goToLogin()
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
+        db.collection("users").document(currentUser.uid)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d(TAG, "DocumentSnapshot successfully written!")
+                goToLogin()
+                Toast.makeText(
+                    baseContext, "User correctly registered",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
     }
 
 }
