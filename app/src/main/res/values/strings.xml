@@ -4,4 +4,14 @@
     <string name="custom_layout_idp_header">Choose a provider</string>
     <string name="custom_layout_email_header">Use your email</string>
     <string name="custom_layout_email_click_text">Continue with Email</string>
+    <string name="logo_of_the_app">Logo of the app</string>
+    <string name="email">Email</string>
+    <string name="username_icon">username icon</string>
+    <string name="password">Password</string>
+    <string name="password_icon">password icon</string>
+    <string name="login">Login</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="or_continue_with">or continue with</string>
+    <string name="google_login_button">google_login_button</string>
+    <string name="github_login_button">github login button</string>
 </resources>
