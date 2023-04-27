@@ -48,6 +48,10 @@ class LoginEmailActivity : AppCompatActivity() {
         binding.googleLoginButton.setOnClickListener {
             goToGoogleSignIn()
         }
+
+        binding.githubLoginButton.setOnClickListener {
+            goToGithubSignIn()
+        }
     }
 
     private fun login() {
@@ -86,6 +90,11 @@ class LoginEmailActivity : AppCompatActivity() {
 
     private fun goToGoogleSignIn(){
         val intent = Intent(this, GoogleSignInActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun goToGithubSignIn(){
+        val intent = Intent(this, GithubSignInActivity::class.java)
         startActivity(intent)
     }
 }

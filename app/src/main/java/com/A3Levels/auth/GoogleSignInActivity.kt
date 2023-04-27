@@ -1,10 +1,10 @@
 package com.A3Levels.auth
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.A3Levels.MainActivity
 import com.A3Levels.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -16,7 +16,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class GoogleSignInActivity : Activity() {
+class GoogleSignInActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient

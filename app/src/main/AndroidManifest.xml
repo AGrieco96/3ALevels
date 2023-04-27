@@ -29,6 +29,8 @@
             android:name=".auth.LoginEmailActivity" />
         <activity
             android:name=".auth.GoogleSignInActivity" />
+        <activity
+            android:name=".auth.GithubSignInActivity" />
     </application>
 
 </manifest>
