@@ -74,6 +74,8 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         //Gets the screens height and width
         devHeight = DisplayMetrics().heightPixels
         devWidth = DisplayMetrics().widthPixels
+        //getWindowMager().getDefaultDisplay().getMetrics(DisplayMetrics())
+        //windowManager().getDefaultMetrics().
 
         //Creates a listener on the sensor
         sensorManager.registerListener(this, gravitySensor, SensorManager.SENSOR_DELAY_GAME)
@@ -90,8 +92,8 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         val Y = ball!!.y
 
         //The coordinates the ball moves to
-        val nextX = X + sensorEvent.values[1]
-        val nextY = Y + sensorEvent.values[0]
+        val nextX = X - sensorEvent.values[0]
+        val nextY = Y + sensorEvent.values[1]
 
         //moves the ball LEFT until it crashes with the border
         if (nextX - radius >= frameWidth / 2) {
@@ -99,7 +101,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         } else {
             onFrameHit()
             //"Bounces" the ball of the frame
-            ball!!.x = nextX + 35
+            //ball!!.x = nextX + 35
         }
         //moves the ball to the TOP until it crashes with the border
         //Added "+ 20" to make the ball bounce on the inner edge of the frame
@@ -107,22 +109,26 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
             ball!!.y = nextY
         } else {
             onFrameHit()
-            ball!!.y = nextY + 35
+            //ball!!.y = nextY + 35
         }
 
         //moves the ball to the RIGHT until it crashes with the border
         //Added "- 60" to make the ball bounce on the frame and not the edge of the screen
-        if (nextX + radius > devWidth - frameWidth / 2 - 60) {
+        if (nextX + radius >=  1024 ) {
             onFrameHit()
-            ball!!.x = nextX - 35
+            ball!!.x = 1024.0F -150
+
         }
 
         //moves the ball to the BOTTOM until it crashes with the border
         //Added "- 320" to make the ball bounce on the frame and off the edge of the screen
-        if (nextY + radius > devHeight - frameHeight / 2 - 320) {
+        if (nextY + radius >= 2048  ) {
             onFrameHit()
-            ball!!.y = nextY - 35
+            ball!!.y = 2048.0F - 150
+            println("ASSE X" + nextX)
         }
+        println("DevHeight : " + devHeight)
+        println("ASSE Y" + nextY)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, i: Int) {
