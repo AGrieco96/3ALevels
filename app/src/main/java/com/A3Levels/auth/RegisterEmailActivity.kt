@@ -39,9 +39,10 @@ class RegisterEmailActivity : AppCompatActivity() {
         val email = binding.editTextEmailAddress.text.toString()
         val password = binding.editTextPassword.text.toString()
         val confirmPassword = binding.editTextConfirmPassword.text.toString()
+        val username = binding.editTextUserName.text.toString()
 
-        if (email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-            Toast.makeText(this, "Email and Password can't be blank", Toast.LENGTH_SHORT).show()
+        if (email.isBlank() || password.isBlank() || confirmPassword.isBlank() || username.isBlank()) {
+            Toast.makeText(this, "No field can be blank", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -55,7 +56,7 @@ class RegisterEmailActivity : AppCompatActivity() {
             if(task.isSuccessful){
                 val userFirebase = auth.currentUser
                 if(userFirebase != null) {
-                    addUserToDB(userFirebase)
+                    addUserToDB(userFirebase, username)
                 }
             } else {
             // If sign in fails, display a message to the user.
@@ -71,11 +72,12 @@ class RegisterEmailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun addUserToDB(currentUser : FirebaseUser) {
+    private fun addUserToDB(currentUser : FirebaseUser, username : String) {
             val db = Firebase.firestore
 
             val user = hashMapOf(
-                "email" to currentUser.email
+                "email" to currentUser.email,
+                "displayName" to username
             )
 
         db.collection("users").document(currentUser.uid)
