@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.A3Levels.MainActivity
+import com.A3Levels.HomeActivity
 import com.A3Levels.databinding.LoginEmailBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -84,7 +84,7 @@ class LoginEmailActivity : AppCompatActivity() {
     }
 
     private fun goToHome(){
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
 
