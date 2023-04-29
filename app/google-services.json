@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "70720094517",
+    "project_id": "alevels-18c59",
+    "storage_bucket": "alevels-18c59.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70720094517:android:7de3b271718f7f7b1e0c7c",
+        "android_client_info": {
+          "package_name": "com.A3Levels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70720094517-uele4flb7g4pf960s8bq9jnh9m71p8v6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.A3Levels",
+            "certificate_hash": "3aece0fc347df9a86a92937f509e2ce2f5606869"
+          }
+        },
+        {
+          "client_id": "70720094517-ta98aouv4vmiqllegc40np9rico46bvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSYyOPZNqEXLoOzWcS8ylE1mOFFy4qGic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70720094517-0pc6q3evbvj3fb46crskecad4lcsla37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
