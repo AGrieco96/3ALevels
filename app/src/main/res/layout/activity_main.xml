@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/kenvector_future"
         android:includeFontPadding="false"
         android:text="@string/app_name"
         android:textColor="#89FF00"

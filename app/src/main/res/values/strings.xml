@@ -19,4 +19,43 @@
     <string name="do_you_have_an_account">Do you have an account?</string>
     <string name="user_name">Username</string>
     <string name="ContentDescription"> SplashScreen </string>
+
+    <string name="Button_Play"> START GAME </string>
+    <string name="Button_Option"> OPTIONS </string>
+    <string name="Button_Credits"> CREDITS </string>
+    <string name="Button_Back"> BACK </string>
+    <string name="username_login"> %s </string>
+    <string name="credits">
+        \n
+        This is a personal project for the Mobile Application and Cloud Computing courses in Sapienza \n\n
+        All rights reserved to the 3ALEVELS co.\n\n
+        \n\n
+        Producer : \n
+        Andrea Nardocci \n
+        Andrea Di Tommaso \n
+        Antonio Grieco \n
+        \n\n
+        Graphic Design : \n
+        Andrea Nardocci \n
+        Andrea Di Tommaso \n
+        Antonio Grieco \n
+        \n\n
+        Owner : \n
+        Andrea Nardocci \n
+        Andrea Di Tommaso \n
+        Antonio Grieco \n
+        \n\n
+        Sound E Music : \n
+        Andrea Nardocci \n
+        Andrea Di Tommaso \n
+        Antonio Grieco \n
+        \n\n
+        \n\n
+        Special Reward to : \n
+        IDE : Android Studio \n
+        Cloud : Firebase \n
+        Asset Store : Kenney \n
+
+
+    </string>
 </resources>

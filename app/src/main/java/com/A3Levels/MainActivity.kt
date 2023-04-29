@@ -16,26 +16,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-
         Firebase.auth.signOut()
-
-        binding.authText.setOnClickListener {
-            goToRegister()
-        }
         setContentView(R.layout.activity_main)
     }
 
-    private fun goToRegister(){
-        val intent = Intent(this, LoginEmailActivity::class.java)
-        startActivity(intent)
-    }
-
-
     val mainHandler = Handler(Looper.getMainLooper()).postDelayed({
-        val intent = Intent(this@MainActivity, HomeActivity::class.java)
+        val intent = Intent(this@MainActivity, LoginEmailActivity::class.java)
         startActivity(intent)
         finish()
     },3000)
