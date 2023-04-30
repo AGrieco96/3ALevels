@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button12"
+            android:id="@+id/button_start"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:background="@drawable/green_button05"

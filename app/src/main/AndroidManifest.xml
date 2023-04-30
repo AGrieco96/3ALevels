@@ -15,6 +15,9 @@
         android:theme="@style/Theme.3ALevels"
         tools:targetApi="31">
         <activity
+            android:name=".game.LobbyActivity"
+            android:exported="false" />
+        <activity
             android:name=".other.CreditsActivity"
             android:exported="false" />
         <activity

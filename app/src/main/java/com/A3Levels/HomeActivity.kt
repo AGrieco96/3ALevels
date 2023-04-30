@@ -8,6 +8,7 @@ import com.A3Levels.auth.GoogleSignInActivity.Companion.TAG
 import com.A3Levels.auth.LoginEmailActivity
 import com.A3Levels.auth.RegisterEmailActivity
 import com.A3Levels.databinding.ActivityHomeBinding
+import com.A3Levels.game.LobbyActivity
 import com.A3Levels.other.CreditsActivity
 import com.A3Levels.other.OptionActivity
 import com.google.firebase.FirebaseApp
@@ -33,11 +34,13 @@ class HomeActivity : AppCompatActivity() {
         //Retrieve user information from Cloud Firestore
         val db = FirebaseFirestore.getInstance()
         val userUID = FirebaseAuth.getInstance().currentUser?.uid
+        var username = ""
         if( userUID != null ){
             val userRef = db.collection("users").document(userUID)
             userRef.get().addOnSuccessListener{ document ->
                 if ( document != null && document.exists()) {
                     val user = document.toObject(User::class.java)
+                    username = user?.displayName.toString()
                     //update ui
                     binding.usernameView.text=user?.displayName
                     resources.getString(R.string.username_login, user?.displayName)
@@ -62,6 +65,10 @@ class HomeActivity : AppCompatActivity() {
             logout()
         }
 
+        binding.buttonStart.setOnClickListener{
+            startGame(username)
+        }
+
 
 
 
@@ -81,6 +88,12 @@ class HomeActivity : AppCompatActivity() {
     private fun logout(){
         FirebaseAuth.getInstance().signOut()
         val intent = Intent(this, LoginEmailActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun startGame(username:String){
+        val intent = Intent(this, LobbyActivity::class.java)
+        intent.putExtra("username", username)
         startActivity(intent)
     }
 }
