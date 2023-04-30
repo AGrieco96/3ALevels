@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="#000000"
     tools:context=".HomeActivity">
 
 
@@ -13,86 +11,117 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="200dp"
+        android:alpha="1"
         android:background="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/background_home_3" />
 
     <LinearLayout
         android:layout_width="240dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button12"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="@drawable/button_play"
+            android:background="@drawable/green_button05"
             android:fontFamily="@font/kenvector_future"
             android:includeFontPadding="false"
+            android:scaleX="0.95"
+            android:scaleY="0.95"
             android:text="@string/Button_Play"
+            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button14"
+            android:id="@+id/button_option"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/blue_button05"
             android:fontFamily="@font/kenvector_future"
             android:includeFontPadding="false"
+            android:scaleX="0.95"
+            android:scaleY="0.95"
             android:text="@string/Button_Option"
+            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button15"
+            android:id="@+id/button_credits"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/blue_button05"
             android:fontFamily="@font/kenvector_future"
             android:includeFontPadding="false"
+            android:scaleX="0.95"
+            android:scaleY="0.95"
             android:text="@string/Button_Credits"
+            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="16sp" />
 
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="64dp"
-        android:fontFamily="@font/kenvector_future"
-        android:text="@string/app_name"
-        android:textColor="#89FF00"
-        android:textSize="34sp"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.183"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button16"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/red_cross"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.661"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kenvector_future"
+                android:text="@string/app_name"
+                android:textColor="#89FF00"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/usernameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kenvector_future"
+                android:text="@string/username_login"
+                android:textColor="#89FF00" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_logout"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/red_cross"
+            android:paddingTop="2dp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
