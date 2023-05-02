@@ -55,7 +55,15 @@
         IDE : Android Studio \n
         Cloud : Firebase \n
         Asset Store : Kenney \n
-
-
     </string>
+
+    <!-- Option value string -->
+    <string name="text_enable">Enable</string>
+    <string name="text_sound">sound</string>
+    <string name="text_volume">Volume</string>
+    <string name="text_graphicsSettings">graphics settings</string>
+    <string name="text_languageSettings">language settings</string>
+    <string name="text_notification">notification</string>
+    <string name="text_save">save</string>
+
 </resources>

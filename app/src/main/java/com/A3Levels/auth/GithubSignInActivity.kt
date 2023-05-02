@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.A3Levels.MainActivity
+import com.A3Levels.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.OAuthProvider
@@ -118,7 +118,7 @@ class GithubSignInActivity : AppCompatActivity() {
     }
 
     private fun goToHome(){
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
 
@@ -127,7 +127,7 @@ class GithubSignInActivity : AppCompatActivity() {
 
         val user = hashMapOf(
             "email" to currentUser.email,
-            "displayName" to currentUser.displayName
+            "displayName" to changeName(currentUser.displayName)
         )
 
         db.collection("users").document(currentUser.uid)
@@ -141,6 +141,15 @@ class GithubSignInActivity : AppCompatActivity() {
                 ).show()
             }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+    }
+
+    private fun changeName(displayName: String?):String? {
+        var username = displayName.toString()
+        if(username.isBlank()){
+            return "random"
+        }
+        else
+            return displayName
     }
 
 }

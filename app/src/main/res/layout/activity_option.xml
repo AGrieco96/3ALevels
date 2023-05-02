@@ -26,6 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -34,24 +35,34 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kenvector_future_thin"
                     android:padding="8dp"
-                    android:text="SoundSetting"
+                    android:text="@string/text_sound"
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textStyle="bold" />
 
                 <CheckBox
                     android:id="@+id/sound_enable_checkbox"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kenvector_future_thin"
-                    android:text="YES"
+                    android:text="@string/text_enable"
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/kenvector_future_thin"
+                android:padding="8dp"
+                android:text="@string/text_volume"
+                android:textColor="@color/design_default_color_on_secondary"
+                android:textStyle="bold" />
+
             <SeekBar
                 android:id="@+id/sound_volume_seekbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:max="100"
                 android:padding="8dp"
                 android:progress="50"
@@ -72,7 +83,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kenvector_future_thin"
                 android:padding="8dp"
-                android:text="Graphics Settings"
+                android:text="@string/text_graphicsSettings"
+                android:textAlignment="center"
                 android:textColor="@color/design_default_color_on_secondary"
                 android:textStyle="bold" />
 
@@ -100,7 +112,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kenvector_future_thin"
                 android:padding="8dp"
-                android:text="Language Settings"
+                android:text="@string/text_languageSettings"
+                android:textAlignment="center"
                 android:textColor="@color/design_default_color_on_secondary"
                 android:textStyle="bold" />
 
@@ -119,18 +132,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:gravity="center"
             android:padding="8dp">
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kenvector_future_thin"
                 android:padding="8dp"
-                android:text="Notification Settings"
+                android:text="@string/text_notification"
+                android:textAlignment="center"
                 android:textColor="@color/design_default_color_on_secondary"
                 android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/notification_enable_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kenvector_future_thin"
+                android:text="@string/text_enable"
+                android:textAlignment="textStart"
+                android:textColor="@color/design_default_color_on_secondary"
+                android:textSize="12sp" />
+
             <!--
             <Spinner
                 android:id="@+id/notification_tone_spinner"
@@ -142,13 +167,6 @@
                 android:padding="8dp"
                 android:popupBackground="@drawable/button_normal" />>
 -->
-            <CheckBox
-                android:id="@+id/notification_enable_checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/kenvector_future_thin"
-                android:text="YES"
-                android:textColor="@color/design_default_color_on_secondary" />
 
         </LinearLayout>
 
@@ -160,11 +178,11 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/button_exitNoSave"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="?attr/selectableItemBackground"
-                android:contentDescription="Cancel"
+                android:contentDescription="@string/Button_Back"
                 android:minWidth="200dp"
                 android:minHeight="48dp"
                 app:srcCompat="@drawable/red_cross" />
@@ -178,7 +196,7 @@
                 android:minWidth="200dp"
                 android:minHeight="48dp"
                 android:padding="8dp"
-                android:text="SAVE"
+                android:text="@string/text_save"
                 android:textColor="@color/design_default_color_on_secondary" />
         </LinearLayout>
 
