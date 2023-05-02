@@ -114,45 +114,6 @@ class LevelJumpActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun startRecording() {
-        audioRecord.startRecording()
-        isRecording = true
-        var threshold = 6500
-        // Start a thread to listen for microphone input and update the character's position
-        Thread {
-            val buffer = ShortArray(audioRecord.bufferSizeInFrames)
-            while (isRecording) {
-
-                // Read audio data from the microphone input
-                audioRecord.read(buffer, 0, buffer.size)
-                // Calculate the current amplitude of the microphone input
-                val amplitude = buffer.maxOrNull() ?: 0
-                //Trigger only if amplitude is above threshold
-                if (amplitude > threshold && !isJumping ) {
-                    isJumping = true
-                    jumpHeight = 100
-                }
-
-                // Update the jump height for the next frame
-                if (isJumping) {
-                    jumpHeight = jumpHeight - 10
-                    if (jumpHeight <= 0) {
-                        isJumping = false
-                    }
-                } else {
-                    jumpHeight = 0
-                }
-                jumpHeight = 100 - abs(jumpHeight - 50)
-
-                runOnUiThread {
-                    imageView.translationY = jumpHeight.toFloat()
-                }
-
-                // Sleep for a short period to control the update rate
-                Thread.sleep(16)
-            }
-        }.start()
-    }
 
 
     override fun onDestroy() {
