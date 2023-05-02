@@ -8,6 +8,7 @@ import com.A3Levels.auth.GoogleSignInActivity.Companion.TAG
 import com.A3Levels.auth.LoginEmailActivity
 import com.A3Levels.auth.RegisterEmailActivity
 import com.A3Levels.databinding.ActivityHomeBinding
+import com.A3Levels.games.LevelJumpActivity
 import com.A3Levels.other.CreditsActivity
 import com.A3Levels.other.OptionActivity
 import com.google.firebase.FirebaseApp
@@ -62,6 +63,11 @@ class HomeActivity : AppCompatActivity() {
             logout()
         }
 
+        /* Testing Level Jump*/
+        binding.button12.setOnClickListener{
+            val intent = Intent(this, LevelJumpActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
