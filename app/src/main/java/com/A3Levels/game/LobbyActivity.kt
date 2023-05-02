@@ -10,6 +10,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.getField
 
 class LobbyActivity : AppCompatActivity() {
 
@@ -30,10 +31,12 @@ class LobbyActivity : AppCompatActivity() {
         lobbiesRef.get()
             .addOnSuccessListener { querySnapshot ->
                 if(querySnapshot.isEmpty){
-                    createNewLobby()
+                    //call an handle function to upgrade lobby_id
+                    getNextLobbyId()
                 }
                 else{
                     val lobby = querySnapshot.documents[0].id
+                    Log.e(TAG,"Lobby Trovata, Join")
                     joinLobby(lobby)
                 }
             }
@@ -59,10 +62,29 @@ class LobbyActivity : AppCompatActivity() {
 
          */
     }
-    private fun createNewLobby(){
+
+    private fun getNextLobbyId() {
+        //Query the db to get the highest lobby_id value since is incremental.
+        var maxLobbyId = 0
+        lobbiesRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot ){
+                    val lobbyIdS = document.get("lobby_id").toString()
+                    val lobbyId = lobbyIdS.toInt()
+                    if (lobbyId > maxLobbyId){
+                        maxLobbyId = lobbyId + 1
+                        createNewLobby(maxLobbyId)
+                    }
+                }
+            }
+            .addOnFailureListener{ exception ->
+                Log.e(TAG,"Error getting lobbies : $exception")
+            }
+    }
+    private fun createNewLobby(maxLobbyId:Int){
         //create new istance on db of lobbies.
         val lobby = hashMapOf(
-            "lobby_id" to getNextLobbyId(),
+            "lobby_id" to maxLobbyId,
             "player_1" to intent.getStringExtra("username"),
             "player_2" to ""
         )
@@ -77,30 +99,24 @@ class LobbyActivity : AppCompatActivity() {
 
     private fun joinLobby(lobbyId: String){
         val lobbyRef = lobbiesRef.document(lobbyId)
-        lobbyRef.update("player_2", intent.getStringExtra("username"))
-            .addOnSuccessListener {
-                // Successfully joined the lobby
-            }
-            .addOnFailureListener{ exception ->
-                Log.e(TAG,"Error creating lobby : $exception")
-            }
-    }
-
-    private fun getNextLobbyId():Int {
-        //Query the db to get the highest lobby_id value since is incremental.
-        var maxLobbyId = 0
-        lobbiesRef.get()
-            .addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot ){
-                    val lobbyId = document.getLong("lobby_id")?.toInt() ?: 0
-                    if (lobbyId > maxLobbyId){
-                        maxLobbyId = lobbyId
-                    }
+        lobbyRef.get()
+            .addOnSuccessListener { documentSnapshot->
+                val player2 = documentSnapshot.getString("player_2")
+                if(player2 != "") {
+                    //Lobby full create your own.
+                    getNextLobbyId()
+                }else{
+                    lobbyRef.update("player_2", intent.getStringExtra("username"))
+                        .addOnSuccessListener {
+                            // Successfully joined the lobby
+                        }
+                        .addOnFailureListener{ exception ->
+                            Log.e(TAG,"Error creating lobby : $exception")
+                        }
                 }
             }
-            .addOnFailureListener{ exception ->
-                Log.e(TAG,"Error getting lobbies : $exception")
-            }
-        return maxLobbyId + 1
+
     }
+
+
 }
