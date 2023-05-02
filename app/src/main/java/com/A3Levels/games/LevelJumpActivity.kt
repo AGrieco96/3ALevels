@@ -74,6 +74,49 @@ class LevelJumpActivity : AppCompatActivity() {
     private fun startRecording() {
         audioRecord.startRecording()
         isRecording = true
+        var threshold = 5000
+        var jumpDuration = 800 // The duration of the jump, in milliseconds
+        var jumpStartTime = 0L // The time at which the jump started
+        var isJumping = false // Whether or not the character is currently jumping
+
+        Thread {
+            val buffer = ShortArray(audioRecord.bufferSizeInFrames)
+            while (isRecording) {
+                audioRecord.read(buffer, 0, buffer.size)
+                val amplitude = buffer.maxOrNull() ?: 0
+
+                if (amplitude > threshold && !isJumping) {
+                    isJumping = true
+                    jumpStartTime = System.currentTimeMillis()
+                }
+
+                if (isJumping) {
+                    val elapsedTime = System.currentTimeMillis() - jumpStartTime
+                    val jumpHeight = (Math.sin(elapsedTime.toDouble() / jumpDuration * Math.PI) * 100).toInt()
+                    runOnUiThread {
+                        imageView.translationY = jumpHeight.toFloat()
+                    }
+
+                    if (elapsedTime >= jumpDuration) {
+                        isJumping = false
+                        runOnUiThread {
+                            imageView.translationY = 0F
+                        }
+                    }
+                } else {
+                    runOnUiThread {
+                        imageView.translationY = 0F
+                    }
+                }
+
+                Thread.sleep(16)
+            }
+        }.start()
+    }
+
+    private fun startRecording() {
+        audioRecord.startRecording()
+        isRecording = true
         var threshold = 6500
         // Start a thread to listen for microphone input and update the character's position
         Thread {
