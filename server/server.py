@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
-
-#PORCO DI DIO DELLA MADONNA
+from imageai.Classification import ImageClassification
+import os
+import base64
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -23,6 +24,25 @@ def create():
         id = request.json['id']
         todo_ref.document(id).set(request.json)
         return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An Error Occured: {e}"
+    
+@app.route('/ai', methods=['POST'])
+def image_recognition():
+    try:
+        base64_image_string = request.args.get('image')
+        execution_path = os.getcwd()
+        prediction = ImageClassification()
+        prediction.setModelTypeAsMobileNetV2()
+        prediction.setModelPath(os.path.join(execution_path, "mobilenet_v2-b0353104.pth"))
+        prediction.loadModel()
+
+        content = base64.b64decode(base64_image_string)
+        with open('image.jpg', 'wb') as f:
+            f.write(content)
+
+        predictions, probabilities = prediction.classifyImage(os.path.join(execution_path, "image.jpg"), result_count=10)
+        return jsonify(predictions), 200
     except Exception as e:
         return f"An Error Occured: {e}"
 
