@@ -30,7 +30,7 @@ def create():
 @app.route('/ai', methods=['POST'])
 def image_recognition():
     try:
-        base64_image_string = request.args.get('image')
+        base64_image_string = request.json['image']
         execution_path = os.getcwd()
         prediction = ImageClassification()
         prediction.setModelTypeAsMobileNetV2()
