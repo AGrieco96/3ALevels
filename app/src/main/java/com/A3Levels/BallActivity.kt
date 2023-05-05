@@ -1,6 +1,5 @@
 package com.A3Levels
 
-import android.R
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -13,6 +12,7 @@ import android.util.DisplayMetrics
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.A3Levels.databinding.BallActivityBinding
+
 
 
 class BallActivity : AppCompatActivity() , SensorEventListener {
@@ -42,8 +42,8 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
 
     //Gets the screens height and width
     var displayMetrics: DisplayMetrics? = null
-    private var devHeight = 0
-    private var devWidth = 0
+    var devHeight = 0
+    var devWidth = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,10 +72,17 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
 
         //Gets the screens height and width
-        devHeight = DisplayMetrics().heightPixels
-        devWidth = DisplayMetrics().widthPixels
-        //getWindowMager().getDefaultDisplay().getMetrics(DisplayMetrics())
-        //windowManager().getDefaultMetrics().
+        val displayMetrics = DisplayMetrics()
+
+        // on below line we are getting metrics
+        // for display using window manager.
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+        // on below line we are getting height
+        // and width using display metrics.
+         devHeight = displayMetrics.heightPixels
+         devWidth = displayMetrics.widthPixels
+
 
         //Creates a listener on the sensor
         sensorManager.registerListener(this, gravitySensor, SensorManager.SENSOR_DELAY_GAME)
@@ -114,21 +121,26 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
 
         //moves the ball to the RIGHT until it crashes with the border
         //Added "- 60" to make the ball bounce on the frame and not the edge of the screen
-        if (nextX + radius >=  1024 ) {
+        //if (nextX + radius >=  1024 ) {
+        if ((nextX + radius) > devWidth - (frameWidth / 2) - 60) {
             onFrameHit()
-            ball!!.x = 1024.0F -150
+            //ball!!.x = 1024.0F -150
+            ball!!.x =(nextX - 35)
 
         }
 
         //moves the ball to the BOTTOM until it crashes with the border
         //Added "- 320" to make the ball bounce on the frame and off the edge of the screen
-        if (nextY + radius >= 2048  ) {
+        //if (nextY + radius >= 2048  ) {
+        if ((nextY + radius) > devHeight - (frameHeight / 2) - 320) {
+
             onFrameHit()
-            ball!!.y = 2048.0F - 150
+            //ball!!.y = 2048.0F - 150
+            ball!!.y = (nextY - 35)
             println("ASSE X" + nextX)
         }
-        println("DevHeight : " + devHeight)
-        println("ASSE Y" + nextY)
+        println("BAllx : " + ball!!.x)
+        println("BallY" + ball!!.y)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, i: Int) {
@@ -153,10 +165,10 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     private fun onFrameHit() {
         //Vibrator
        // val vibrator = (getSystemService(VIBRATOR_SERVICE) as Vibrator)
-      //  vibrator.vibrate(400)
+       // vibrator.vibrate(400)
 
         //Sound
-       // toneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP)
+        //toneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP)
     }
 
 

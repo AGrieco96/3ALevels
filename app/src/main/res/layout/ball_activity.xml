@@ -21,18 +21,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:color/black" />
+        app:srcCompat="@drawable/ballwallpaper" />
 
     <ImageView
         android:id="@+id/ball"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="196dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="312dp"
         android:contentDescription="@string/a_ball"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:layout_constraintVertical_bias="0.834"
+        app:srcCompat="@android:drawable/dialog_frame" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="102dp"
+        android:layout_height="206dp"
+        app:layout_constraintBottom_toBottomOf="@+id/frame"
+        app:layout_constraintEnd_toEndOf="@+id/frame"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toTopOf="@+id/frame"
+        app:srcCompat="@drawable/hole" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
