@@ -143,7 +143,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         //println("BallY" + ball!!.y)
 
 
-        if ( (ball!!.x >= 400 && ball!!.x >= 540) && (ball!!.y <= 955 && ball!!.y >= 1095) )
+        if ( (ball!!.x >= 400 && ball!!.x <= 540) && (ball!!.y >= 955 && ball!!.y <= 1095) )
             println(" HAI VINTOOOOOOOOOOOOOOOOOOOO")
     }
 
