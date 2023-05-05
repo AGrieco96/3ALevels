@@ -6,10 +6,13 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.media.AudioManager
 import android.media.ToneGenerator
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.DisplayMetrics
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.A3Levels.databinding.BallActivityBinding
 
@@ -166,13 +169,18 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     /**
      * Sets of multiple effects when the ball hits the edge of the frame
      */
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun onFrameHit() {
         //Vibrator
-       // val vibrator = (getSystemService(VIBRATOR_SERVICE) as Vibrator)
-       // vibrator.vibrate(400)
+        val vibrator = (getSystemService(VIBRATOR_SERVICE) as Vibrator)
+        val vibrationEffect2: VibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
+
+        // it is safe to cancel other vibrations currently taking place
+        vibrator.cancel()
+        vibrator.vibrate(vibrationEffect2)
 
         //Sound
-        //toneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP)
+        toneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP)
     }
 
 
