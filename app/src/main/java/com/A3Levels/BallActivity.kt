@@ -137,10 +137,14 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
             onFrameHit()
             //ball!!.y = 2048.0F - 150
             ball!!.y = (nextY - 35)
-            println("ASSE X" + nextX)
+            //println("ASSE X" + nextX)
         }
-        println("BAllx : " + ball!!.x)
-        println("BallY" + ball!!.y)
+        //println("BAllx : " + ball!!.x)
+        //println("BallY" + ball!!.y)
+
+
+        if ( (ball!!.x >= 400 && ball!!.x >= 540) && (ball!!.y <= 955 && ball!!.y >= 1095) )
+            println(" HAI VINTOOOOOOOOOOOOOOOOOOOO")
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, i: Int) {
