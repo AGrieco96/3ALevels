@@ -3,9 +3,11 @@ package com.A3Levels.games
 import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,18 +16,20 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.Recorder
-import androidx.camera.video.Recording
-import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.A3Levels.databinding.ActivityPhotoLevelBinding
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-
-typealias LumaListener = (luma: Double) -> Unit
 
 
 class LevelPhotoActivity : AppCompatActivity() {
@@ -33,8 +37,8 @@ class LevelPhotoActivity : AppCompatActivity() {
 
     private var imageCapture: ImageCapture? = null
 
-    private var videoCapture: VideoCapture<Recorder>? = null
-    private var recording: Recording? = null
+    private val objectList : String = "chair"
+
 
     private lateinit var cameraExecutor: ExecutorService
 
@@ -77,7 +81,7 @@ class LevelPhotoActivity : AppCompatActivity() {
         val imageCapture = imageCapture ?: return
 
         // Create time stamped name and MediaStore entry.
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
+        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.ITALY)
             .format(System.currentTimeMillis())
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
@@ -109,6 +113,7 @@ class LevelPhotoActivity : AppCompatActivity() {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
+                    imageBase64(output.savedUri)
                 }
             }
         )
@@ -146,6 +151,66 @@ class LevelPhotoActivity : AppCompatActivity() {
             }
 
         }, ContextCompat.getMainExecutor(this))
+
+    }
+
+    private fun imageBase64(uri: Uri?) {
+        val inputStream = uri?.let { contentResolver.openInputStream(it) }
+
+        val bytes: ByteArray
+        val buffer = ByteArray(8192)
+        var bytesRead: Int
+        val output = ByteArrayOutputStream()
+
+        try {
+            if (inputStream != null) {
+                while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                    output.write(buffer, 0, bytesRead)
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        bytes = output.toByteArray()
+        return sendPhoto(Base64.encodeToString(bytes, Base64.DEFAULT))
+    }
+
+    private fun sendPhoto(imageString : String) {
+        val objectInPhoto = "chair"
+
+        try {
+
+            // Make new json object and put params in it
+            val jsonParams = JSONObject()
+            jsonParams.put("object", objectInPhoto)
+            jsonParams.put("image", imageString)
+
+            // Building a request
+            val request = JsonObjectRequest(
+                Request.Method.POST,
+                "https://threealevels.onrender.com/ai",
+                jsonParams,
+                {
+                    println(it)
+                }
+            ) {
+                println(it)
+            }
+
+            /*
+
+              For the sake of the example I've called newRequestQueue(getApplicationContext()) here
+              but the recommended way is to create a singleton that will handle this.
+
+              Read more at : https://developer.android.com/training/volley/requestqueue
+
+              Category -> Use a singleton pattern
+
+            */Volley.newRequestQueue(applicationContext).add(request)
+        } catch (ex: JSONException) {
+            // Catch if something went wrong with the params
+        }
 
     }
 
