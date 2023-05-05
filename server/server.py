@@ -31,6 +31,7 @@ def create():
 def image_recognition():
     try:
         base64_image_string = request.json['image']
+        object = request.json['object']
         execution_path = os.getcwd()
         prediction = ImageClassification()
         prediction.setModelTypeAsMobileNetV2()
@@ -42,7 +43,19 @@ def image_recognition():
             f.write(content)
 
         predictions, probabilities = prediction.classifyImage(os.path.join(execution_path, "image.jpg"), result_count=10)
-        return jsonify(predictions), 200
+        string_list = []
+        for s in predictions:
+            if ' ' in s:
+                for w in s.split():
+                    string_list.append(w)
+            else:
+                string_list.append(s)
+
+        if object in string_list:
+            response = "Good job! You have take a photo of a" + object
+        else:
+            response = "Oh no! You have take a photo of a" + predictions[0]
+        return jsonify(response), 200
     except Exception as e:
         return f"An Error Occured: {e}"
 
