@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         // Set the animation properties
-        animation.duration = 3000
+        animation.duration = 2000
         animation.fillAfter = true
         animation.interpolator = LinearInterpolator()
 
