@@ -12,20 +12,29 @@
         android:orientation="vertical">
 
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="273dp"
-            android:background="@color/black">
+            android:background="@color/black"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kenvector_future"
+                android:paddingTop="60dp"
+                android:text="3ALEVELS"
+                android:textColor="#3BD841"
+                android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="77dp"
                 android:layout_height="77dp"
-                android:layout_marginTop="93dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher_foreground"
+                android:background="@drawable/splashscreen3"
                 android:contentDescription="@string/logo_of_the_app" />
-
-        </FrameLayout>
+        </LinearLayout>
 
 
         <RelativeLayout
@@ -34,7 +43,7 @@
             android:layout_marginLeft="62dp"
             android:layout_marginTop="36.7dp"
             android:layout_marginRight="62dp"
-            android:background="@drawable/blue_border_rounded_cornwe">
+            android:background="@drawable/input_text_1">
 
             <!-- INPUT -->
             <EditText
@@ -42,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/username_icon"
+                android:autofillHints=""
                 android:background="@android:color/transparent"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
@@ -51,7 +61,6 @@
                 android:paddingBottom="15dp"
                 android:textCursorDrawable="@color/black"
                 android:textSize="12sp"
-                android:autofillHints=""
                 tools:ignore="RtlSymmetry" />
 
             <!-- ICON -->
@@ -61,8 +70,8 @@
                 android:layout_height="10.3dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="17dp"
-                android:src="@drawable/email"
-                android:contentDescription="@string/username_icon" />
+                android:contentDescription="@string/username_icon"
+                android:src="@drawable/email" />
 
         </RelativeLayout>
 
@@ -71,38 +80,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="62dp"
-            android:layout_marginRight="62dp"
             android:layout_marginTop="12.7dp"
-            android:background="@drawable/blue_border_rounded_cornwe">
+            android:layout_marginRight="62dp"
+            android:background="@drawable/input_text_1">
 
             <!-- INPUT -->
             <EditText
                 android:id="@+id/editTextPassword"
-                android:layout_toEndOf="@+id/icon"
-                android:hint="@string/password"
-                android:textSize="12sp"
-                android:paddingStart="17dp"
-                android:paddingTop="15dp"
-                android:maxLines="1"
-                android:inputType="textPassword"
-                android:paddingBottom="15dp"
-                android:maxLength="10"
-                android:textCursorDrawable="@color/black"
-                android:background="@android:color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/icon"
                 android:autofillHints=""
+                android:background="@android:color/transparent"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:paddingStart="17dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:textCursorDrawable="@color/black"
+                android:textSize="12sp"
                 tools:ignore="RtlSymmetry" />
 
             <!-- ICON -->
             <ImageView
                 android:id="@+id/icon"
-                android:src="@drawable/password"
                 android:layout_width="14.7dp"
                 android:layout_height="10.3dp"
-                android:layout_marginStart="17dp"
                 android:layout_centerVertical="true"
-                android:contentDescription="@string/password_icon" />
+                android:layout_marginStart="17dp"
+                android:contentDescription="@string/password_icon"
+                android:src="@drawable/password" />
 
         </RelativeLayout>
 
