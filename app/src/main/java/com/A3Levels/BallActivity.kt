@@ -96,6 +96,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onSensorChanged(sensorEvent: SensorEvent) {
         //Current coordinates of the ball
         val X = ball!!.x
