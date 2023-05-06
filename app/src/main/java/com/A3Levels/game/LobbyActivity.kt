@@ -1,20 +1,24 @@
 package com.A3Levels.game
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.A3Levels.R
 import com.A3Levels.auth.GoogleSignInActivity.Companion.TAG
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.getField
 
 class LobbyActivity : AppCompatActivity() {
 
     private lateinit var lobbiesRef: CollectionReference
+    private val db = FirebaseFirestore.getInstance()
+    private var lobbyId:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,45 +26,37 @@ class LobbyActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
 
         //Retrieve user information from Cloud Firestore
-        val db = FirebaseFirestore.getInstance()
+        // val db = FirebaseFirestore.getInstance()
         lobbiesRef = db.collection("lobbies")
         searchGame()
     }
 
     private fun searchGame(){
+        var flag:Boolean = false
         lobbiesRef.get()
             .addOnSuccessListener { querySnapshot ->
-                if(querySnapshot.isEmpty){
-                    //call an handle function to upgrade lobby_id
-                    getNextLobbyId()
+                for (document in querySnapshot ) {
+                    val status = document.get("status").toString()
+                    if (status.equals("waiting")) {
+                        flag = true
+                        lobbyId = document.id
+                    }
                 }
-                else{
-                    val lobby = querySnapshot.documents[0].id
-                    Log.e(TAG,"Lobby Trovata, Join")
-                    joinLobby(lobby)
-                }
-            }
-            .addOnFailureListener{ exception ->
-                Log.e(TAG,"Error getting lobbies: $exception")
-            }
-        /*
-        lobbiesRef.whereEqualTo("player_2","")
-            .limit(1)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                if (querySnapshot.isEmpty){
-                    // No Lobbies found, create a new one
-                    createNewLobby()
-                }else {
-                    val lobbyId = querySnapshot.documents[0].id
+                if(flag){
+                    // Lobby found
+                    println("FLAG TRUE")
+                    //lobbyId = querySnapshot.documents[0].id
                     joinLobby(lobbyId)
+                    setupListener(lobbyId)
+                } else {
+                    // Lobby not found. increase id and create new one.
+                    getNextLobbyId()
+                    println("FLAG FALSE")
                 }
             }
             .addOnFailureListener{ exception ->
                 Log.e(TAG,"Error getting lobbies: $exception")
             }
-
-         */
     }
 
     private fun getNextLobbyId() {
@@ -70,10 +66,13 @@ class LobbyActivity : AppCompatActivity() {
             .addOnSuccessListener { querySnapshot ->
                 for (document in querySnapshot ){
                     val lobbyIdS = document.get("lobby_id").toString()
-                    val lobbyId = lobbyIdS.toInt()
-                    if (lobbyId > maxLobbyId){
-                        maxLobbyId = lobbyId + 1
-                        createNewLobby(maxLobbyId)
+                    val lobbyId_field = lobbyIdS.toInt()
+                    if (lobbyId_field >= maxLobbyId){
+                        maxLobbyId = lobbyId_field + 1
+                        // Create new lobby.
+                        lobbyId = document.id
+                        createNewLobby(maxLobbyId,lobbyId)
+                        setupListener(lobbyId)
                     }
                 }
             }
@@ -81,40 +80,61 @@ class LobbyActivity : AppCompatActivity() {
                 Log.e(TAG,"Error getting lobbies : $exception")
             }
     }
-    private fun createNewLobby(maxLobbyId:Int){
+    private fun createNewLobby(maxLobbyId:Int, lobbyId: String){
         //create new istance on db of lobbies.
         val lobby = hashMapOf(
             "lobby_id" to maxLobbyId,
             "player_1" to intent.getStringExtra("username"),
-            "player_2" to ""
+            "player_2" to "",
+            "status" to "waiting"
         )
         lobbiesRef.add(lobby)
             .addOnSuccessListener { documentReference ->
                 Log.e(TAG,"Lobby Creata in attesa di un opponente")
+                //setupListener(lobbyId)
             }
             .addOnFailureListener{ exception ->
                 Log.e(TAG,"Error creating lobby : $exception")
             }
+
     }
 
     private fun joinLobby(lobbyId: String){
         val lobbyRef = lobbiesRef.document(lobbyId)
         lobbyRef.get()
             .addOnSuccessListener { documentSnapshot->
-                val player2 = documentSnapshot.getString("player_2")
-                if(player2 != "") {
-                    //Lobby full create your own.
-                    getNextLobbyId()
-                }else{
-                    lobbyRef.update("player_2", intent.getStringExtra("username"))
-                        .addOnSuccessListener {
-                            // Successfully joined the lobby
-                        }
-                        .addOnFailureListener{ exception ->
-                            Log.e(TAG,"Error creating lobby : $exception")
-                        }
-                }
+                lobbyRef.update("player_2", intent.getStringExtra("username"))
+                    .addOnSuccessListener {
+                        lobbyRef.update("status","started")
+                    }
+                    .addOnFailureListener{ exception ->
+                        Log.e(TAG,"Error On joining lobby : $exception ")
+                    }
             }
+
+    }
+
+    private fun setupListener(lobbyId: String){
+        /*
+        val docLobbyRef = db.collection("lobbies").document(lobbyId)
+        docLobbyRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@EventListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                Log.d(TAG, "Current data: ${snapshot.data}")
+                Log.d(TAG, "Document ID: " + docLobbyRef.id)
+                // Handle the changes to the field in the document
+                val intent = Intent(this, TestActivity::class.java)
+                startActivity(intent)
+            } else {
+                Log.d(TAG, "Current data: null")
+                Log.d(TAG, "Document ID: " + docLobbyRef.id)
+            }
+        })
+    */
 
     }
 
