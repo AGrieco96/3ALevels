@@ -34,12 +34,8 @@ import java.util.concurrent.Executors
 
 class LevelPhotoActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityPhotoLevelBinding
-
     private var imageCapture: ImageCapture? = null
-
-    private val objectList : String = "chair"
-
-
+    private val objectList = listOf("chair", "bottle", "smartphone", "tv", "key", "wallet")
     private lateinit var cameraExecutor: ExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +43,6 @@ class LevelPhotoActivity : AppCompatActivity() {
         viewBinding = ActivityPhotoLevelBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        // Request camera permissions
         if (allPermissionsGranted()) {
             startCamera()
         } else {
@@ -55,7 +50,6 @@ class LevelPhotoActivity : AppCompatActivity() {
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
-        // Set up the listeners for take photo and video capture buttons
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
@@ -77,10 +71,8 @@ class LevelPhotoActivity : AppCompatActivity() {
     }
 
     private fun takePhoto() {
-        // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
 
-        // Create time stamped name and MediaStore entry.
         val name = SimpleDateFormat(FILENAME_FORMAT, Locale.ITALY)
             .format(System.currentTimeMillis())
         val contentValues = ContentValues().apply {
@@ -91,15 +83,12 @@ class LevelPhotoActivity : AppCompatActivity() {
             }
         }
 
-        // Create output options object which contains file + metadata
         val outputOptions = ImageCapture.OutputFileOptions
             .Builder(contentResolver,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues)
             .build()
 
-        // Set up image capture listener, which is triggered after photo has
-        // been taken
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(this),
@@ -123,10 +112,8 @@ class LevelPhotoActivity : AppCompatActivity() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
-            // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
-            // Preview
             val preview = Preview.Builder()
                 .build()
                 .also {
@@ -135,14 +122,11 @@ class LevelPhotoActivity : AppCompatActivity() {
 
             imageCapture = ImageCapture.Builder().build()
 
-            // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
-                // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
 
-                // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
                     this, cameraSelector, preview, imageCapture)
 
@@ -177,16 +161,13 @@ class LevelPhotoActivity : AppCompatActivity() {
     }
 
     private fun sendPhoto(imageString : String) {
-        val objectInPhoto = "chair"
+        val objectInPhoto = objectList[(0..5).random()]
 
         try {
-
-            // Make new json object and put params in it
             val jsonParams = JSONObject()
             jsonParams.put("object", objectInPhoto)
             jsonParams.put("image", imageString)
 
-            // Building a request
             val request = JsonObjectRequest(
                 Request.Method.POST,
                 "https://threealevels.onrender.com/ai",
@@ -198,20 +179,10 @@ class LevelPhotoActivity : AppCompatActivity() {
                 println(it)
             }
 
-            /*
-
-              For the sake of the example I've called newRequestQueue(getApplicationContext()) here
-              but the recommended way is to create a singleton that will handle this.
-
-              Read more at : https://developer.android.com/training/volley/requestqueue
-
-              Category -> Use a singleton pattern
-
-            */Volley.newRequestQueue(applicationContext).add(request)
+            Volley.newRequestQueue(applicationContext).add(request)
         } catch (ex: JSONException) {
-            // Catch if something went wrong with the params
+            ex.toString()
         }
-
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
