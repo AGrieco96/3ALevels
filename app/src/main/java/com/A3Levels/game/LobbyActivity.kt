@@ -44,7 +44,6 @@ class LobbyActivity : AppCompatActivity() {
                 }
                 if(flag){
                     // Lobby found
-                    println("FLAG TRUE")
                     //lobbyId = querySnapshot.documents[0].id
                     joinLobby(lobbyId)
                     setupListener(lobbyId)
@@ -69,18 +68,15 @@ class LobbyActivity : AppCompatActivity() {
                     val lobbyId_field = lobbyIdS.toInt()
                     if (lobbyId_field >= maxLobbyId){
                         maxLobbyId = lobbyId_field + 1
-                        // Create new lobby.
-                        lobbyId = document.id
-                        createNewLobby(maxLobbyId,lobbyId)
-                        setupListener(lobbyId)
                     }
                 }
+                createNewLobby(maxLobbyId)
             }
             .addOnFailureListener{ exception ->
                 Log.e(TAG,"Error getting lobbies : $exception")
             }
     }
-    private fun createNewLobby(maxLobbyId:Int, lobbyId: String){
+    private fun createNewLobby(maxLobbyId:Int){
         //create new istance on db of lobbies.
         val lobby = hashMapOf(
             "lobby_id" to maxLobbyId,
@@ -91,7 +87,8 @@ class LobbyActivity : AppCompatActivity() {
         lobbiesRef.add(lobby)
             .addOnSuccessListener { documentReference ->
                 Log.e(TAG,"Lobby Creata in attesa di un opponente")
-                //setupListener(lobbyId)
+                lobbyId = documentReference.id
+                setupListener(lobbyId)
             }
             .addOnFailureListener{ exception ->
                 Log.e(TAG,"Error creating lobby : $exception")
@@ -115,26 +112,40 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun setupListener(lobbyId: String){
-        /*
+        println("LobbyID :   "+ lobbyId)
         val docLobbyRef = db.collection("lobbies").document(lobbyId)
-        docLobbyRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+        val listener = docLobbyRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
                 return@EventListener
             }
 
             if (snapshot != null && snapshot.exists()) {
-                Log.d(TAG, "Current data: ${snapshot.data}")
-                Log.d(TAG, "Document ID: " + docLobbyRef.id)
-                // Handle the changes to the field in the document
-                val intent = Intent(this, TestActivity::class.java)
-                startActivity(intent)
+                val myfield = snapshot.getString("status")
+                // Log.d(TAG, "Current data: ${snapshot.data}")
+                Log.d(TAG, "Current data: $myfield")
+                if (myfield.equals("started")) {
+                    val intent = Intent(this, TestActivity::class.java)
+                    startActivity(intent)
+                }
+                /*
+                val player2 = snapshot.getString("player_1").toString()
+                val flagPlayer:Boolean = player2.isEmpty()
+                println("Player2   : " + player2)
+                println("FlagPlayer :  " + player2.isEmpty())
+                if(!flagPlayer){
+                    // Log.d(TAG, "Document ID: " + docLobbyRef.id)
+                    // Handle the changes to the field in the document
+
+                }
+                */
             } else {
                 Log.d(TAG, "Current data: null")
-                Log.d(TAG, "Document ID: " + docLobbyRef.id)
+                //Log.d(TAG, "Document ID: " + docLobbyRef.id)
             }
         })
-    */
+
+
 
     }
 
