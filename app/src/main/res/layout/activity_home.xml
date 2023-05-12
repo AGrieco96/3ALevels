@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button12"
+            android:id="@+id/button_start"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:background="@drawable/green_button05"
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kenvector_future"
                 android:text="@string/app_name"
-                android:textColor="#89FF00"
+                android:textColor="@color/ui_general_main"
                 android:textSize="34sp" />
 
             <TextView
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kenvector_future"
                 android:text="@string/username_login"
-                android:textColor="#89FF00" />
+                android:textColor="@color/ui_general_main" />
 
         </LinearLayout>
 

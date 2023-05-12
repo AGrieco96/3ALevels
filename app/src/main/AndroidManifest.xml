@@ -4,17 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- Enable microphone device authorization  -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-
     <application
         android:allowBackup="true"
+        android:enableOnBackInvokedCallback="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +16,10 @@
         android:theme="@style/Theme.3ALevels"
         tools:targetApi="31">
         <activity
-            android:name=".games.LevelJumpActivity"
+            android:name=".game.TestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".game.LobbyActivity"
             android:exported="false" />
         <activity
             android:name=".other.CreditsActivity"
@@ -49,7 +44,6 @@
         <activity android:name=".auth.LoginEmailActivity" />
         <activity android:name=".auth.GoogleSignInActivity" />
         <activity android:name=".auth.GithubSignInActivity" />
-        <activity android:name=".games.LevelPhotoActivity" />
     </application>
 
 </manifest>
