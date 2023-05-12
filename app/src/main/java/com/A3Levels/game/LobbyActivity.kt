@@ -123,7 +123,7 @@ class LobbyActivity : AppCompatActivity() {
                         val jsonObject = JSONObject()
                         jsonObject.put("lobby_id", lobbyId)
 
-                        RequestsHTTP.httpPOST(jsonObject)
+                        RequestsHTTP.httpPOSTcreateGame(jsonObject)
 
                     }
                     .addOnFailureListener{ exception ->

@@ -9,6 +9,7 @@ import com.A3Levels.auth.LoginEmailActivity
 import com.A3Levels.auth.RegisterEmailActivity
 import com.A3Levels.databinding.ActivityHomeBinding
 import com.A3Levels.game.LobbyActivity
+import com.A3Levels.games.LevelPhotoActivity
 import com.A3Levels.other.CreditsActivity
 import com.A3Levels.other.OptionActivity
 import com.google.firebase.FirebaseApp
@@ -92,7 +93,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun startGame(username:String){
-        val intent = Intent(this, LobbyActivity::class.java)
+        val intent = Intent(this, LevelPhotoActivity::class.java)
         intent.putExtra("username", username)
         startActivity(intent)
     }

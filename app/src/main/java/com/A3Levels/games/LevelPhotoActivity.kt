@@ -19,6 +19,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.A3Levels.databinding.ActivityPhotoLevelBinding
+import com.A3Levels.other.RequestsHTTP
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -163,26 +164,12 @@ class LevelPhotoActivity : AppCompatActivity() {
     private fun sendPhoto(imageString : String) {
         val objectInPhoto = objectList[(0..5).random()]
 
-        try {
-            val jsonParams = JSONObject()
-            jsonParams.put("object", objectInPhoto)
-            jsonParams.put("image", imageString)
+        // Create JSON using JSONObject
+        val jsonObject = JSONObject()
+        jsonObject.put("object", objectInPhoto)
+        jsonObject.put("image", imageString)
 
-            val request = JsonObjectRequest(
-                Request.Method.POST,
-                "https://threealevels.onrender.com/ai",
-                jsonParams,
-                {
-                    println(it)
-                }
-            ) {
-                println(it)
-            }
-
-            Volley.newRequestQueue(applicationContext).add(request)
-        } catch (ex: JSONException) {
-            ex.toString()
-        }
+        RequestsHTTP.httpPOSTphotoAI(jsonObject)
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
