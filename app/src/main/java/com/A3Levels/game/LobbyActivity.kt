@@ -1,18 +1,32 @@
 package com.A3Levels.game
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build.VERSION_CODES.S
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.A3Levels.MainActivity
 import com.A3Levels.R
 import com.A3Levels.auth.GoogleSignInActivity.Companion.TAG
+import com.A3Levels.other.APIService
+import com.A3Levels.other.RequestsHTTP
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.getField
+import com.google.gson.GsonBuilder
+import io.grpc.internal.JsonParser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import retrofit2.Retrofit
+
 
 class LobbyActivity : AppCompatActivity() {
 
@@ -103,6 +117,14 @@ class LobbyActivity : AppCompatActivity() {
                 lobbyRef.update("player_2", intent.getStringExtra("username"))
                     .addOnSuccessListener {
                         lobbyRef.update("status","started")
+                            val lobbyId = documentSnapshot.get("lobby_id").toString()
+
+                        // Create JSON using JSONObject
+                        val jsonObject = JSONObject()
+                        jsonObject.put("lobby_id", lobbyId)
+
+                        RequestsHTTP.httpPOST(jsonObject)
+
                     }
                     .addOnFailureListener{ exception ->
                         Log.e(TAG,"Error On joining lobby : $exception ")
