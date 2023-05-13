@@ -1,4 +1,4 @@
-package com.A3Levels
+package com.A3Levels.game
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent

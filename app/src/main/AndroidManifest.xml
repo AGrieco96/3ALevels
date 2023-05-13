@@ -49,9 +49,7 @@
         <activity android:name=".auth.GithubSignInActivity" />
 
 
-        <activity android:name=".LaMiaPrimaVolta"></activity>
-
-        <activity android:name=".BallActivity"></activity>
+        <activity android:name=".game.BallActivity"></activity>
     </application>
 
 </manifest>

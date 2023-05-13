@@ -1,6 +1,7 @@
 package com.A3Levels.game
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,8 @@ import com.A3Levels.auth.GoogleSignInActivity
 import com.A3Levels.databinding.ActivityTestLevelBinding
 import com.A3Levels.other.RequestsHTTP
 import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 
@@ -137,6 +140,9 @@ class TestLevelActivity : AppCompatActivity() {
         binding.buttonEnd.visibility = View.INVISIBLE
         binding.timerTextView.visibility = View.INVISIBLE
 
+
+        /* LISTENER PER IL LIVELLO */
+        setupListener(lobbyId)
     }
 
     private fun startTimer() {
@@ -148,6 +154,35 @@ class TestLevelActivity : AppCompatActivity() {
         seconds = 0
         deciseconds = 0
         milliseconds = 0
+    }
+
+    private fun setupListener(lobbyId: String){
+
+        FirebaseApp.initializeApp(this)
+        val db = FirebaseFirestore.getInstance()
+        val docGameRef = db.collection("games").document(lobbyId)
+        val listener = docGameRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@EventListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                val myLevel = snapshot.getString("level")
+                // Log.d(TAG, "Current data: ${snapshot.data}")
+                Log.d(TAG, "Current data: $myLevel")
+                if (myLevel.equals("2")) {
+                    val intent = Intent(this, BallActivity::class.java)
+                    startActivity(intent)
+                }
+            } else {
+                Log.d(TAG, "Current data: null")
+                //Log.d(TAG, "Document ID: " + docLobbyRef.id)
+            }
+        })
+
+
+
     }
 
 }
