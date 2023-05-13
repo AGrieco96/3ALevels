@@ -4,6 +4,8 @@
     <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
     <uses-permission android:name="android.permission.VIBRATE" tools:ignore="ManifestOrder" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,6 +17,24 @@
         android:theme="@style/Theme.3ALevels"
         tools:targetApi="31">
         <activity
+            android:name=".game.TestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".game.LobbyActivity"
+            android:exported="false" />
+        <activity android:name=".game.TestLevelActivity" />
+
+        <activity
+            android:name=".other.CreditsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".other.OptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:label="Home" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -23,6 +43,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".auth.RegisterEmailActivity" />
+        <activity android:name=".auth.LoginEmailActivity" />
+        <activity android:name=".auth.GoogleSignInActivity" />
+        <activity android:name=".auth.GithubSignInActivity" />
+
 
         <activity android:name=".LaMiaPrimaVolta"></activity>
 

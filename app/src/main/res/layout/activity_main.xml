@@ -6,14 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:background="@color/black">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/ContentDescription"
+                android:cropToPadding="false"
+                android:paddingLeft="150dp"
+                android:paddingTop="100dp"
+                android:paddingRight="150dp"
+                android:paddingBottom="20dp"
+                app:srcCompat="@drawable/splash_screen_4" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/logoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kenvector_future"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/app_name"
+            android:textColor="@color/ui_general_main"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/firstButton"
