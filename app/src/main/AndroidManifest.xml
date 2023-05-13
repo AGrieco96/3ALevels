@@ -21,6 +21,8 @@
         <activity
             android:name=".game.LobbyActivity"
             android:exported="false" />
+        <activity android:name=".game.TestLevelActivity" />
+
         <activity
             android:name=".other.CreditsActivity"
             android:exported="false" />
@@ -44,6 +46,7 @@
         <activity android:name=".auth.LoginEmailActivity" />
         <activity android:name=".auth.GoogleSignInActivity" />
         <activity android:name=".auth.GithubSignInActivity" />
+
     </application>
 
 </manifest>

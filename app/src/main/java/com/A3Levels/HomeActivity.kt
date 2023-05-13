@@ -4,19 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.A3Levels.auth.GoogleSignInActivity.Companion.TAG
 import com.A3Levels.auth.LoginEmailActivity
 import com.A3Levels.auth.RegisterEmailActivity
 import com.A3Levels.databinding.ActivityHomeBinding
 import com.A3Levels.game.LobbyActivity
+import com.A3Levels.game.TestLevelActivity
 import com.A3Levels.other.CreditsActivity
 import com.A3Levels.other.OptionActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -51,6 +49,8 @@ class HomeActivity : AppCompatActivity() {
                 Log.d(TAG,"Error getting document: ", exception)
             }
         }
+        //Hide extra UI
+        binding.exitLayout.visibility = View.GONE
 
         binding.buttonOption.setOnClickListener {
             display_options()
@@ -62,11 +62,18 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.buttonLogout.setOnClickListener{
+            binding.exitLayout.visibility = View.VISIBLE
+        }
+        binding.buttonCancel.setOnClickListener{
+            binding.exitLayout.visibility = View.GONE
+        }
+        binding.buttonConfirm.setOnClickListener{
             logout()
         }
 
         binding.buttonStart.setOnClickListener{
-            startGame(username)
+            //startGame(username)
+            testGame()
         }
 
 
@@ -94,6 +101,11 @@ class HomeActivity : AppCompatActivity() {
     private fun startGame(username:String){
         val intent = Intent(this, LobbyActivity::class.java)
         intent.putExtra("username", username)
+        startActivity(intent)
+    }
+
+    private fun testGame(){
+        val intent = Intent ( this, TestLevelActivity::class.java)
         startActivity(intent)
     }
 }

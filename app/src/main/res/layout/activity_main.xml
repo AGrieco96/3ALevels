@@ -28,9 +28,9 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/ContentDescription"
                 android:cropToPadding="false"
-                android:paddingLeft="100dp"
+                android:paddingLeft="150dp"
                 android:paddingTop="100dp"
-                android:paddingRight="100dp"
+                android:paddingRight="150dp"
                 android:paddingBottom="20dp"
                 app:srcCompat="@drawable/splash_screen_4" />
 
