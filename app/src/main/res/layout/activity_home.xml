@@ -109,15 +109,15 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="45dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_logout"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@drawable/red_cross"
             android:paddingTop="2dp" />
@@ -127,7 +127,7 @@
     <LinearLayout
         android:id="@+id/exitLayout"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="0dp"
         android:background="@color/material_dynamic_neutral10"
         android:gravity="center"
         android:orientation="vertical"
@@ -152,7 +152,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingLeft="10dp"
             android:paddingTop="30dp"
+            android:paddingRight="10dp"
             android:paddingBottom="30dp">
 
             <androidx.appcompat.widget.AppCompatButton
@@ -163,6 +165,11 @@
                 android:background="@drawable/green_button05"
                 android:fontFamily="@font/kenvector_future_thin"
                 android:text="@string/Button_Logout" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_Cancel"
