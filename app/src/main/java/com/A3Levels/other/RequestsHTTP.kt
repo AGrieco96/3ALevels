@@ -17,7 +17,7 @@ const val URL = "https://true-radios-fly.loca.lt"
 class RequestsHTTP {
     companion object {
 
-        fun httpPOST(jsonObject: JSONObject) {
+        fun httpPOSTCreateGame(jsonObject: JSONObject) {
             // Create Retrofit
             val retrofit = Retrofit.Builder().baseUrl(URL).build()
 
