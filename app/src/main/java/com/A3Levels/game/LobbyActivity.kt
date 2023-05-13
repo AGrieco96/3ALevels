@@ -98,11 +98,10 @@ class LobbyActivity : AppCompatActivity() {
             "player_2" to "",
             "status" to "waiting"
         )
-        lobbiesRef.add(lobby)
-            .addOnSuccessListener { documentReference ->
+        lobbiesRef.document(maxLobbyId.toString()).set(lobby)
+            .addOnSuccessListener {
                 Log.e(TAG,"Lobby Creata in attesa di un opponente")
-                lobbyId = documentReference.id
-                setupListener(lobbyId)
+                setupListener(maxLobbyId.toString())
             }
             .addOnFailureListener{ exception ->
                 Log.e(TAG,"Error creating lobby : $exception")
