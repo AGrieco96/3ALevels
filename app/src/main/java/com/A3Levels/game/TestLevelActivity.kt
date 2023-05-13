@@ -11,7 +11,6 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
-import com.A3Levels.auth.GoogleSignInActivity
 import com.A3Levels.databinding.ActivityTestLevelBinding
 import com.A3Levels.other.RequestsHTTP
 import com.google.firebase.FirebaseApp
@@ -161,15 +160,15 @@ class TestLevelActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         val db = FirebaseFirestore.getInstance()
         val docGameRef = db.collection("games").document(lobbyId)
-        val listener = docGameRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+        docGameRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
                 return@EventListener
             }
 
             if (snapshot != null && snapshot.exists()) {
-                val myLevel = snapshot.getString("level")
-                // Log.d(TAG, "Current data: ${snapshot.data}")
+                val myLevel = snapshot.get("level").toString()
+                Log.d(TAG, "Current data: ${snapshot.data}")
                 Log.d(TAG, "Current data: $myLevel")
                 if (myLevel.equals("2")) {
                     val intent = Intent(this, BallActivity::class.java)
