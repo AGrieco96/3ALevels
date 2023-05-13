@@ -127,7 +127,7 @@ class GithubSignInActivity : AppCompatActivity() {
 
         val user = hashMapOf(
             "email" to currentUser.email,
-            "displayName" to changeName(currentUser.displayName)
+            "displayName" to changeName(currentUser.displayName!!.replace(" ", ""))
         )
 
         db.collection("users").document(currentUser.uid)
@@ -146,7 +146,7 @@ class GithubSignInActivity : AppCompatActivity() {
     private fun changeName(displayName: String?):String? {
         var username = displayName.toString()
         if(username.isBlank()){
-            return "random"
+            return "Random33"
         }
         else
             return displayName
