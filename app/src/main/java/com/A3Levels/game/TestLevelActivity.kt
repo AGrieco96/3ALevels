@@ -1,18 +1,28 @@
 package com.A3Levels.game
 
+import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import com.A3Levels.auth.GoogleSignInActivity
 import com.A3Levels.databinding.ActivityTestLevelBinding
+import com.A3Levels.other.RequestsHTTP
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
+import org.json.JSONObject
 
 class TestLevelActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTestLevelBinding
+    private lateinit var binding : ActivityTestLevelBinding
+    private lateinit var lobbyId : String
+    private var livello : String = ""
+
     /*
         Global Handler Timer
      */
@@ -41,13 +51,17 @@ class TestLevelActivity : AppCompatActivity() {
         binding = ActivityTestLevelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        lobbyId = intent.getStringExtra("lobbyId").toString()
+        println("LobbyID nel TestLevel " + lobbyId)
+
         // Start animation to leave tutorial and display game UI.
         set_game_UI()
 
         //Testing purpose.
         binding.buttonEnd.setOnClickListener{
-            setup_end_layout()
+            end_game()
         }
+
 
         /* Forse bisogna aggiungere un campo nel db che incrementa con l'incrementare dei livelli ??? */
 
@@ -57,7 +71,7 @@ class TestLevelActivity : AppCompatActivity() {
         // Create a AlphaAnimation object
         val animation = AlphaAnimation(1.0f,0.0f)
         // Set the animation properties
-        animation.duration = 3000
+        animation.duration = 6000
         animation.fillAfter = true
         animation.interpolator = LinearInterpolator()
 
@@ -84,18 +98,44 @@ class TestLevelActivity : AppCompatActivity() {
 
     }
 
-    private fun setup_end_layout(){
+    private fun end_game(){
+        // Retrieve level information from firestore
+        /*
+        FirebaseApp.initializeApp(this)
+        val db = FirebaseFirestore.getInstance()
+        val gamesRef = db.collection("games").document(lobbyId)
+        gamesRef.get()
+            .addOnCompleteListener --> Rende la chiamata asincrona.
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    livello = documentSnapshot.get("level").toString()
+                    println("Livello documento " + livello )
+                } else {
+                    Log.d(TAG, "Il documento non esiste")
+                }
+            }
+            .addOnFailureListener{ exception ->
+                Log.e(TAG,"Error getting level ID: $exception")
+            }
+        */
         binding.timerTextView2.text = String.format("%02d:%02d.%02d", seconds / 60, seconds % 60, milliseconds / 10)
+        var finalTime = ((seconds*1000)+milliseconds).toString()
+
+        // Create JSON using JSONObject
+        val jsonObject = JSONObject()
+        jsonObject.put("lobby_id", lobbyId)
+        jsonObject.put("player_id", intent.getStringExtra("username"))
+        //jsonObject.put("level", livello)
+        jsonObject.put("time", finalTime)
+        RequestsHTTP.httpPOSTGameUpdate(jsonObject)
+
         stopTimer()
         // Setup UI for the ending of the level.
         binding.layoutTutorial.visibility = View.GONE
         binding.layoutEnd.visibility = View.VISIBLE
         binding.layoutGame.visibility = View.GONE
         binding.buttonEnd.visibility = View.INVISIBLE
-
-        /*
-            Avvia un listener che ascolta nel db la presenza del tempo del player 2
-        */
+        binding.timerTextView.visibility = View.INVISIBLE
 
     }
 

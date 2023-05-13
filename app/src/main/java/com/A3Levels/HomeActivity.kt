@@ -72,8 +72,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.buttonStart.setOnClickListener{
-            //startGame(username)
-            testGame()
+            startGame(username)
+            //testGame()
         }
 
 

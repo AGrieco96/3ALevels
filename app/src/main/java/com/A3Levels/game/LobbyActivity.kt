@@ -33,10 +33,15 @@ class LobbyActivity : AppCompatActivity() {
     private lateinit var lobbiesRef: CollectionReference
     private val db = FirebaseFirestore.getInstance()
     private var lobbyId:String = ""
+    private lateinit var username : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
+
+        /* Variabile initialization */
+        username = intent.getStringExtra("username").toString()
+
         FirebaseApp.initializeApp(this)
 
         //Retrieve user information from Cloud Firestore
@@ -94,7 +99,7 @@ class LobbyActivity : AppCompatActivity() {
         //create new istance on db of lobbies.
         val lobby = hashMapOf(
             "lobby_id" to maxLobbyId,
-            "player_1" to intent.getStringExtra("username"),
+            "player_1" to username,
             "player_2" to "",
             "status" to "waiting"
         )
@@ -116,7 +121,7 @@ class LobbyActivity : AppCompatActivity() {
                 lobbyRef.update("player_2", intent.getStringExtra("username"))
                     .addOnSuccessListener {
                         lobbyRef.update("status","started")
-                            val lobbyId = documentSnapshot.get("lobby_id").toString()
+                        val lobbyId = documentSnapshot.get("lobby_id").toString()
 
                         // Create JSON using JSONObject
                         val jsonObject = JSONObject()
@@ -146,7 +151,9 @@ class LobbyActivity : AppCompatActivity() {
                 // Log.d(TAG, "Current data: ${snapshot.data}")
                 Log.d(TAG, "Current data: $myfield")
                 if (myfield.equals("started")) {
-                    val intent = Intent(this, TestActivity::class.java)
+                    val intent = Intent(this, TestLevelActivity::class.java)
+                    intent.putExtra("lobbyId", lobbyId)
+                    intent.putExtra("username", username)
                     startActivity(intent)
                 }
                 /*
