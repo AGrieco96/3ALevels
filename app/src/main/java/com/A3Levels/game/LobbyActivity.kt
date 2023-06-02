@@ -138,7 +138,7 @@ class LobbyActivity : AppCompatActivity() {
                 // Log.d(TAG, "Current data: ${snapshot.data}")
                 Log.d(TAG, "Current data: $myfield")
                 if (myfield.equals("started")) {
-                    val intent = Intent(this, TestLevelActivity::class.java)
+                    val intent = Intent(this, GameLevelActivity::class.java)
                     intent.putExtra("lobbyId", lobbyId)
                     intent.putExtra("username", username)
                     startActivity(intent)
