@@ -1,23 +1,18 @@
 package com.A3Levels.game
 
-import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
-import com.A3Levels.auth.GoogleSignInActivity
 import com.A3Levels.databinding.ActivityTestLevelBinding
 import com.A3Levels.other.RequestsHTTP
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 
-class TestLevelActivity : AppCompatActivity() {
+class GameLevelActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityTestLevelBinding
     private lateinit var lobbyId : String
