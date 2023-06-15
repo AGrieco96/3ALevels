@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "70720094517-o5o5ac5fgsvc0u2klu3hmn2mafra5di6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.A3Levels",
+            "certificate_hash": "a577fed54f1ce1fb58b8e5423770db8648d73fa7"
+          }
+        },
+        {
           "client_id": "70720094517-uele4flb7g4pf960s8bq9jnh9m71p8v6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
