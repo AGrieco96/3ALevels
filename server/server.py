@@ -14,6 +14,7 @@ default_app = initialize_app(cred)
 db = firestore.client()
 games_collection = db.collection('games')
 lobby_collection = db.collection('lobbies')
+messages_collection = db.collection('messages')
 
 
 @app.route('/update-game', methods=['PUT'])
@@ -63,6 +64,28 @@ def update_game():
         return f"An Error Occurred: {e}"
 
 
+@app.route('/send-message', methods=['PUT'])
+def send_message():
+    try:
+        lobby_id = request.json['lobby_id']
+        player_id = request.json['player_id']
+        message = request.json['message']
+
+        doc_lobby = lobby_collection.document(lobby_id)
+        doc_l = doc_lobby.get()
+        if player_id != str(doc_l.to_dict()['player_1']):
+            other_player = str(doc_l.to_dict()['player_1'])
+        else:
+            other_player = str(doc_l.to_dict()['player_2'])
+
+        doc_m = messages_collection.document(other_player)
+        doc_m.update({'lastMessage': message})
+
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An Error Occurred: {e}"
+
+
 @app.route('/new-game', methods=['POST'])
 def create_game():
     try:
@@ -96,7 +119,11 @@ def create_game():
                 }
             }
         }
+
+        new_chat = {u'lastMessage': 'Chat created!'}
         games_collection.document(lobby_id).set(new_game)
+        messages_collection.document(username_player1).set(new_chat)
+        messages_collection.document(username_player2).set(new_chat)
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An Error Occurred: {e}"
