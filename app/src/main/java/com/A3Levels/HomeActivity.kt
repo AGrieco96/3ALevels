@@ -65,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
 
         /* Testing Level Jump*/
         binding.button12.setOnClickListener{
-            val intent = Intent(this, LevelJumpActivity::class.java)
+            val intent = Intent(this, PyramidActivity::class.java)
             startActivity(intent)
         }
 
