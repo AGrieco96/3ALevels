@@ -16,79 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textCounter_P1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/kenvector_future"
-                android:text="0"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/textCounter_P2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/kenvector_future"
-                android:text="0"
-                android:textAlignment="center" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/kenvector_future"
-                android:text="You"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/kenvector_future"
-                android:text="Opponent"
-                android:textAlignment="center" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-    -->
-
     <GridLayout
         android:id="@+id/layoutGame"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:rowCount="2"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -141,6 +75,7 @@
         android:id="@+id/layout_End"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -189,6 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -228,25 +164,22 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/TutorialText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kenvector_future_thin"
-                android:text="@string/tutorial_ball_level"
+                android:text="@string/tutorial_level_3"
                 android:textAlignment="center"
                 android:textSize="16sp" />
 
         </LinearLayout>
     </FrameLayout>
 
-    <Button
-        android:id="@+id/buttonEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="EndLevel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/FrameGame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
