@@ -36,8 +36,9 @@ import java.util.concurrent.Executors
 class LevelPhotoActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityPhotoLevelBinding
     private var imageCapture: ImageCapture? = null
-    private val objectList = listOf("chair", "bottle", "smartphone", "tv", "key", "wallet")
+    private val objectList = listOf("chair", "bottle", "smartphone", "television", "key", "wallet")
     private lateinit var cameraExecutor: ExecutorService
+    lateinit var objectInPhoto: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,10 @@ class LevelPhotoActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
+
+        //Setup
+        objectInPhoto = objectList[(0..5).random()]
+        viewBinding.objectToSearch.setText(objectInPhoto.toString())
 
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -162,14 +167,15 @@ class LevelPhotoActivity : AppCompatActivity() {
     }
 
     private fun sendPhoto(imageString : String) {
-        val objectInPhoto = objectList[(0..5).random()]
+
 
         // Create JSON using JSONObject
         val jsonObject = JSONObject()
         jsonObject.put("object", objectInPhoto)
         jsonObject.put("image", imageString)
 
-        RequestsHTTP.httpPOSTphotoAI(jsonObject)
+        //var result = RequestsHTTP.httpPOSTphotoAI(jsonObject)
+        //println("result" + result)
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
