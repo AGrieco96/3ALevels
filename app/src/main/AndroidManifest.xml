@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
 
     <!-- Enable microphone device authorization  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -45,6 +46,7 @@
         <activity android:name=".auth.LoginEmailActivity" />
         <activity android:name=".auth.GoogleSignInActivity" />
         <activity android:name=".auth.GithubSignInActivity" />
+
     </application>
 
 </manifest>
