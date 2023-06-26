@@ -12,16 +12,12 @@ import android.annotation.SuppressLint
 import android.media.AudioFormat
 import android.media.AudioRecord
 import com.A3Levels.R
-import java.lang.Math.abs
 
 class LevelJumpActivity : AppCompatActivity() {
 
     private lateinit var audioRecord: AudioRecord
     private lateinit var imageView: ImageView
     private var isRecording = false
-    private var lastAmplitude = 0
-    private var jumpHeight = 0
-    private var isJumping = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,10 +70,7 @@ class LevelJumpActivity : AppCompatActivity() {
     private fun startRecording() {
         audioRecord.startRecording()
         isRecording = true
-        var threshold = 5000
-        var jumpDuration = 800 // The duration of the jump, in milliseconds
-        var jumpStartTime = 0L // The time at which the jump started
-        var isJumping = false // Whether or not the character is currently jumping
+        var threshold = 1000
 
         Thread {
             val buffer = ShortArray(audioRecord.bufferSizeInFrames)
@@ -85,35 +78,22 @@ class LevelJumpActivity : AppCompatActivity() {
                 audioRecord.read(buffer, 0, buffer.size)
                 val amplitude = buffer.maxOrNull() ?: 0
 
-                if (amplitude > threshold && !isJumping) {
-                    isJumping = true
-                    jumpStartTime = System.currentTimeMillis()
-                }
-
-                if (isJumping) {
-                    val elapsedTime = System.currentTimeMillis() - jumpStartTime
-                    val jumpHeight = (Math.sin(elapsedTime.toDouble() / jumpDuration * Math.PI) * 100).toInt()
+                if (amplitude > threshold) {
                     runOnUiThread {
-                        imageView.translationY = jumpHeight.toFloat()
-                    }
-
-                    if (elapsedTime >= jumpDuration) {
-                        isJumping = false
-                        runOnUiThread {
-                            imageView.translationY = 0F
-                        }
-                    }
-                } else {
-                    runOnUiThread {
-                        imageView.translationY = 0F
+                        imageView.translationY -= amplitude/1000;
+                        println(imageView.y)
                     }
                 }
 
-                Thread.sleep(16)
+                if(imageView.y < 100.0F) {
+                    isRecording = false
+                    println("SEI ARRIVATO")
+                }
             }
         }.start()
-    }
 
+
+    }
 
 
     override fun onDestroy() {
