@@ -8,9 +8,9 @@
     tools:context=".game.TestLevelActivity" >
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="413dp"
-        android:layout_height="730dp"
+        android:id="@+id/protractor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,15 +19,14 @@
         app:srcCompat="@drawable/protractor" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="124dp"
-        android:layout_height="377dp"
-        android:layout_marginStart="25dp"
+        android:id="@+id/arrow"
+        android:layout_width="185dp"
+        android:layout_height="512dp"
+        android:layout_marginStart="29dp"
         android:layout_marginBottom="80dp"
-        android:rotation="24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/protractor"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cursor" />
 
