@@ -10,7 +10,6 @@ import com.A3Levels.auth.LoginEmailActivity
 import com.A3Levels.auth.RegisterEmailActivity
 import com.A3Levels.databinding.ActivityHomeBinding
 import com.A3Levels.game.LobbyActivity
-import com.A3Levels.game.GameLevelActivity
 import com.A3Levels.other.CreditsActivity
 import com.A3Levels.other.OptionActivity
 import com.google.firebase.FirebaseApp
@@ -83,6 +82,7 @@ class HomeActivity : AppCompatActivity() {
 
 
 
+
         //setContentView(R.layout.activity_home)
 
     }
@@ -107,9 +107,11 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra("username", username)
         startActivity(intent)
     }
-
+    /*
     private fun testGame(){
         val intent = Intent ( this, GameLevelActivity::class.java)
         startActivity(intent)
     }
+
+     */
 }

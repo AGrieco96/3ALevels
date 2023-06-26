@@ -68,6 +68,7 @@
     <string name="text_languageSettings">language settings</string>
     <string name="text_notification">notification</string>
     <string name="text_save">save</string>
+    <string name="take_photo">TAKE PHOTO</string>
 
     <!-- Quit value String -->
     <string name="text_quit"> Are you sure you want to logout? </string>

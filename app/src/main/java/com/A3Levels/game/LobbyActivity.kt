@@ -1,18 +1,31 @@
 package com.A3Levels.game
 
 import android.content.Intent
+import android.os.Build.VERSION_CODES.S
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.A3Levels.MainActivity
 import com.A3Levels.R
 import com.A3Levels.auth.GoogleSignInActivity.Companion.TAG
+import com.A3Levels.other.APIService
 import com.A3Levels.other.RequestsHTTP
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.GsonBuilder
+import io.grpc.internal.JsonParser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import retrofit2.Retrofit
 
 
 class LobbyActivity : AppCompatActivity() {
