@@ -19,6 +19,9 @@
             android:name=".game.TestActivity"
             android:exported="false" />
         <activity
+            android:name=".game.StrongboxLevelActivity"
+            android:exported="false" />
+        <activity
             android:name=".game.LobbyActivity"
             android:exported="false" />
         <activity android:name=".game.TestLevelActivity" />

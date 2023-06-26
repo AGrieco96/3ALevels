@@ -10,6 +10,7 @@ import com.google.firebase.ktx.Firebase
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.TranslateAnimation
+import com.A3Levels.game.StrongboxLevelActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animation) {
                 // Finish the activity when the animation ends
                 // finish()
-                val intent = Intent(this@MainActivity, LoginEmailActivity::class.java)
+                val intent = Intent(this@MainActivity, StrongboxLevelActivity::class.java)
                 startActivity(intent)
             }
 
