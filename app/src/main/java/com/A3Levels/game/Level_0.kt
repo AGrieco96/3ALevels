@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.Looper
 
 
-abstract class Level_0 {
+abstract class Level_0(private val levelCallback: Level_0.TimerCallback) {
 
     private val handler = Handler(Looper.getMainLooper())
     private var seconds = 0

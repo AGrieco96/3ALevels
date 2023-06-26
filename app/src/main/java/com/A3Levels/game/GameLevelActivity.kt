@@ -11,15 +11,13 @@ import com.A3Levels.R
 import com.A3Levels.databinding.ActivityTestLevelBinding
 
 
-class GameLevelActivity : AppCompatActivity(),Level_1.LevelCallback , Level_2.LevelCallback {
+class GameLevelActivity : AppCompatActivity(),Level_1.LevelCallback , Level_2.LevelCallback , Level_3.LevelCallback, Level_0.TimerCallback{
 
     private lateinit var binding : ActivityTestLevelBinding
-    //private lateinit var lobbyId : String
-    //private var livello : String = ""
+    private lateinit var lobbyId : String
+
     //Array of levels
-    //val gameLevels: Array<Level_0> = arrayOf(Level_1(),Level_2(),Level_3(),Level_4(),Level_5())
-    val gameLevel1 : Level_1 = Level_1(this)
-    val gameLevel2 : Level_2 = Level_2(this)
+    val gameLevels: Array<Level_0> = arrayOf(Level_1(this),Level_2(this),Level_3(this))
     var counterTest : Int = 0 ;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,21 +25,24 @@ class GameLevelActivity : AppCompatActivity(),Level_1.LevelCallback , Level_2.Le
         binding = ActivityTestLevelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //lobbyId = intent.getStringExtra("lobbyId").toString()
-        //println("LobbyID nel TestLevel " + lobbyId)
-
-
+        lobbyId = intent.getStringExtra("lobbyId").toString()
+        println("GameLevelActivity : LobbyID " + lobbyId)
 
         //Main execution of the logic.
         execute()
-        //Testing purpose.
-        //binding.buttonEnd.setOnClickListener{
-        //    end_game()
-        //}
-
-
     }
 
+    private fun execute(){
+        // Start animation to leave tutorial and display game UI.
+        set_game_UI()
+        if (counterTest > 5) {
+            print("Sonoqui")
+            when(counterTest){
+                1 -> gameLevel1?.startLevel()
+                2 -> gameLevel2?.startLevel()
+            }
+        }
+    }
     private fun set_game_UI(){
 
         setPersonalInfoLevelUI()
@@ -69,7 +70,7 @@ class GameLevelActivity : AppCompatActivity(),Level_1.LevelCallback , Level_2.Le
                 binding.layoutGame.visibility = View.VISIBLE
             //    binding.buttonEnd.visibility = View.VISIBLE
                 binding.timerTextView.visibility = View.VISIBLE
-            //    startTimer()
+                gameLevels[counterTest].startTimer(this@GameLevelActivity )
             }
             override fun onAnimationRepeat(animation: Animation) {}
         })
@@ -86,20 +87,14 @@ class GameLevelActivity : AppCompatActivity(),Level_1.LevelCallback , Level_2.Le
                     val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
                     textView_Tut.text = getString(R.string.tutorial_level_2)
                 }
+            3-> {
+                val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
+                textView_Tut.text = getString(R.string.tutorial_level_3)
+                }
         }
     }
 
-    private fun execute(){
-        // Start animation to leave tutorial and display game UI.
-        set_game_UI()
-        if (counterTest > 5) {
-            print("Sonoqui")
-            when(counterTest){
-                1 -> gameLevel1?.startLevel()
-                2 -> gameLevel2?.startLevel()
-            }
-        }
-    }
+
 
     override fun onLevelCompleted() {
         counterTest += 1

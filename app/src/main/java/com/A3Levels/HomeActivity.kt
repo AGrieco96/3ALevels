@@ -57,7 +57,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.buttonOption.setOnClickListener {
             display_options()
-            finish()
+            //finish()
         }
 
         binding.buttonCredits.setOnClickListener{
@@ -75,16 +75,10 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.buttonStart.setOnClickListener{
-            //startGame(username)
+            startGame(username)
             //testGame()
         }
-
-
-
-
-
         //setContentView(R.layout.activity_home)
-
     }
 
     private fun display_options(){
@@ -107,11 +101,5 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra("username", username)
         startActivity(intent)
     }
-    /*
-    private fun testGame(){
-        val intent = Intent ( this, GameLevelActivity::class.java)
-        startActivity(intent)
-    }
 
-     */
 }

@@ -75,10 +75,13 @@
 
 
     <!-- Game value string -->
-    <string name="tutorial_level_2"> Move your telephone in order to move the ball. Keep calm and do your best in order to reach the goal faster than your opponent! </string>
     <string name="tutorial_level_1"> Use your camera in order to take a photo of the item suggested by the game.  Use your creation!  </string>
+    <string name="tutorial_level_2"> Will you be able to unlock the safe? try using your phone s gyroscope! </string>
     <string name="tutorial_level_3"> Are you able to get your player to the finish line? I think he can HEAR you, so why you don t scream on your mic </string>
-    <string name="tutorial_level_4"> By moving your telephone show me your sense of direction. For this level you need to know at least what is a wind rose. </string>
+    <string name="tutorial_level_5"> Move your telephone in order to move the ball. Keep calm and do your best in order to reach the goal faster than your opponent! </string>
+
+
+
 
     <string name="time_result"> Level  Clear \n Your Time  </string>
 
