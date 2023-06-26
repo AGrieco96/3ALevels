@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import com.A3Levels.auth.GoogleSignInActivity.Companion.TAG
 import com.A3Levels.auth.LoginEmailActivity
+import com.A3Levels.auth.RegisterEmailActivity
 import com.A3Levels.databinding.ActivityHomeBinding
 import com.A3Levels.game.LobbyActivity
 import com.A3Levels.game.GameLevelActivity
@@ -14,6 +15,10 @@ import com.A3Levels.other.CreditsActivity
 import com.A3Levels.other.OptionActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -72,7 +77,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.buttonStart.setOnClickListener{
             //startGame(username)
-            testGame()
+            //testGame()
         }
 
 
