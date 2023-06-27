@@ -76,6 +76,7 @@ class GameLevelActivity : AppCompatActivity(){
     // UI Function
     fun set_game_UI(flagMatch: Boolean){
         if(!(flagMatch)){
+            println("Entro qui?")
             set_endgame_UI()
         }else{
             setPersonalInfoLevelUI()
