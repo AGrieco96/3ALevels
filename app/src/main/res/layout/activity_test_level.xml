@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00FFFFFF"
-    android:backgroundTint="#00FFFFFF"
+    android:background="@color/design_default_color_on_secondary"
+    android:backgroundTint="@color/design_default_color_on_secondary"
     android:visibility="visible"
     tools:context=".game.GameLevelActivity">
 
@@ -83,7 +83,7 @@
         android:layout_height="match_parent"
         android:background="#00FFFFFF"
         android:backgroundTint="#00FFFFFF"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,6 +102,7 @@
                 android:fontFamily="@font/kenvector_future_thin"
                 android:text="@string/time_result"
                 android:textAlignment="center"
+                android:textColor="@color/ui_general_main"
                 android:textSize="20sp" />
 
             <TextView
@@ -111,6 +112,7 @@
                 android:fontFamily="@font/kenvector_future"
                 android:text="00:00"
                 android:textAlignment="center"
+                android:textColor="@color/ui_general_main"
                 android:textSize="48sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -122,6 +124,7 @@
                 android:fontFamily="@font/kenvector_future_thin"
                 android:text="Waiting ..."
                 android:textAlignment="center"
+                android:textColor="@color/ui_general_main"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -132,8 +135,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        android:background="#00FFFFFF"
-        android:backgroundTint="#00FFFFFF"
+        android:background="@color/design_default_color_on_secondary"
+        android:backgroundTint="@color/design_default_color_on_secondary"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -153,6 +156,7 @@
                 android:fontFamily="@font/kenvector_future"
                 android:text="Level "
                 android:textAlignment="center"
+                android:textColor="@color/ui_general_main"
                 android:textSize="24sp" />
 
             <TextView
@@ -162,6 +166,7 @@
                 android:fontFamily="@font/kenvector_future"
                 android:text="1"
                 android:textAlignment="center"
+                android:textColor="@color/ui_general_main"
                 android:textSize="60sp" />
 
             <TextView
@@ -171,6 +176,7 @@
                 android:fontFamily="@font/kenvector_future"
                 android:text="How To play : "
                 android:textAlignment="center"
+                android:textColor="@color/ui_general_main"
                 android:textSize="24sp" />
 
             <TextView
@@ -180,6 +186,7 @@
                 android:fontFamily="@font/kenvector_future_thin"
                 android:text="@string/tutorial_level_3"
                 android:textAlignment="center"
+                android:textColor="@color/ui_general_main"
                 android:textSize="16sp" />
 
         </LinearLayout>

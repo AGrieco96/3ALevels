@@ -1,5 +1,6 @@
 package com.A3Levels.game
 
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -90,12 +91,24 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
                     } else {
                         println("HAI VINTO")
                         timer.cancel()
+                        endGame()
+
+
                     }
             }
         }, 0, 1000) // 1000 milliseconds = 1 second
     }
 
+    fun endGame(){
+        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
+        val intent = Intent(this, GameLevelActivity::class.java)
 
+        // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
+        // intent.putExtra("username", username) - # del livello etc.
+        intent.putExtra("level",3)
+        intent.putExtra("flag",false)
+        startActivity(intent)
+    }
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         return
     }

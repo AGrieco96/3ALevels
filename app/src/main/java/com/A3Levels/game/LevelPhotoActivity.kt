@@ -173,9 +173,9 @@ class LevelPhotoActivity : AppCompatActivity() {
 
 
         // Create JSON using JSONObject
-        val jsonObject = JSONObject()
-        jsonObject.put("object", objectInPhoto)
-        jsonObject.put("image", imageString)
+        //val jsonObject = JSONObject()
+        //jsonObject.put("object", objectInPhoto)
+        //jsonObject.put("image", imageString)
 
         //var result = RequestsHTTP.httpPOSTphotoAI(jsonObject)
         //println("result" + result)
@@ -185,6 +185,8 @@ class LevelPhotoActivity : AppCompatActivity() {
 
         // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
         // intent.putExtra("username", username) - # del livello etc.
+        intent.putExtra("level",2)
+        intent.putExtra("flag",false)
         startActivity(intent)
 
     }

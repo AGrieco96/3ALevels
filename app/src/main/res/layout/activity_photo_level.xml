@@ -2,9 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    </androidx.camera.view.PreviewView>
 
     <TextView
         android:id="@+id/timerTextView3"
@@ -12,6 +20,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/kenvector_future"
         android:text="00:00"
+        android:textColor="@color/ui_general_main"
         android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +36,7 @@
         android:rowCount="2"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="Game Counter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -37,7 +47,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:fontFamily="@font/kenvector_future"
-            android:text="You"
+            android:text="YOU"
             android:textAlignment="center"
             android:textColor="@color/ui_general_main" />
 
@@ -48,7 +58,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:fontFamily="@font/kenvector_future"
-            android:text="Opponent"
+            android:text="P2"
             android:textAlignment="center"
             android:textColor="@color/ui_general_main" />
 
@@ -78,20 +88,17 @@
 
     </GridLayout>
 
-    <androidx.camera.view.PreviewView
-        android:id="@+id/viewFinder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/image_capture_button"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/glasspanel"
+        android:contentDescription="Descrizione del pulsante di cattura immagine"
         android:elevation="2dp"
         android:fontFamily="@font/kenvector_future_thin"
         android:text="@string/take_photo"
+        android:textColor="@color/ui_general_main"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

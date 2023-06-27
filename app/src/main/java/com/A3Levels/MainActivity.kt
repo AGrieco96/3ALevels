@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 // finish()
                 val intent = Intent(this@MainActivity, GameLevelActivity::class.java)
                 intent.putExtra("level", 1)
+                intent.putExtra("flag",true)
                 startActivity(intent)
             }
 

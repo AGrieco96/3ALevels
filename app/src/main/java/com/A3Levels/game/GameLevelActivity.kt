@@ -12,17 +12,22 @@ import android.widget.TextView
 import com.A3Levels.R
 import com.A3Levels.databinding.ActivityTestLevelBinding
 
+
 class GameLevelActivity : AppCompatActivity(){
     private lateinit var binding: ActivityTestLevelBinding
     private lateinit var lobbyId : String
     private lateinit var username : String
-    private var counterLevel = intent.getStringExtra("level").toString().toInt()
+    private var flagMatch : Boolean = true;
+    private var counterLevel : Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Init
         binding = ActivityTestLevelBinding.inflate(layoutInflater)
-        //lobbyId = intent.getStringExtra("lobbyId").toString()
-        //username = intent.getStringExtra("username").toString()
+        setContentView(binding.root)
+        init()
+
+        set_game_UI(flagMatch)
 
         /*
         *   if(flag){
@@ -32,7 +37,7 @@ class GameLevelActivity : AppCompatActivity(){
         *       Visualizzazione end match + attivazione listener
         *   }
         * */
-        set_game_UI()
+
     }
 
     /*
@@ -48,43 +53,59 @@ class GameLevelActivity : AppCompatActivity(){
     }
     */
 
+    // setupInit Function
+    fun init(){
+        //lobbyId = intent.getStringExtra("lobbyId").toString()
+        //username = intent.getStringExtra("username").toString()
+        counterLevel = intent.getIntExtra("level",0)
+        flagMatch = intent.getBooleanExtra("flag",true )
+        println("Counter level : " + counterLevel)
+        println("Flag : "+ flagMatch)
+
+    }
     // UI Function
-    fun set_game_UI(){
-        setPersonalInfoLevelUI()
-        // Create a AlphaAnimation object
-        val animation = AlphaAnimation(1.0f,0.0f)
-        // Set the animation properties
-        animation.duration = 6000
-        animation.fillAfter = true
-        animation.interpolator = LinearInterpolator()
-        // Set the animation listener
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {
-                binding.layoutTutorial.visibility = View.VISIBLE
-                binding.layoutEnd.visibility = View.GONE
-                binding.layoutGame.visibility = View.INVISIBLE
-                //binding.buttonEnd.visibility = View.GONE
-                binding.timerTextView.visibility = View.INVISIBLE
-            }
-            override fun onAnimationEnd(animation: Animation) {
-                // Do something when the animation ends
-                binding.layoutTutorial.visibility = View.GONE
-                //binding.layoutGame.visibility = View.VISIBLE
-                //binding.buttonEnd.visibility = View.VISIBLE
-                //binding.timerTextView.visibility = View.VISIBLE
-                //gameLevels[counterTest].startTimer(this@GameLevelActivity )
-                startLevel()
-            }
-            override fun onAnimationRepeat(animation: Animation) {}
-        })
-        binding.layoutTutorial.startAnimation(animation)
+    fun set_game_UI(flagMatch: Boolean){
+        if(!(flagMatch)){
+            set_endgame_UI()
+        }else{
+            setPersonalInfoLevelUI()
+            // Create a AlphaAnimation object
+            val animation = AlphaAnimation(1.0f,0.0f)
+            // Set the animation properties
+            animation.duration = 6000
+            animation.fillAfter = true
+            animation.interpolator = LinearInterpolator()
+            // Set the animation listener
+            animation.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {
+                    binding.layoutTutorial.visibility = View.VISIBLE
+                    binding.layoutEnd.visibility = View.GONE
+                    //binding.layoutGame.visibility = View.INVISIBLE
+                    //binding.buttonEnd.visibility = View.GONE
+                    //binding.timerTextView.visibility = View.INVISIBLE
+                }
+                override fun onAnimationEnd(animation: Animation) {
+                    // Do something when the animation ends
+                    binding.layoutTutorial.visibility = View.GONE
+                    //binding.layoutGame.visibility = View.VISIBLE
+                    //binding.buttonEnd.visibility = View.VISIBLE
+                    //binding.timerTextView.visibility = View.VISIBLE
+                    //gameLevels[counterTest].startTimer(this@GameLevelActivity )
+                    startLevel()
+                }
+                override fun onAnimationRepeat(animation: Animation) {}
+            })
+            binding.layoutTutorial.startAnimation(animation)
+        }
     }
     fun setPersonalInfoLevelUI(){
 
+        binding.layoutTutorial.findViewById<TextView>(R.id.levelText).text = counterLevel.toString()
         when(counterLevel){
             1 -> {
                 val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
                 textView_Tut.text = getString(R.string.tutorial_level_1)
+
             }
             2 -> {
                 val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
@@ -96,33 +117,7 @@ class GameLevelActivity : AppCompatActivity(){
             }
         }
     }
-
-    // Execution Flow Function
-    fun startLevel(){
-        when(counterLevel){
-            1 -> {
-                    val intent = Intent(this, LevelPhotoActivity::class.java)
-                    intent.putExtra("lobbyId", lobbyId)
-                    intent.putExtra("username", username)
-                    startActivity(intent)
-                }
-            2 -> {
-                val intent = Intent(this, StrongboxLevelActivity::class.java)
-                intent.putExtra("lobbyId", lobbyId)
-                intent.putExtra("username", username)
-                startActivity(intent)
-            }
-            3 -> {
-                val intent = Intent(this, LevelJumpActivity::class.java)
-                intent.putExtra("lobbyId", lobbyId)
-                intent.putExtra("username", username)
-                startActivity(intent)
-            }
-        }
-
-    }
-
-    private fun end_game(){
+    private fun set_endgame_UI(){
         // Retrieve level information from firestore
         /*
         FirebaseApp.initializeApp(this)
@@ -159,8 +154,44 @@ class GameLevelActivity : AppCompatActivity(){
         */
         binding.layoutTutorial.visibility = View.GONE
         binding.layoutEnd.visibility = View.VISIBLE
-        binding.layoutGame.visibility = View.GONE
+        //binding.layoutGame.visibility = View.GONE
         //binding.buttonEnd.visibility = View.INVISIBLE
-        binding.timerTextView.visibility = View.INVISIBLE
+        //binding.timerTextView.visibility = View.INVISIBLE
+
+        /*
+        *
+        * METTERE IN ASCOLTO DEL LISTENER PER AVVIARE NUOVA PARTITA ORA FACCIO MANUALMENTE.
+        *
+        * */
+        set_game_UI(true)
+
     }
+
+    // Execution Flow Function
+    fun startLevel(){
+        when(counterLevel){
+            1 -> {
+                val intent = Intent(this, LevelPhotoActivity::class.java)
+                //intent.putExtra("lobbyId", lobbyId)
+                //intent.putExtra("username", username)
+                startActivity(intent)
+                }
+            2 -> {
+                val intent = Intent(this, StrongboxLevelActivity::class.java)
+                //intent.putExtra("lobbyId", lobbyId)
+                //intent.putExtra("username", username)
+                startActivity(intent)
+            }
+
+            3 -> {
+                val intent = Intent(this, LevelJumpActivity::class.java)
+                //intent.putExtra("lobbyId", lobbyId)
+                //intent.putExtra("username", username)
+                startActivity(intent)
+            }
+        }
+
+    }
+
+
 }
