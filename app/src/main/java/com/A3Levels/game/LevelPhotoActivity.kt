@@ -188,8 +188,8 @@ class LevelPhotoActivity : AppCompatActivity() {
 
         // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
         val intent = Intent(this, GameLevelActivity::class.java)
-        intent.putExtra("player_id", username)
-        intent.putExtra("lobby_id", lobbyId)
+        intent.putExtra("username", username)
+        intent.putExtra("lobbyId", lobbyId)
         intent.putExtra("object", objectInPhoto)
         intent.putExtra("image", imageString)
         intent.putExtra("level",2)
