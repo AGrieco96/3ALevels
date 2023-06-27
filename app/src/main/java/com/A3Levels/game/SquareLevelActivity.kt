@@ -1,4 +1,4 @@
-package com.A3Levels
+package com.A3Levels.game
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +13,7 @@ import com.A3Levels.databinding.AccelerometerActivityBinding
 import kotlin.random.Random.Default.nextInt
 
 
-class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
+class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
 
     private lateinit var binding : AccelerometerActivityBinding
 
@@ -35,9 +35,9 @@ class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         square = binding.mySquare
-        finalPositionText = binding.finalPositionText
+       // finalPositionText = binding.finalPositionText
 
-        finalPositionText.setText(finalLeftRight)
+       // finalPositionText.setText(finalLeftRight)
 
         setUpSensorStuff()
     }

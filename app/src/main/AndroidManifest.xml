@@ -23,6 +23,9 @@
             android:name=".game.LobbyActivity"
             android:exported="false" />
         <activity android:name=".game.TestLevelActivity" />
+        <activity
+            android:name=".game.SquareLevelActivity"
+            android:exported="false" />
 
         <activity
             android:name=".other.CreditsActivity"
