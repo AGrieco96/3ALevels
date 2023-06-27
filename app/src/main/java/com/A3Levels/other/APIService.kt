@@ -15,7 +15,7 @@ interface APIService {
     @PUT("$URL/update-game")
     suspend fun updateGame(@Body requestBody: RequestBody): Response<ResponseBody>
 
-    @POST("$URL/ai")
+    @PUT("$URL/ai")
     suspend fun photoAI(@Body requestBody: RequestBody): Response<ResponseBody>
 
 }

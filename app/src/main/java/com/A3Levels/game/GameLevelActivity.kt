@@ -185,6 +185,7 @@ class GameLevelActivity : AppCompatActivity(){
 
     // Execution Flow Function
     fun startLevel(){
+        println("Start Level : "+counterLevel)
         when(counterLevel){
             1 -> {
                 val intent = Intent(this, LevelPhotoActivity::class.java)
@@ -223,7 +224,7 @@ class GameLevelActivity : AppCompatActivity(){
 
     private fun advancedPost(){
         var time = Random.nextInt(from = 10, until = 60).toString()
-        if(counterLevel-1 != 1){
+        if(counterLevel-1 == 1){
             // Post sempre uguale
             var objectphoto = intent.getStringExtra("object").toString()
             var images = intent.getStringExtra("image").toString()
