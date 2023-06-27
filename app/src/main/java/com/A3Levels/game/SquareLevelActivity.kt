@@ -20,6 +20,7 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var square: TextView
     private lateinit var finalPositionText: TextView
+    private lateinit var goal : String
     private val finalUpDown : Int = nextInt(-9, 9)
     private val finalLeftRight : Int = nextInt(-9, 9)
 
@@ -35,9 +36,9 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         square = binding.mySquare
-       // finalPositionText = binding.finalPositionText
-
-       // finalPositionText.setText(finalLeftRight)
+        finalPositionText = binding.finalPositionText
+        goal = "Find the up/down $finalUpDown left/right $finalLeftRight position!"
+        finalPositionText.text = goal
 
         setUpSensorStuff()
     }
