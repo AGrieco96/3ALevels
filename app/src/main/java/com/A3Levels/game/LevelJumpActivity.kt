@@ -132,3 +132,34 @@ class LevelJumpActivity : AppCompatActivity() {
         isRecording = false
     }
 }
+
+/*
+*     private fun setupListener(lobbyId: String){
+
+        FirebaseApp.initializeApp(this)
+        val db = FirebaseFirestore.getInstance()
+        val docGameRef = db.collection("games").document(lobbyId)
+        docGameRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@EventListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                val myLevel = snapshot.get("level").toString()
+                Log.d(TAG, "Current data: ${snapshot.data}")
+                Log.d(TAG, "Current data: $myLevel")
+                if (myLevel.equals("2")) {
+                    val intent = Intent(this, BallActivity::class.java)
+                    startActivity(intent)
+                }
+            } else {
+                Log.d(TAG, "Current data: null")
+                //Log.d(TAG, "Document ID: " + docLobbyRef.id)
+            }
+        })
+
+
+
+    }
+* */
