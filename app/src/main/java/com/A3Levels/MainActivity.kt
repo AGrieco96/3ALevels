@@ -9,7 +9,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
+        val intent = Intent(this, LaMiaPrimaVolta::class.java)
+        startActivity(intent)
 
         val buttonClick = findViewById<Button>(R.id.firstButton)
         buttonClick.setOnClickListener {

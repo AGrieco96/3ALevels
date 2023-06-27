@@ -9,22 +9,35 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
-
+import com.A3Levels.databinding.AccelerometerActivityBinding
+import kotlin.random.Random.Default.nextInt
 
 
 class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
 
+    private lateinit var binding : AccelerometerActivityBinding
+
     private lateinit var sensorManager: SensorManager
     private lateinit var square: TextView
+    private lateinit var finalPositionText: TextView
+    private val finalUpDown : Int = nextInt(-9, 9)
+    private val finalLeftRight : Int = nextInt(-9, 9)
+
+
+    //up/down tra 9 e -9
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.accelerometer_activity)
+        binding = AccelerometerActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Keeps phone in light mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        square = findViewById(R.id.my_square)
+        square = binding.mySquare
+        finalPositionText = binding.finalPositionText
+
+        finalPositionText.setText(finalLeftRight)
 
         setUpSensorStuff()
     }
@@ -50,24 +63,23 @@ class LaMiaPrimaVolta : AppCompatActivity() , SensorEventListener {
             //Log.d("Main", "onSensorChanged: sides ${event.values[0]} front/back ${event.values[1]} ")
 
             // Sides = Tilting phone left(10) and right(-10)
-            val sides = event.values[0]
+            val leftRight = event.values[0]
 
             // Up/Down = Tilting phone up(10), flat (0), upside-down(-10)
             val upDown = event.values[1]
 
             square.apply {
                 rotationX = upDown * 3f
-                rotationY = sides * 3f
-                rotation = -sides
-                translationX = sides * -10
+                rotationY = leftRight * 3f
+                rotation = -leftRight
+                translationX = leftRight * -10
                 translationY = upDown * 10
             }
 
-            // Changes the colour of the square if it's completely flat
-            val color = if (upDown.toInt() == 0 && sides.toInt() == 0) Color.GREEN else Color.RED
+            // Changes the colour of the square when reaches the final position
+            val color = if (upDown.toInt() == finalUpDown && leftRight.toInt() == finalLeftRight) Color.GREEN else Color.RED
             square.setBackgroundColor(color)
-
-            square.text = "up/down ${upDown.toInt()}\nleft/right ${sides.toInt()}"
+            square.text = "up/down ${upDown.toInt()}\nleft/right ${leftRight.toInt()}"
         }
     }
 

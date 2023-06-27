@@ -14,9 +14,22 @@
         android:layout_centerInParent="true"
         android:background="#EF5350"
         android:gravity="center"
-        android:text="Hello"
         android:textColor="@color/white"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/finalPositionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/my_square"
+        android:layout_alignTop="@+id/my_square"
+        android:layout_alignEnd="@+id/my_square"
+        android:layout_alignBottom="@+id/my_square"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="-156dp"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="336dp"
+        android:background="#FFC107" />
 
 
 </RelativeLayout>
