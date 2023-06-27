@@ -11,18 +11,27 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.media.AudioFormat
 import android.media.AudioRecord
+import android.view.View
+import android.widget.FrameLayout
 import com.A3Levels.R
+import com.A3Levels.databinding.ActivityHomeBinding
+import com.A3Levels.databinding.ActivityLevelJumpBinding
+import com.A3Levels.databinding.ActivityPhotoLevelBinding
 
 class LevelJumpActivity : AppCompatActivity() {
 
     private lateinit var audioRecord: AudioRecord
-    private lateinit var imageView: ImageView
+    //private lateinit var imageView: ImageView
+    private lateinit var imageView : FrameLayout
     private var isRecording = false
+    private lateinit var binding: ActivityLevelJumpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_level_jump)
+        //setContentView(R.layout.activity_level_jump)
 
+        binding = ActivityLevelJumpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         // Request the RECORD_AUDIO permission if it is not already granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
             != PackageManager.PERMISSION_GRANTED
@@ -36,7 +45,10 @@ class LevelJumpActivity : AppCompatActivity() {
             startRecording()
         }
 
-        imageView = findViewById(R.id.characterImageView)
+        //binding.niagara.visibility = View.INVISIBLE
+
+        //imageView = findViewById(R.id.characterImageView)
+        imageView = findViewById(R.id.shipLayout)
     }
 
     override fun onRequestPermissionsResult(
@@ -75,13 +87,28 @@ class LevelJumpActivity : AppCompatActivity() {
         Thread {
             val buffer = ShortArray(audioRecord.bufferSizeInFrames)
             while (isRecording) {
+
                 audioRecord.read(buffer, 0, buffer.size)
                 val amplitude = buffer.maxOrNull() ?: 0
 
                 if (amplitude > threshold) {
                     runOnUiThread {
+                        if ( binding.niagara.visibility == View.VISIBLE ) {
+                            //nothing
+                        } else {
+                            println("FIRE VISIBLE!")
+                            binding.niagara.visibility = View.VISIBLE
+                        }
                         imageView.translationY -= amplitude/1000;
                         println(imageView.y)
+                    }
+                }else {
+
+                    if ( binding.niagara.visibility == View.INVISIBLE ) {
+                        //nothing
+                    } else {
+                        println("Fire disabled")
+                        binding.niagara.visibility = View.INVISIBLE
                     }
                 }
 

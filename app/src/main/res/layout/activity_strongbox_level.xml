@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/strongbox_background"
-    tools:context=".game.TestLevelActivity" >
+    tools:context=".game.StrongboxLevelActivity" >
 
     <TextView
         android:id="@+id/timerTextView4"
@@ -103,5 +103,20 @@
         app:layout_constraintStart_toStartOf="@+id/protractor"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cursor" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="550dp"
+        android:fontFamily="@font/kenvector_future_thin"
+        android:text="UNLOCK : 210°"
+        android:textAlignment="center"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/protractor"
+        app:layout_constraintStart_toStartOf="@+id/protractor"
+        app:layout_constraintTop_toTopOf="@+id/layoutGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

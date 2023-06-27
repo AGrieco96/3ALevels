@@ -4,25 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgorund_blowtojump"
+    android:background="@drawable/sfondouniverso"
     tools:context=".game.LevelJumpActivity">
 
-    <ImageView
-        android:id="@+id/characterImageView"
+    <TextView
+        android:id="@+id/timerTextView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/kenvector_future"
+        android:text="00:00"
+        android:textColor="@color/ui_general_main"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridLayout
+        android:id="@+id/layoutGame"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:columnCount="2"
+        android:contentDescription="Game Counter"
+        android:rowCount="2"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/shipbeige_manned" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="YOU"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="P2"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main" />
+
+        <TextView
+            android:id="@+id/textCounter_P1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textCounter_P2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main"
+            android:textSize="24sp" />
+
+    </GridLayout>
 
     <ImageView
         android:id="@+id/UfoImageView2"
-        android:layout_width="250dp"
-        android:layout_height="546dp"
-        android:layout_marginTop="-150dp"
+        android:layout_width="332dp"
+        android:layout_height="598dp"
+        android:layout_marginTop="-145dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -30,4 +94,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ufoalien" />
+
+    <FrameLayout
+        android:id="@+id/shipLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UfoImageView2">
+
+        <ImageView
+            android:id="@+id/niagara"
+            android:layout_width="125dp"
+            android:layout_height="260dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/fiamma"
+            tools:layout_editor_absoluteX="106dp"
+            tools:layout_editor_absoluteY="494dp" />
+
+        <ImageView
+            android:id="@+id/ufo"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/shipbeige_manned" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
