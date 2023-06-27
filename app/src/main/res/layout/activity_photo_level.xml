@@ -6,21 +6,96 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/timerTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kenvector_future"
+        android:text="00:00"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridLayout
+        android:id="@+id/layoutGame"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="You"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="Opponent"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main" />
+
+        <TextView
+            android:id="@+id/textCounter_P1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textCounter_P2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main"
+            android:textSize="24sp" />
+
+    </GridLayout>
+
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/image_capture_button"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginBottom="50dp"
+        android:background="@drawable/glasspanel"
         android:elevation="2dp"
+        android:fontFamily="@font/kenvector_future_thin"
         android:text="@string/take_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/ui_general_main" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_centerline"
@@ -35,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="300dp"
         android:fontFamily="@font/kenvector_future"
-        android:textColor="@color/design_default_color_secondary"
+        android:textColor="@color/ui_general_main"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/image_capture_button"
         app:layout_constraintEnd_toEndOf="@+id/viewFinder"

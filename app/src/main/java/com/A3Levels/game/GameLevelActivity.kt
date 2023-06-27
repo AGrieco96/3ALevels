@@ -24,6 +24,14 @@ class GameLevelActivity : AppCompatActivity(){
         //lobbyId = intent.getStringExtra("lobbyId").toString()
         //username = intent.getStringExtra("username").toString()
 
+        /*
+        *   if(flag){
+        *     Visualizzazione start match.
+        *   }
+        *   else{
+        *       Visualizzazione end match + attivazione listener
+        *   }
+        * */
         set_game_UI()
     }
 
@@ -39,6 +47,8 @@ class GameLevelActivity : AppCompatActivity(){
         milliseconds = 0
     }
     */
+
+    // UI Function
     fun set_game_UI(){
         setPersonalInfoLevelUI()
         // Create a AlphaAnimation object
@@ -69,7 +79,6 @@ class GameLevelActivity : AppCompatActivity(){
         })
         binding.layoutTutorial.startAnimation(animation)
     }
-
     fun setPersonalInfoLevelUI(){
 
         when(counterLevel){
@@ -88,15 +97,29 @@ class GameLevelActivity : AppCompatActivity(){
         }
     }
 
+    // Execution Flow Function
     fun startLevel(){
         when(counterLevel){
-            1 ->
+            1 -> {
+                    val intent = Intent(this, LevelPhotoActivity::class.java)
+                    intent.putExtra("lobbyId", lobbyId)
+                    intent.putExtra("username", username)
+                    startActivity(intent)
+                }
+            2 -> {
+                val intent = Intent(this, StrongboxLevelActivity::class.java)
+                intent.putExtra("lobbyId", lobbyId)
+                intent.putExtra("username", username)
+                startActivity(intent)
+            }
+            3 -> {
+                val intent = Intent(this, LevelJumpActivity::class.java)
+                intent.putExtra("lobbyId", lobbyId)
+                intent.putExtra("username", username)
+                startActivity(intent)
+            }
         }
-        //Main execution of the logic.
-        val intent = Intent(this, LevelPhotoActivity::class.java)
-        intent.putExtra("lobbyId", lobbyId)
-        intent.putExtra("username", username)
-        startActivity(intent)
+
     }
 
     private fun end_game(){

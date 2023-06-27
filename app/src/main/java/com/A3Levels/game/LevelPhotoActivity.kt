@@ -2,6 +2,7 @@ package com.A3Levels.game
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -178,6 +179,14 @@ class LevelPhotoActivity : AppCompatActivity() {
 
         //var result = RequestsHTTP.httpPOSTphotoAI(jsonObject)
         //println("result" + result)
+
+        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
+        val intent = Intent(this, GameLevelActivity::class.java)
+
+        // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
+        // intent.putExtra("username", username) - # del livello etc.
+        startActivity(intent)
+
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
