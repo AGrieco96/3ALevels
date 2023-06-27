@@ -65,10 +65,16 @@ class GameLevelActivity : AppCompatActivity(){
 
     // setupInit Function
     fun init(){
-        lobbyId = intent.getStringExtra("lobbyId").toString()
-        username = intent.getStringExtra("username").toString()
         counterLevel = intent.getIntExtra("level",0)
-        flagMatch = intent.getBooleanExtra("flag",true )
+        if (counterLevel == 1) {
+            println("Stringa che deve essere uguale all'username  : "+ gameLevelExtraInfo.myUsername)
+            lobbyId = intent.getStringExtra("lobbyId").toString()
+            username = intent.getStringExtra("username").toString()
+            println("Username   :   "+username)
+            flagMatch = intent.getBooleanExtra("flag",true )
+        }
+
+
         println("Counter level : " + counterLevel)
         println("Flag : "+ flagMatch)
 
@@ -76,7 +82,6 @@ class GameLevelActivity : AppCompatActivity(){
     // UI Function
     fun set_game_UI(flagMatch: Boolean){
         if(!(flagMatch)){
-            println("Entro qui?")
             set_endgame_UI()
         }else{
             setPersonalInfoLevelUI()
@@ -224,6 +229,7 @@ class GameLevelActivity : AppCompatActivity(){
     }
 
     private fun advancedPost(){
+        /* Retrieve dell'username */
         var time = Random.nextInt(from = 10, until = 60).toString()
         if(counterLevel-1 == 1){
             // Post sempre uguale
@@ -263,11 +269,12 @@ class GameLevelActivity : AppCompatActivity(){
             }
 
             if (snapshot != null && snapshot.exists()) {
-                val myfield = snapshot.getString("level")
+                val myfield = snapshot.getLong("level")
                 // Log.d(TAG, "Current data: ${snapshot.data}")
                 Log.d(TAG, "Current data: $myfield")
-                var newLevel = counterLevel.toString()
-                if (myfield.equals(newLevel)) {
+                var newLevel = counterLevel.toLong()
+                print("NewLevel : "+newLevel+"  Counter level  : "+ counterLevel+ "  myField  :  "+myfield)
+                if (myfield == newLevel) {
                     set_game_UI(true)
                 }
                 /*

@@ -194,7 +194,7 @@ class LevelPhotoActivity : AppCompatActivity() {
         intent.putExtra("image", imageString)
         intent.putExtra("level",2)
         intent.putExtra("flag",false)
-        //intent.putExtra("time",time)
+        //intent.putExtra("time",10)
         startActivity(intent)
 
     }

@@ -12,7 +12,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
 
-const val URL = "https://metal-taxes-cry.loca.lt/"
+const val URL = "https://eager-eels-wear.loca.lt"
 
 class RequestsHTTP {
     companion object {
