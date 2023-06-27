@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.view.View
@@ -115,11 +116,23 @@ class LevelJumpActivity : AppCompatActivity() {
                 if(imageView.y < 100.0F) {
                     isRecording = false
                     println("SEI ARRIVATO")
+                    endGame()
                 }
             }
         }.start()
 
 
+    }
+
+    fun endGame(){
+        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
+        val intent = Intent(this, GameLevelActivity::class.java)
+
+        // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
+        // intent.putExtra("username", username) - # del livello etc.
+        intent.putExtra("level",4)
+        intent.putExtra("flag",false)
+        startActivity(intent)
     }
 
 

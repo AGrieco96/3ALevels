@@ -66,6 +66,10 @@
         <activity
             android:name=".game.BallActivity"
             android:exported="false" />
+        <activity
+            android:name=".game.SquareLevelActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

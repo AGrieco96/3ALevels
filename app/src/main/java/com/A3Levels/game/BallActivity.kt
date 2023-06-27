@@ -1,5 +1,6 @@
 package com.A3Levels.game
 
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -14,6 +15,7 @@ import android.util.DisplayMetrics
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.A3Levels.HomeActivity
 import com.A3Levels.databinding.BallActivityBinding
 
 
@@ -147,8 +149,21 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         //println("BallY" + ball!!.y)
 
 
-        if ( (ball!!.x >= 400 && ball!!.x <= 540) && (ball!!.y >= 955 && ball!!.y <= 1095) )
+        if ( (ball!!.x >= 400 && ball!!.x <= 540) && (ball!!.y >= 955 && ball!!.y <= 1095) ){
             println(" HAI VINTOOOOOOOOOOOOOOOOOOOO")
+            endGame()
+        }
+    }
+
+    fun endGame(){
+        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
+        val intent = Intent(this, HomeActivity::class.java)
+
+        // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
+        // intent.putExtra("username", username) - # del livello etc.
+        //intent.putExtra("level",5)
+        //intent.putExtra("flag",false)
+        startActivity(intent)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, i: Int) {

@@ -115,6 +115,14 @@ class GameLevelActivity : AppCompatActivity(){
                 val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
                 textView_Tut.text = getString(R.string.tutorial_level_3)
             }
+            4->{
+                val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
+                textView_Tut.text = getString(R.string.tutorial_level_4)
+            }
+            5->{
+                val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
+                textView_Tut.text = getString(R.string.tutorial_level_5)
+            }
         }
     }
     private fun set_endgame_UI(){
@@ -185,6 +193,18 @@ class GameLevelActivity : AppCompatActivity(){
 
             3 -> {
                 val intent = Intent(this, LevelJumpActivity::class.java)
+                //intent.putExtra("lobbyId", lobbyId)
+                //intent.putExtra("username", username)
+                startActivity(intent)
+            }
+            4 -> {
+                val intent = Intent(this, SquareLevelActivity::class.java)
+                //intent.putExtra("lobbyId", lobbyId)
+                //intent.putExtra("username", username)
+                startActivity(intent)
+            }
+            5 -> {
+                val intent = Intent(this, BallActivity::class.java)
                 //intent.putExtra("lobbyId", lobbyId)
                 //intent.putExtra("username", username)
                 startActivity(intent)

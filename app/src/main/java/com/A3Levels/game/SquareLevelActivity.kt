@@ -1,5 +1,6 @@
 package com.A3Levels.game
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
@@ -25,8 +26,8 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
     private lateinit var goal : String
 
     private var color = Color.RED
-    private var finalUpDown = Random.nextInt(from = -9, until = 9)
-    private var finalLeftRight = Random.nextInt(from = -9, until = 9)
+    private var finalUpDown = Random.nextInt(from = -7, until = 7)
+    private var finalLeftRight = Random.nextInt(from = -7, until = 7)
     private var flag : Boolean = true
     private var leftRight : Float = 0F
     private var upDown : Float = 0F
@@ -100,7 +101,7 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
         }
     }
 
-    //Funzione da avviare nel momento in cui la freccia entra nella threshold del valore (threshold più piccola per evitare falsi negativi)
+
     private fun startTimer() {
         var timer : Timer = Timer()
         var secondsPassed : Int = 0
@@ -115,11 +116,27 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
                 if(secondsPassed < 3) {
                     secondsPassed++
                 } else {
-                    println("HAI VINTO")
+                    if (flag){
+                        println("HAI VINTO")
+                        flag = false
+                        timer.cancel()
+                        endGame()
+                    }
                     timer.cancel()
                 }
             }
         }, 0, 1000) // 1000 milliseconds = 1 second
+    }
+
+    fun endGame(){
+        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
+        val intent = Intent(this, GameLevelActivity::class.java)
+
+        // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
+        // intent.putExtra("username", username) - # del livello etc.
+        intent.putExtra("level",5)
+        intent.putExtra("flag",false)
+        startActivity(intent)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {

@@ -92,8 +92,6 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
                         println("HAI VINTO")
                         timer.cancel()
                         endGame()
-
-
                     }
             }
         }, 0, 1000) // 1000 milliseconds = 1 second
