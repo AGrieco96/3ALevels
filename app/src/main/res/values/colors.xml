@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#2B2828</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="ui_general_main">#81A9DB</color>
 </resources>

@@ -1,3 +1,89 @@
 <resources>
     <string name="app_name">3ALevels</string>
+    <string name="a_ball">A ball</string>
+    <string name="the_frame">The frame</string>
+
+    <string name="custom_layout_subheader">Sign in using this nice custom layout!</string>
+    <string name="custom_layout_idp_header">Choose a provider</string>
+    <string name="custom_layout_email_header">Use your email</string>
+    <string name="text_registration"> 3ALevel Registration </string>
+    <string name="custom_layout_email_click_text">Continue with Email</string>
+    <string name="logo_of_the_app">Logo of the app</string>
+    <string name="email">Email</string>
+    <string name="username_icon">username icon</string>
+    <string name="password">Password</string>
+    <string name="password_icon">password icon</string>
+    <string name="login">Login</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="or_continue_with">or continue with</string>
+    <string name="google_login_button">google_login_button</string>
+    <string name="github_login_button">github login button</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">REGISTER</string>
+    <string name="do_you_have_an_account">Do you have an account?</string>
+    <string name="user_name">Username</string>
+    <string name="ContentDescription"> SplashScreen </string>
+
+    <string name="Button_Play"> START GAME </string>
+    <string name="Button_Option"> OPTIONS </string>
+    <string name="Button_Credits"> CREDITS </string>
+    <string name="Button_Back"> BACK </string>
+    <string name="Button_Logout"> Logout</string>
+    <string name="username_login"> %s </string>
+    <string name="credits">
+        \n
+        This is a personal project for Mobile Application and Cloud Computing course in Sapienza \n\n
+        All rights reserved to the 3ALEVELS co.\n\n
+        \n\n
+        Producer : \n
+        Andrea Nardocci \n
+        Andrea Di Tommaso \n
+        Antonio Grieco \n
+        \n\n
+        Graphic Design : \n
+        Andrea Nardocci \n
+        Andrea Di Tommaso \n
+        Antonio Grieco \n
+        \n\n
+        Owner : \n
+        Andrea Nardocci \n
+        Andrea Di Tommaso \n
+        Antonio Grieco \n
+        \n\n
+        Sound E Music : \n
+        Andrea Nardocci \n
+        Andrea Di Tommaso \n
+        Antonio Grieco \n
+        \n\n
+        \n\n
+        Special Reward to : \n
+        IDE : Android Studio \n
+        Cloud : Firebase \n
+        Asset Store : Kenney \n
+    </string>
+    <string name="text_rights"> © 2023 3ALevels. All rights reserved. </string>
+
+    <!-- Option value string -->
+    <string name="text_enable">Enable</string>
+    <string name="text_sound">sound</string>
+    <string name="text_volume">Volume</string>
+    <string name="text_graphicsSettings">graphics settings</string>
+    <string name="text_languageSettings">language settings</string>
+    <string name="text_notification">notification</string>
+    <string name="text_save">save</string>
+
+    <!-- Quit value String -->
+    <string name="text_quit"> Are you sure you want to logout? </string>
+
+
+    <!-- Game value string -->
+    <string name="tutorial_ball_level"> Move your telephone in order to move the ball. Keep calm and do your best in order to reach the goal faster than your opponent! </string>
+    <string name="tutorial_photo_level"> Use your camera in order to take a photo of the item suggested by the game.  Use your creation!  </string>
+    <string name="tutorial_scream_Jump"> Are you able to get your player to the finish line? I think he can HEAR you, so why you don t scream on your mic </string>
+    <string name="tutorial_compass"> By moving your telephone show me your sense of direction. For this level you need to know at least what is a wind rose. </string>
+
+    <string name="time_result"> Level  Clear \n Your Time  </string>
+
+
+
 </resources>
