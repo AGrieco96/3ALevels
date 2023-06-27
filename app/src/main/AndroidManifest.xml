@@ -26,18 +26,6 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".game.GameLevelActivity" />
-        <activity
-            android:name=".other.CreditsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".other.OptionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
-            android:exported="false"
-            android:label="Home" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -50,6 +38,32 @@
         <activity android:name=".auth.LoginEmailActivity" />
         <activity android:name=".auth.GoogleSignInActivity" />
         <activity android:name=".auth.GithubSignInActivity" />
+        <activity
+            android:name=".other.CreditsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".other.OptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:label="Home" />
+
+        <!-- //GameActivity -->
+        <activity
+            android:name=".game.GameLevelActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.LevelPhotoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".game.LevelJumpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".game.StrongboxLevelActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

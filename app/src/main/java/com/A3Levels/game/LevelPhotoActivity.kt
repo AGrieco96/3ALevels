@@ -1,4 +1,4 @@
-package com.A3Levels.games
+package com.A3Levels.game
 
 import android.Manifest
 import android.content.ContentValues
@@ -19,11 +19,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.A3Levels.databinding.ActivityPhotoLevelBinding
-import com.A3Levels.other.RequestsHTTP
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import org.json.JSONException
+import com.A3Levels.databinding.ActivityTestLevelBinding
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -34,7 +30,9 @@ import java.util.concurrent.Executors
 
 
 class LevelPhotoActivity : AppCompatActivity() {
+
     private lateinit var viewBinding: ActivityPhotoLevelBinding
+
     private var imageCapture: ImageCapture? = null
     private val objectList = listOf("chair", "bottle", "smartphone", "television", "key", "wallet")
     private lateinit var cameraExecutor: ExecutorService
@@ -43,18 +41,22 @@ class LevelPhotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityPhotoLevelBinding.inflate(layoutInflater)
+
         setContentView(viewBinding.root)
 
         if (allPermissionsGranted()) {
             startCamera()
+
         } else {
             ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
         }
 
         //Setup
         objectInPhoto = objectList[(0..5).random()]
         viewBinding.objectToSearch.setText(objectInPhoto.toString())
+
 
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
         cameraExecutor = Executors.newSingleThreadExecutor()

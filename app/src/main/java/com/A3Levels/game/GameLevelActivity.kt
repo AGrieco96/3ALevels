@@ -1,5 +1,7 @@
 package com.A3Levels.game
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,96 +12,91 @@ import android.widget.TextView
 import com.A3Levels.R
 import com.A3Levels.databinding.ActivityTestLevelBinding
 
-
-class GameLevelActivity : AppCompatActivity(),Level_1.LevelCallback , Level_2.LevelCallback , Level_3.LevelCallback, Level_0.TimerCallback{
-
-    private lateinit var binding : ActivityTestLevelBinding
+class GameLevelActivity : AppCompatActivity(){
+    private lateinit var binding: ActivityTestLevelBinding
     private lateinit var lobbyId : String
-
-    //Array of levels
-    val gameLevels: Array<Level_0> = arrayOf(Level_1(this),Level_2(this),Level_3(this))
-    var counterTest : Int = 0 ;
+    private lateinit var username : String
+    private var counterLevel = intent.getStringExtra("level").toString().toInt()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTestLevelBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        //lobbyId = intent.getStringExtra("lobbyId").toString()
+        //username = intent.getStringExtra("username").toString()
 
-        lobbyId = intent.getStringExtra("lobbyId").toString()
-        println("GameLevelActivity : LobbyID " + lobbyId)
-
-        //Main execution of the logic.
-        execute()
-    }
-
-    private fun execute(){
-        // Start animation to leave tutorial and display game UI.
         set_game_UI()
-        if (counterTest > 5) {
-            print("Sonoqui")
-            when(counterTest){
-                1 -> gameLevel1?.startLevel()
-                2 -> gameLevel2?.startLevel()
-            }
-        }
     }
-    private fun set_game_UI(){
 
+    /*
+    private fun startTimer() {
+        handler.post(updateTimer)
+    }
+
+    private fun stopTimer() {
+        handler.removeCallbacks(updateTimer)
+        seconds = 0
+        deciseconds = 0
+        milliseconds = 0
+    }
+    */
+    fun set_game_UI(){
         setPersonalInfoLevelUI()
-
         // Create a AlphaAnimation object
         val animation = AlphaAnimation(1.0f,0.0f)
         // Set the animation properties
         animation.duration = 6000
         animation.fillAfter = true
         animation.interpolator = LinearInterpolator()
-
-
         // Set the animation listener
         animation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {
                 binding.layoutTutorial.visibility = View.VISIBLE
                 binding.layoutEnd.visibility = View.GONE
                 binding.layoutGame.visibility = View.INVISIBLE
-            //    binding.buttonEnd.visibility = View.GONE
+                //binding.buttonEnd.visibility = View.GONE
                 binding.timerTextView.visibility = View.INVISIBLE
             }
             override fun onAnimationEnd(animation: Animation) {
                 // Do something when the animation ends
                 binding.layoutTutorial.visibility = View.GONE
-                binding.layoutGame.visibility = View.VISIBLE
-            //    binding.buttonEnd.visibility = View.VISIBLE
-                binding.timerTextView.visibility = View.VISIBLE
-                gameLevels[counterTest].startTimer(this@GameLevelActivity )
+                //binding.layoutGame.visibility = View.VISIBLE
+                //binding.buttonEnd.visibility = View.VISIBLE
+                //binding.timerTextView.visibility = View.VISIBLE
+                //gameLevels[counterTest].startTimer(this@GameLevelActivity )
+                startLevel()
             }
             override fun onAnimationRepeat(animation: Animation) {}
         })
         binding.layoutTutorial.startAnimation(animation)
-
     }
-    private fun setPersonalInfoLevelUI(){
-        when(counterTest){
+
+    fun setPersonalInfoLevelUI(){
+
+        when(counterLevel){
             1 -> {
-                    val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
-                    textView_Tut.text = getString(R.string.tutorial_level_1)
-                }
+                val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
+                textView_Tut.text = getString(R.string.tutorial_level_1)
+            }
             2 -> {
-                    val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
-                    textView_Tut.text = getString(R.string.tutorial_level_2)
-                }
+                val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
+                textView_Tut.text = getString(R.string.tutorial_level_2)
+            }
             3-> {
                 val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
                 textView_Tut.text = getString(R.string.tutorial_level_3)
-                }
+            }
         }
     }
 
-
-
-    override fun onLevelCompleted() {
-        counterTest += 1
-        end_game()
-        execute()
+    fun startLevel(){
+        when(counterLevel){
+            1 ->
+        }
+        //Main execution of the logic.
+        val intent = Intent(this, LevelPhotoActivity::class.java)
+        intent.putExtra("lobbyId", lobbyId)
+        intent.putExtra("username", username)
+        startActivity(intent)
     }
 
     private fun end_game(){
@@ -142,19 +139,5 @@ class GameLevelActivity : AppCompatActivity(),Level_1.LevelCallback , Level_2.Le
         binding.layoutGame.visibility = View.GONE
         //binding.buttonEnd.visibility = View.INVISIBLE
         binding.timerTextView.visibility = View.INVISIBLE
-
     }
-    /*
-    private fun startTimer() {
-        handler.post(updateTimer)
-    }
-
-    private fun stopTimer() {
-        handler.removeCallbacks(updateTimer)
-        seconds = 0
-        deciseconds = 0
-        milliseconds = 0
-    }
-    */
-
 }

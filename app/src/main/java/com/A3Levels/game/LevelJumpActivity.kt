@@ -1,4 +1,4 @@
-package com.A3Levels.games
+package com.A3Levels.game
 
 import android.content.pm.PackageManager
 import android.media.MediaRecorder

@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#00FFFFFF"
+    android:backgroundTint="#00FFFFFF"
+    android:visibility="visible"
     tools:context=".game.GameLevelActivity">
 
     <TextView
@@ -13,6 +16,7 @@
         android:fontFamily="@font/kenvector_future"
         android:text="00:00"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,9 +24,11 @@
         android:id="@+id/layoutGame"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
         android:columnCount="2"
         android:rowCount="2"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -75,6 +81,8 @@
         android:id="@+id/layout_End"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,6 +132,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +156,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/levelText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kenvector_future"
@@ -173,13 +183,6 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
-    </FrameLayout>
-
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/FrameGame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

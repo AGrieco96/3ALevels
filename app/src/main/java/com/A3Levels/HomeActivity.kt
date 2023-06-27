@@ -9,6 +9,7 @@ import com.A3Levels.auth.GoogleSignInActivity.Companion.TAG
 import com.A3Levels.auth.LoginEmailActivity
 import com.A3Levels.auth.RegisterEmailActivity
 import com.A3Levels.databinding.ActivityHomeBinding
+import com.A3Levels.game.GameLevelActivity
 import com.A3Levels.game.LobbyActivity
 import com.A3Levels.other.CreditsActivity
 import com.A3Levels.other.OptionActivity
@@ -75,8 +76,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.buttonStart.setOnClickListener{
-            startGame(username)
-            //testGame()
+            //startGame(username)
+            testGame()
         }
         //setContentView(R.layout.activity_home)
     }
@@ -99,6 +100,11 @@ class HomeActivity : AppCompatActivity() {
     private fun startGame(username:String){
         val intent = Intent(this, LobbyActivity::class.java)
         intent.putExtra("username", username)
+        startActivity(intent)
+    }
+
+    private fun testGame(){
+        val intent = Intent(this, GameLevelActivity::class.java)
         startActivity(intent)
     }
 
