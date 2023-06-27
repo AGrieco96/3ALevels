@@ -53,8 +53,7 @@
         <!-- //GameActivity -->
         <activity
             android:name=".game.GameLevelActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
         <activity
             android:name=".game.LevelPhotoActivity"
             android:exported="false" />
@@ -64,9 +63,9 @@
         <activity
             android:name=".game.StrongboxLevelActivity"
             android:exported="false" />
-
-
-        <activity android:name=".game.BallActivity"></activity>
+        <activity
+            android:name=".game.BallActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

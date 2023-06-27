@@ -1,8 +1,8 @@
 package com.A3Levels
 
-import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.content.Intent
 import com.A3Levels.auth.LoginEmailActivity
 import com.A3Levels.databinding.ActivityMainBinding
 import com.google.firebase.auth.ktx.auth
@@ -11,6 +11,7 @@ import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.TranslateAnimation
 import com.A3Levels.game.GameLevelActivity
+
 
 class MainActivity : AppCompatActivity() {
 
