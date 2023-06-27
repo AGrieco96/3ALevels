@@ -53,8 +53,6 @@ class HomeActivity : AppCompatActivity() {
                 Log.d(TAG,"Error getting document: ", exception)
             }
         }
-        //Hide extra UI
-        binding.exitLayout.visibility = View.GONE
 
         binding.buttonOption.setOnClickListener {
             display_options()
@@ -64,6 +62,8 @@ class HomeActivity : AppCompatActivity() {
         binding.buttonCredits.setOnClickListener{
             display_credits()
         }
+        //Hide extra UI for logout
+        binding.exitLayout.visibility = View.GONE
 
         binding.buttonLogout.setOnClickListener{
             binding.exitLayout.visibility = View.VISIBLE
@@ -76,8 +76,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.buttonStart.setOnClickListener{
-            //startGame(username)
-            testGame()
+            startGame(username)
         }
         //setContentView(R.layout.activity_home)
     }
@@ -103,9 +102,5 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun testGame(){
-        val intent = Intent(this, GameLevelActivity::class.java)
-        startActivity(intent)
-    }
 
 }

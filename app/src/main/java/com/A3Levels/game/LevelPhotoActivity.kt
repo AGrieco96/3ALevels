@@ -176,17 +176,25 @@ class LevelPhotoActivity : AppCompatActivity() {
         //val jsonObject = JSONObject()
         //jsonObject.put("object", objectInPhoto)
         //jsonObject.put("image", imageString)
+        //jsonObject.put("lobby_id",)
+        //jsonObject.put("player_id",)
+        //jsonObject.put("time",)
+        //RequestsHTTP.httpPOSTphotoAI(jsonObject)
 
-        //var result = RequestsHTTP.httpPOSTphotoAI(jsonObject)
+        var lobbyId = intent.getStringExtra("lobbyId").toString()
+        var username = intent.getStringExtra("username").toString()
+
         //println("result" + result)
 
         // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
         val intent = Intent(this, GameLevelActivity::class.java)
-
-        // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
-        // intent.putExtra("username", username) - # del livello etc.
+        intent.putExtra("player_id", username)
+        intent.putExtra("lobby_id", lobbyId)
+        intent.putExtra("object", objectInPhoto)
+        intent.putExtra("image", imageString)
         intent.putExtra("level",2)
         intent.putExtra("flag",false)
+        //intent.putExtra("time",time)
         startActivity(intent)
 
     }

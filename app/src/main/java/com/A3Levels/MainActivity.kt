@@ -10,7 +10,7 @@ import com.google.firebase.ktx.Firebase
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.TranslateAnimation
-import com.A3Levels.game.GameLevelActivity
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,9 +55,9 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animation) {
                 // Finish the activity when the animation ends
                 // finish()
-                val intent = Intent(this@MainActivity, GameLevelActivity::class.java)
-                intent.putExtra("level", 1)
-                intent.putExtra("flag",true)
+                val intent = Intent(this@MainActivity, LoginEmailActivity::class.java)
+                //intent.putExtra("level", 1)
+                //intent.putExtra("flag",true)
                 startActivity(intent)
             }
 

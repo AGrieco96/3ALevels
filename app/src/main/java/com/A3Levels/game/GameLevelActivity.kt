@@ -1,16 +1,26 @@
 package com.A3Levels.game
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import com.A3Levels.R
+import com.A3Levels.auth.GoogleSignInActivity
 import com.A3Levels.databinding.ActivityTestLevelBinding
+import com.A3Levels.other.RequestsHTTP
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import org.json.JSONObject
+import kotlin.random.Random
 
 
 class GameLevelActivity : AppCompatActivity(){
@@ -55,8 +65,8 @@ class GameLevelActivity : AppCompatActivity(){
 
     // setupInit Function
     fun init(){
-        //lobbyId = intent.getStringExtra("lobbyId").toString()
-        //username = intent.getStringExtra("username").toString()
+        lobbyId = intent.getStringExtra("lobbyId").toString()
+        username = intent.getStringExtra("username").toString()
         counterLevel = intent.getIntExtra("level",0)
         flagMatch = intent.getBooleanExtra("flag",true )
         println("Counter level : " + counterLevel)
@@ -98,6 +108,7 @@ class GameLevelActivity : AppCompatActivity(){
             binding.layoutTutorial.startAnimation(animation)
         }
     }
+
     fun setPersonalInfoLevelUI(){
 
         binding.layoutTutorial.findViewById<TextView>(R.id.levelText).text = counterLevel.toString()
@@ -105,7 +116,6 @@ class GameLevelActivity : AppCompatActivity(){
             1 -> {
                 val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
                 textView_Tut.text = getString(R.string.tutorial_level_1)
-
             }
             2 -> {
                 val textView_Tut = binding.layoutTutorial.findViewById<TextView>(R.id.TutorialText)
@@ -166,12 +176,10 @@ class GameLevelActivity : AppCompatActivity(){
         //binding.buttonEnd.visibility = View.INVISIBLE
         //binding.timerTextView.visibility = View.INVISIBLE
 
-        /*
-        *
-        * METTERE IN ASCOLTO DEL LISTENER PER AVVIARE NUOVA PARTITA ORA FACCIO MANUALMENTE.
-        *
-        * */
-        set_game_UI(true)
+        // Handler
+        advancedPost()
+        setupListener()
+        //set_game_UI(true)
 
     }
 
@@ -180,8 +188,8 @@ class GameLevelActivity : AppCompatActivity(){
         when(counterLevel){
             1 -> {
                 val intent = Intent(this, LevelPhotoActivity::class.java)
-                //intent.putExtra("lobbyId", lobbyId)
-                //intent.putExtra("username", username)
+                intent.putExtra("lobbyId", lobbyId)
+                intent.putExtra("username", username)
                 startActivity(intent)
                 }
             2 -> {
@@ -210,6 +218,74 @@ class GameLevelActivity : AppCompatActivity(){
                 startActivity(intent)
             }
         }
+
+    }
+
+    private fun advancedPost(){
+        var time = Random.nextInt(from = 10, until = 60).toString()
+        if(counterLevel-1 != 1){
+            // Post sempre uguale
+            var objectphoto = intent.getStringExtra("object").toString()
+            var images = intent.getStringExtra("image").toString()
+
+            // Create JSON using JSONObject
+            val jsonObject = JSONObject()
+            jsonObject.put("object", objectphoto)
+            jsonObject.put("image", images)
+            jsonObject.put("lobby_id", lobbyId)
+            jsonObject.put("player_id", username)
+            jsonObject.put("time",time)
+            RequestsHTTP.httpPOSTphotoAI(jsonObject)
+
+        }else {
+            //Post per il photo level
+            val jsonObject = JSONObject()
+            jsonObject.put("lobby_id", lobbyId)
+            jsonObject.put("player_id", username)
+            jsonObject.put("time",time)
+            RequestsHTTP.httpPOSTGameUpdate(jsonObject)
+        }
+
+    }
+
+    private val db = FirebaseFirestore.getInstance()
+    private fun setupListener(){
+        FirebaseApp.initializeApp(this)
+
+        println("LobbyID :   "+ lobbyId)
+        val docGamesRef = db.collection("games").document(lobbyId)
+        val listener = docGamesRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@EventListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                val myfield = snapshot.getString("level")
+                // Log.d(TAG, "Current data: ${snapshot.data}")
+                Log.d(TAG, "Current data: $myfield")
+                var newLevel = counterLevel.toString()
+                if (myfield.equals(newLevel)) {
+                    set_game_UI(true)
+                }
+                /*
+                val player2 = snapshot.getString("player_1").toString()
+                val flagPlayer:Boolean = player2.isEmpty()
+                println("Player2   : " + player2)
+                println("FlagPlayer :  " + player2.isEmpty())
+                if(!flagPlayer){
+                    // Log.d(TAG, "Document ID: " + docLobbyRef.id)
+                    // Handle the changes to the field in the document
+
+                }
+                */
+            } else {
+                Log.d(GoogleSignInActivity.TAG, "Current data: null")
+                //Log.d(TAG, "Document ID: " + docLobbyRef.id)
+            }
+        })
+
+
 
     }
 

@@ -39,6 +39,7 @@
         <activity android:name=".auth.LoginEmailActivity" />
         <activity android:name=".auth.GoogleSignInActivity" />
         <activity android:name=".auth.GithubSignInActivity" />
+        <activity android:name=".game.LobbyActivity" />
         <activity
             android:name=".other.CreditsActivity"
             android:exported="false" />
