@@ -10,7 +10,9 @@ import android.hardware.SensorManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import com.A3Levels.databinding.AccelerometerActivityBinding
-import kotlin.random.Random.Default.nextInt
+import java.util.Timer
+import java.util.TimerTask
+import kotlin.random.Random
 
 
 class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
@@ -21,8 +23,14 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
     private lateinit var square: TextView
     private lateinit var finalPositionText: TextView
     private lateinit var goal : String
-    private val finalUpDown : Int = nextInt(-9, 9)
-    private val finalLeftRight : Int = nextInt(-9, 9)
+
+    private var color = Color.RED
+    private var finalUpDown = Random.nextInt(from = -9, until = 9)
+    private var finalLeftRight = Random.nextInt(from = -9, until = 9)
+    private var flag : Boolean = true
+    private var leftRight : Float = 0F
+    private var upDown : Float = 0F
+
 
 
     //up/down tra 9 e -9
@@ -64,10 +72,10 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
             //Log.d("Main", "onSensorChanged: sides ${event.values[0]} front/back ${event.values[1]} ")
 
             // Sides = Tilting phone left(10) and right(-10)
-            val leftRight = event.values[0]
+            leftRight = event.values[0]
 
             // Up/Down = Tilting phone up(10), flat (0), upside-down(-10)
-            val upDown = event.values[1]
+            upDown = event.values[1]
 
             square.apply {
                 rotationX = upDown * 3f
@@ -77,11 +85,41 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
                 translationY = upDown * 10
             }
 
+            if(upDown.toInt() == finalUpDown && leftRight.toInt() == finalLeftRight) {
+                color = Color.GREEN
+                flag = false
+                startTimer()
+
+            } else {
+                color = Color.RED
+            }
+
             // Changes the colour of the square when reaches the final position
-            val color = if (upDown.toInt() == finalUpDown && leftRight.toInt() == finalLeftRight) Color.GREEN else Color.RED
             square.setBackgroundColor(color)
             square.text = "up/down ${upDown.toInt()}\nleft/right ${leftRight.toInt()}"
         }
+    }
+
+    //Funzione da avviare nel momento in cui la freccia entra nella threshold del valore (threshold più piccola per evitare falsi negativi)
+    private fun startTimer() {
+        var timer : Timer = Timer()
+        var secondsPassed : Int = 0
+
+        timer?.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                if (!(upDown.toInt() == finalUpDown && leftRight.toInt() == finalLeftRight)) {
+                    timer.cancel()
+                    flag = true
+                    return
+                }
+                if(secondsPassed < 3) {
+                    secondsPassed++
+                } else {
+                    println("HAI VINTO")
+                    timer.cancel()
+                }
+            }
+        }, 0, 1000) // 1000 milliseconds = 1 second
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
