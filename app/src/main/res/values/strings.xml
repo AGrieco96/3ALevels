@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">3ALevels</string>
+    <string name="a_ball">A ball</string>
+    <string name="the_frame">The frame</string>
+
     <string name="custom_layout_subheader">Sign in using this nice custom layout!</string>
     <string name="custom_layout_idp_header">Choose a provider</string>
     <string name="custom_layout_email_header">Use your email</string>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
+    <uses-permission android:name="android.permission.VIBRATE" tools:ignore="ManifestOrder" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
@@ -15,7 +17,6 @@
 
     <application
         android:allowBackup="true"
-        android:enableOnBackInvokedCallback="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -64,6 +65,8 @@
             android:name=".game.StrongboxLevelActivity"
             android:exported="false" />
 
+
+        <activity android:name=".game.BallActivity"></activity>
     </application>
 
 </manifest>
