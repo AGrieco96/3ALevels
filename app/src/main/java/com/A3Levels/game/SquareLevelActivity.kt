@@ -84,7 +84,7 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
                 translationY = upDown * 10
             }
 
-            if(upDown.toInt() == finalUpDown && leftRight.toInt() == finalLeftRight) {
+            if((upDown.toInt() == finalUpDown) && (leftRight.toInt() == finalLeftRight) && flag) {
                 color = Color.GREEN
                 flag = false
                 startTimer()

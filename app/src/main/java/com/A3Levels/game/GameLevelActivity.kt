@@ -11,6 +11,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
+import com.A3Levels.PyramidActivity
 import com.A3Levels.R
 import com.A3Levels.auth.GoogleSignInActivity
 import com.A3Levels.databinding.ActivityTestLevelBinding
@@ -19,6 +20,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import org.json.JSONObject
 import kotlin.random.Random
 
@@ -30,7 +32,7 @@ class GameLevelActivity : AppCompatActivity(){
     //private lateinit var username : String
     //private var flagMatch : Boolean = true;
     private var counterLevel : Int = 0;
-
+    private var listener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -208,6 +210,8 @@ class GameLevelActivity : AppCompatActivity(){
 
     // Execution Flow Function
     fun startLevel(){
+        listener?.remove()
+        listener = null
         println("Livello che sta per essere startato : "+counterLevel)
         when(counterLevel){
             1 -> {
@@ -240,6 +244,11 @@ class GameLevelActivity : AppCompatActivity(){
                 val intent = Intent(this, BallActivity::class.java)
                 //intent.putExtra("lobbyId", lobbyId)
                 //intent.putExtra("username", username)
+                startActivity(intent)
+            }
+            6 -> {
+                //* Display the end game
+                val intent = Intent ( this, PyramidActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -285,7 +294,7 @@ class GameLevelActivity : AppCompatActivity(){
 
         println("LobbyID :   "+ lobbyId)
         val docGamesRef = db.collection("games").document(lobbyId)
-        val listener = docGamesRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+        listener = docGamesRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
                 return@EventListener
@@ -306,6 +315,7 @@ class GameLevelActivity : AppCompatActivity(){
                 if (newLevel==dbLevel) {
                     println("Entro qui ")
                     //set_game_UI(true)
+
                     startLevel()
                 }
                 /*
