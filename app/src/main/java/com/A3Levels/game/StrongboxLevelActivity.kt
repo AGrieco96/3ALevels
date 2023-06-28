@@ -63,14 +63,11 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
                 grade = arrow.rotation
             }
 
-            if((finalGrade - 10F <= grade) && (grade <= finalGrade + 10F) && flag){
+            if(((finalGrade - 10F <= grade) && (grade <= finalGrade + 10F)) && flag){
                 println("CIAOOOOOOOOOOOOO")
                 flag = false
                 startTimer()
             }
-
-
-
         }
     }
 
@@ -81,10 +78,9 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
 
         timer?.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
+                println("startTimer")
                     if (!((finalGrade - 10F <= grade) && (grade <= finalGrade + 10F))) {
-                        timer.cancel()
-                        flag = true
-                        return
+                        secondsPassed = 0
                     }
                     if(secondsPassed < 3) {
                         secondsPassed++

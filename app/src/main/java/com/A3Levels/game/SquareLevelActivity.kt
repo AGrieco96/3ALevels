@@ -32,8 +32,6 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
     private var leftRight : Float = 0F
     private var upDown : Float = 0F
 
-
-
     //up/down tra 9 e -9
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,28 +99,22 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
         }
     }
 
-
     private fun startTimer() {
         var timer : Timer = Timer()
         var secondsPassed : Int = 0
 
         timer?.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                if (!(upDown.toInt() == finalUpDown && leftRight.toInt() == finalLeftRight)) {
-                    timer.cancel()
-                    flag = true
-                    return
+                println("startTimer")
+                if (!((upDown.toInt() == finalUpDown) && (leftRight.toInt() == finalLeftRight))) {
+                    secondsPassed = 0
                 }
                 if(secondsPassed < 3) {
                     secondsPassed++
                 } else {
-                    if (flag){
-                        println("HAI VINTO")
-                        flag = false
-                        timer.cancel()
-                        endGame()
-                    }
+                    println("HAI VINTO")
                     timer.cancel()
+                    endGame()
                 }
             }
         }, 0, 1000) // 1000 milliseconds = 1 second
@@ -131,7 +123,6 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
     fun endGame(){
         // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
         val intent = Intent(this, GameLevelActivity::class.java)
-
         gameLevelExtraInfo.setlLevel(5)
         gameLevelExtraInfo.setFlag(false)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
