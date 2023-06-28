@@ -101,6 +101,7 @@ class GameLevelActivity : AppCompatActivity(){
 
     fun createAnimation(): AlphaAnimation{
         println("Eseguo il create Animation?")
+
         // Create a AlphaAnimation object
         val animation = AlphaAnimation(1.0f,0.0f)
         // Set the animation properties
@@ -303,7 +304,8 @@ class GameLevelActivity : AppCompatActivity(){
 
                 if (newLevel==dbLevel) {
                     println("Entro qui ")
-                    set_game_UI(true)
+                    //set_game_UI(true)
+                    startLevel()
                 }
                 /*
                 val player2 = snapshot.getString("player_1").toString()
