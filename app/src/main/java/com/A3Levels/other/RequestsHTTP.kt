@@ -8,9 +8,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 
 const val URL = "https://khaki-trams-invite.loca.lt"
 
@@ -61,8 +63,10 @@ class RequestsHTTP {
         }
 
         fun httpPOSTGameUpdate(jsonObject: JSONObject) {
+
             // Create Retrofit
-            val retrofit = Retrofit.Builder().baseUrl(URL).build()
+            val htppClient = OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build()
+            val retrofit = Retrofit.Builder().baseUrl(URL).client(htppClient).build()
 
             // Create Service
             val service = retrofit.create(APIService::class.java)
