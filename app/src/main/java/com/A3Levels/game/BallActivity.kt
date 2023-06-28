@@ -23,9 +23,9 @@ import com.A3Levels.databinding.BallActivityBinding
 class BallActivity : AppCompatActivity() , SensorEventListener {
 
     // Binding
-
     private lateinit var binding: BallActivityBinding
 
+    private var flag:Boolean = true
     //Sensor
     private lateinit var sensorManager: SensorManager
     private var gravitySensor: Sensor? = null
@@ -43,7 +43,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     private var radius = 0
 
     //Used to play a sound when the ball hits the edge of the frame
-    private var toneGenerator: ToneGenerator? = null
+    //private var toneGenerator: ToneGenerator? = null
 
     //Gets the screens height and width
     var displayMetrics: DisplayMetrics? = null
@@ -53,15 +53,14 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = BallActivityBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         //Gets the frame and the ball
         val frame = binding.frame
         ball = binding.ball
 
         //Initiates a new ToneGenerator
-        toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME)
+        //toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, ToneGenerator.MAX_VOLUME)
 
         //Sets the height and with of the frame
         frameWidth = frame.width
@@ -88,17 +87,11 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
          devHeight = displayMetrics.heightPixels
          devWidth = displayMetrics.widthPixels
 
-
         //Creates a listener on the sensor
         sensorManager.registerListener(this, gravitySensor, SensorManager.SENSOR_DELAY_GAME)
         //Set the delay to GAME as that created a less "laggy" experience
 
-
-
     }
-
-
-
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onSensorChanged(sensorEvent: SensorEvent) {
@@ -114,7 +107,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         if (nextX - radius >= frameWidth / 2) {
             ball!!.x = nextX
         } else {
-            onFrameHit()
+            //onFrameHit()
             //"Bounces" the ball of the frame
             //ball!!.x = nextX + 35
         }
@@ -123,7 +116,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         if (nextY - radius >= frameHeight / 2 + 20) {
             ball!!.y = nextY
         } else {
-            onFrameHit()
+            //onFrameHit()
             //ball!!.y = nextY + 35
         }
 
@@ -131,7 +124,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         //Added "- 60" to make the ball bounce on the frame and not the edge of the screen
         //if (nextX + radius >=  1024 ) {
         if ((nextX + radius) > devWidth - (frameWidth / 2) - 60) {
-            onFrameHit()
+            //onFrameHit()
             //ball!!.x = 1024.0F -150
             ball!!.x =(nextX - 35)
 
@@ -142,7 +135,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         //if (nextY + radius >= 2048  ) {
         if ((nextY + radius) > devHeight - (frameHeight / 2) - 320) {
 
-            onFrameHit()
+            //onFrameHit()
             //ball!!.y = 2048.0F - 150
             ball!!.y = (nextY - 35)
             //println("ASSE X" + nextX)
@@ -151,8 +144,9 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         //println("BallY" + ball!!.y)
 
 
-        if ( (ball!!.x >= 400 && ball!!.x <= 540) && (ball!!.y >= 955 && ball!!.y <= 1095) ){
+        if ( (ball!!.x >= 400 && ball!!.x <= 540) && (ball!!.y >= 955 && ball!!.y <= 1095) && flag){
             println(" HAI VINTOOOOOOOOOOOOOOOOOOOO")
+            flag = false
             //Removes the listener when the app is not in use
             sensorManager.unregisterListener(this)
             endGame()
@@ -188,6 +182,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     /**
      * Sets of multiple effects when the ball hits the edge of the frame
      */
+  /*
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun onFrameHit() {
         //Vibrator
@@ -202,5 +197,6 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         toneGenerator!!.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP)
     }
 
-
+*/
 }
+
