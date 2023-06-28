@@ -18,7 +18,7 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var binding : ActivityStrongboxLevelBinding
     private lateinit var sensorManager: SensorManager
     private lateinit var arrow: ImageView
-    private val finalGrade = 210F
+    private val finalGrade = 60F//210F
     private var flag : Boolean = true
     private var grade = 0F
 

@@ -287,14 +287,14 @@ class GameLevelActivity : AppCompatActivity(){
                 // Log.d(TAG, "Current data: ${snapshot.data}")
                 Log.d(TAG, "Current data: $myfield")
 
-                var newLevel = counterLevel.toString()
-                println("Risultato compare : " +myfield.equals(newLevel))
-                print("NewLevel : "+newLevel+"  Counter level  : "+ counterLevel+ "  myField  :  "+myfield)
+                var newLevel = counterLevel
+                var dbLevel = myfield?.toInt()
+                println("newLevel : "+newLevel+" dbLevel : "+dbLevel)
+                println("Risultato compare : " +(newLevel==dbLevel))
 
-                if (myfield.equals(newLevel)) {
+                if (newLevel==dbLevel) {
                     println("Entro qui ")
                     set_game_UI(true)
-
                 }
                 /*
                 val player2 = snapshot.getString("player_1").toString()
