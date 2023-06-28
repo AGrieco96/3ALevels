@@ -181,20 +181,20 @@ class LevelPhotoActivity : AppCompatActivity() {
         //jsonObject.put("time",)
         //RequestsHTTP.httpPOSTphotoAI(jsonObject)
 
-        var lobbyId = intent.getStringExtra("lobbyId").toString()
-        var username = intent.getStringExtra("username").toString()
+        //var lobbyId = intent.getStringExtra("lobbyId").toString()
+        //var username = intent.getStringExtra("username").toString()
 
         //println("result" + result)
 
         // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
+        // Set the new variable to share
+        gameLevelExtraInfo.setlLevel(2)
+        gameLevelExtraInfo.setFlag(false)
+        gameLevelExtraInfo.setObjectInPhoto(objectInPhoto)
+        gameLevelExtraInfo.setImage(imageString)
+        gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
+
         val intent = Intent(this, GameLevelActivity::class.java)
-        intent.putExtra("username", username)
-        intent.putExtra("lobbyId", lobbyId)
-        intent.putExtra("object", objectInPhoto)
-        intent.putExtra("image", imageString)
-        intent.putExtra("level",2)
-        intent.putExtra("flag",false)
-        //intent.putExtra("time",10)
         startActivity(intent)
 
     }

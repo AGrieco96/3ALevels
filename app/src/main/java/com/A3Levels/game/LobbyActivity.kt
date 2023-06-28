@@ -153,11 +153,15 @@ class LobbyActivity : AppCompatActivity() {
                 if (myfield.equals("started")) {
                     val intent = Intent(this, GameLevelActivity::class.java)
                     gameLevelExtraInfo.setUsername(username)
-
+                    gameLevelExtraInfo.setLobbyId(lobbyId)
+                    gameLevelExtraInfo.setlLevel(1)
+                    gameLevelExtraInfo.setFlag(true)
+                    /*
                     intent.putExtra("lobbyId", lobbyId)
                     intent.putExtra("username", username)
                     intent.putExtra("level",1)
                     intent.putExtra("flag",true)
+                     */
                     startActivity(intent)
                 }
                 /*

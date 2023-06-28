@@ -24,20 +24,32 @@ import kotlin.random.Random
 
 
 class GameLevelActivity : AppCompatActivity(){
+
     private lateinit var binding: ActivityTestLevelBinding
-    private lateinit var lobbyId : String
-    private lateinit var username : String
-    private var flagMatch : Boolean = true;
+    var lobbyId : String = "0"
+    //private lateinit var username : String
+    //private var flagMatch : Boolean = true;
     private var counterLevel : Int = 0;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Init
         binding = ActivityTestLevelBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        init()
 
-        set_game_UI(flagMatch)
+        FirebaseApp.initializeApp(this)
+
+        //init()
+
+
+        //Retrieve the level in order to launch the correct activity.
+        lobbyId = gameLevelExtraInfo.myLobbyID
+        println("lobbyId : "+lobbyId)
+        counterLevel = gameLevelExtraInfo.myLevel
+        println("Check sul flag su onCreate : " +gameLevelExtraInfo.myFlag)
+        println("Check sul livello : " +gameLevelExtraInfo.myLevel)
+        set_game_UI(gameLevelExtraInfo.myFlag)
 
         /*
         *   if(flag){
@@ -64,6 +76,7 @@ class GameLevelActivity : AppCompatActivity(){
     */
 
     // setupInit Function
+    /*
     fun init(){
         counterLevel = intent.getIntExtra("level",0)
         if (counterLevel == 1) {
@@ -73,12 +86,8 @@ class GameLevelActivity : AppCompatActivity(){
             println("Username   :   "+username)
             flagMatch = intent.getBooleanExtra("flag",true )
         }
-
-
-        println("Counter level : " + counterLevel)
-        println("Flag : "+ flagMatch)
-
     }
+    */
     // UI Function
     fun set_game_UI(flagMatch: Boolean){
         if(!(flagMatch)){
@@ -191,12 +200,12 @@ class GameLevelActivity : AppCompatActivity(){
 
     // Execution Flow Function
     fun startLevel(){
-        println("Start Level : "+counterLevel)
+        println("Livello che sta per essere startato : "+counterLevel)
         when(counterLevel){
             1 -> {
                 val intent = Intent(this, LevelPhotoActivity::class.java)
-                intent.putExtra("lobbyId", lobbyId)
-                intent.putExtra("username", username)
+                //intent.putExtra("lobbyId", lobbyId)
+                //intent.putExtra("username", username)
                 startActivity(intent)
                 }
             2 -> {
@@ -230,11 +239,15 @@ class GameLevelActivity : AppCompatActivity(){
 
     private fun advancedPost(){
         /* Retrieve dell'username */
-        var time = Random.nextInt(from = 10, until = 60).toString()
+        val time = Random.nextInt(from = 10, until = 60).toString()
+        val username = gameLevelExtraInfo.myUsername
         if(counterLevel-1 == 1){
             // Post sempre uguale
-            var objectphoto = intent.getStringExtra("object").toString()
-            var images = intent.getStringExtra("image").toString()
+            val objectphoto = gameLevelExtraInfo.myObjectInPhoto
+            val images = gameLevelExtraInfo.myImage
+
+            //var objectphoto = intent.getStringExtra("object").toString()
+            //var images = intent.getStringExtra("image").toString()
 
             // Create JSON using JSONObject
             val jsonObject = JSONObject()
@@ -256,9 +269,10 @@ class GameLevelActivity : AppCompatActivity(){
 
     }
 
-    private val db = FirebaseFirestore.getInstance()
+
     private fun setupListener(){
-        FirebaseApp.initializeApp(this)
+
+        val db = FirebaseFirestore.getInstance()
 
         println("LobbyID :   "+ lobbyId)
         val docGamesRef = db.collection("games").document(lobbyId)
@@ -269,13 +283,18 @@ class GameLevelActivity : AppCompatActivity(){
             }
 
             if (snapshot != null && snapshot.exists()) {
-                val myfield = snapshot.getLong("level")
+                val myfield = snapshot.getString("level")
                 // Log.d(TAG, "Current data: ${snapshot.data}")
                 Log.d(TAG, "Current data: $myfield")
-                var newLevel = counterLevel.toLong()
+
+                var newLevel = counterLevel.toString()
+                println("Risultato compare : " +myfield.equals(newLevel))
                 print("NewLevel : "+newLevel+"  Counter level  : "+ counterLevel+ "  myField  :  "+myfield)
-                if (myfield == newLevel) {
+
+                if (myfield.equals(newLevel)) {
+                    println("Entro qui ")
                     set_game_UI(true)
+
                 }
                 /*
                 val player2 = snapshot.getString("player_1").toString()
@@ -289,7 +308,7 @@ class GameLevelActivity : AppCompatActivity(){
                 }
                 */
             } else {
-                Log.d(GoogleSignInActivity.TAG, "Current data: null")
+                Log.d(TAG, "Current data: null")
                 //Log.d(TAG, "Document ID: " + docLobbyRef.id)
             }
         })
