@@ -35,7 +35,7 @@ class LevelPhotoActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityPhotoLevelBinding
 
     private var imageCapture: ImageCapture? = null
-    private val objectList = listOf("chair", "bottle", "smartphone", "television", "key", "wallet")
+    private val objectList = listOf("chair", "bottle", "cellular", "television", "key", "wallet")
     private lateinit var cameraExecutor: ExecutorService
     lateinit var objectInPhoto: String
 
