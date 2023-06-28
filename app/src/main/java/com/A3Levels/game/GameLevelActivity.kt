@@ -203,7 +203,10 @@ class GameLevelActivity : AppCompatActivity(){
 
         // Handler
         advancedPost()
-        setupListener()
+        if ( counterLevel != 6 )
+            setupListener()
+        else
+            startLevel()
         //set_game_UI(true)
 
     }

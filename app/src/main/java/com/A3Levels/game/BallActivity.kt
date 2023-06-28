@@ -158,6 +158,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     fun endGame(){
         // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
         // INSERIRE ACTIVITY PER LA WIN / LOSE
+        val intent = Intent ( this, GameLevelActivity::class.java)
         gameLevelExtraInfo.setlLevel(6)
         gameLevelExtraInfo.setFlag(false)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
