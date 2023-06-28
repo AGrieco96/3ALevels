@@ -288,8 +288,10 @@ class GameLevelActivity : AppCompatActivity(){
                 Log.w(TAG, "Listen failed.", e)
                 return@EventListener
             }
+            println("Snapshot attuale" + snapshot)
 
             if (snapshot != null && snapshot.exists()) {
+
                 val myfield = snapshot.getString("level")
                 // Log.d(TAG, "Current data: ${snapshot.data}")
                 Log.d(TAG, "Current data: $myfield")

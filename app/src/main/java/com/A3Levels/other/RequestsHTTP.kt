@@ -36,6 +36,7 @@ class RequestsHTTP {
 
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
+                        /*
 
                         // Convert raw JSON to pretty JSON using GSON library
                         val gson = GsonBuilder().setPrettyPrinting().create()
@@ -47,6 +48,8 @@ class RequestsHTTP {
                         )
 
                         Log.d("Pretty Printed JSON :", prettyJson)
+
+                        */
 
                     } else {
 
