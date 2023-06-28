@@ -9,6 +9,7 @@ import com.A3Levels.auth.LoginEmailActivity
 import com.A3Levels.auth.RegisterEmailActivity
 import com.A3Levels.databinding.ActivityHomeBinding
 import com.A3Levels.games.LevelJumpActivity
+import com.A3Levels.graphics.PyramidActivity
 import com.A3Levels.other.CreditsActivity
 import com.A3Levels.other.OptionActivity
 import com.google.firebase.FirebaseApp

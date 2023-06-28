@@ -9,6 +9,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import android.os.Handler
 import android.os.Looper
+import com.A3Levels.graphics.PyramidActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     val mainHandler = Handler(Looper.getMainLooper()).postDelayed({
-        val intent = Intent(this@MainActivity, LoginEmailActivity::class.java)
+        val intent = Intent(this@MainActivity, PyramidActivity::class.java)
         startActivity(intent)
         //finish()
     },3000)
