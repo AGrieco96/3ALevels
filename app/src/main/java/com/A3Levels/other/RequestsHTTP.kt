@@ -65,8 +65,7 @@ class RequestsHTTP {
         fun httpPOSTGameUpdate(jsonObject: JSONObject) {
 
             // Create Retrofit
-            val htppClient = OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build()
-            val retrofit = Retrofit.Builder().baseUrl(URL).client(htppClient).build()
+            val retrofit = Retrofit.Builder().baseUrl(URL).build()
 
             // Create Service
             val service = retrofit.create(APIService::class.java)
@@ -107,7 +106,8 @@ class RequestsHTTP {
         }
         fun httpPOSTphotoAI(jsonObject: JSONObject) {
             // Create Retrofit
-            val retrofit = Retrofit.Builder().baseUrl(URL).build()
+            val httpClient = OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build()
+            val retrofit = Retrofit.Builder().baseUrl(URL).client(httpClient).build()
 
             // Create Service
             val service = retrofit.create(APIService::class.java)
