@@ -14,7 +14,7 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
-const val URL = "https://slimy-foxes-occur.loca.lt"
+const val URL = "https://fruity-states-count.loca.lt"
 
 class RequestsHTTP {
     companion object {
@@ -61,7 +61,6 @@ class RequestsHTTP {
                 }
             }
         }
-
         fun httpPOSTGameUpdate(jsonObject: JSONObject) {
 
             // Create Retrofit
@@ -138,6 +137,49 @@ class RequestsHTTP {
 
 
                          */
+                    } else {
+
+                        Log.e("RETROFIT_ERROR", response.code().toString())
+
+                    }
+                }
+            }
+        }
+
+        fun httpPUTsendMessage(jsonObject: JSONObject) {
+
+            // Create Retrofit
+            val retrofit = Retrofit.Builder().baseUrl(URL).build()
+
+            // Create Service
+            val service = retrofit.create(APIService::class.java)
+
+            // Convert JSONObject to String
+            val jsonObjectString = jsonObject.toString()
+
+            // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
+            val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+
+            CoroutineScope(Dispatchers.IO).launch {
+                // Do the PUT request and get response
+                val response = service.sendMessage(requestBody)
+                println(response)
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        /*
+                        // Convert raw JSON to pretty JSON using GSON library
+                        val gson = GsonBuilder().setPrettyPrinting().create()
+                        val prettyJson = gson.toJson(
+                            JsonParser.parse(
+                                response.body()
+                                    ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
+                            )
+                        )
+
+                        Log.d("Pretty Printed JSON :", prettyJson)
+                        */
+
                     } else {
 
                         Log.e("RETROFIT_ERROR", response.code().toString())

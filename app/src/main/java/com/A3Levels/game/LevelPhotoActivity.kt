@@ -22,6 +22,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.A3Levels.databinding.ActivityPhotoLevelBinding
 import com.A3Levels.databinding.ActivityTestLevelBinding
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -39,6 +43,7 @@ class LevelPhotoActivity : AppCompatActivity() {
     private val objectList = listOf("chair", "bottle", "cellular", "television", "key", "wallet")
     private lateinit var cameraExecutor: ExecutorService
     lateinit var objectInPhoto: String
+    private var listener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +67,8 @@ class LevelPhotoActivity : AppCompatActivity() {
 
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
         cameraExecutor = Executors.newSingleThreadExecutor()
+
+        messageListener()
     }
 
     override fun onRequestPermissionsResult(
@@ -194,7 +201,8 @@ class LevelPhotoActivity : AppCompatActivity() {
         gameLevelExtraInfo.setObjectInPhoto(objectInPhoto)
         gameLevelExtraInfo.setImage(imageString)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
-
+        listener?.remove()
+        listener = null
         val intent = Intent(this, GameLevelActivity::class.java)
         startActivity(intent)
 
@@ -222,5 +230,34 @@ class LevelPhotoActivity : AppCompatActivity() {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
+    }
+
+    fun messageListener(){
+        val db = FirebaseFirestore.getInstance()
+        val username = gameLevelExtraInfo.myUsername
+        println("Retrieve dell'username dall'activity photo level : "+ username)
+        val docMessagesRef = db.collection("messages").document(username)
+        listener = docMessagesRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+            if (e != null) {
+                Log.w(ContentValues.TAG, "Listen failed.", e)
+                return@EventListener
+            }
+            println("Snapshot attuale" + snapshot)
+
+            if (snapshot != null && snapshot.exists()) {
+
+                val myfield = snapshot.getString("lastMessage")
+                if ( !(myfield.equals("Chat created!")) ){
+                    Toast.makeText(
+                        baseContext, myfield,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            } else {
+                Log.d(ContentValues.TAG, "Current data: null")
+                //Log.d(TAG, "Document ID: " + docLobbyRef.id)
+            }
+        })
     }
 }

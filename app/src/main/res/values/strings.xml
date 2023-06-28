@@ -85,9 +85,15 @@
     <string name="tutorial_level_5"> Move your telephone in order to move the ball. Keep calm and do your best in order to reach the goal faster than your opponent! </string>
 
 
-
-
     <string name="time_result"> Level  Clear \n Your Time  </string>
+
+    <!-- Chat with users -->
+    <string name="message_1">  hahahahaha, you are slow </string>
+    <string name="message_2">  Ops... </string>
+    <string name="message_3">  Crazy things </string>
+    <string name="message_4">  You are a loser </string>
+    <string name="message_5">  Good game </string>
+
 
 
 </resources>

@@ -9,15 +9,22 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.media.AudioFormat
 import android.media.AudioRecord
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.Toast
 import com.A3Levels.R
 import com.A3Levels.databinding.ActivityHomeBinding
 import com.A3Levels.databinding.ActivityLevelJumpBinding
 import com.A3Levels.databinding.ActivityPhotoLevelBinding
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 
 class LevelJumpActivity : AppCompatActivity() {
 
@@ -50,6 +57,7 @@ class LevelJumpActivity : AppCompatActivity() {
 
         //imageView = findViewById(R.id.characterImageView)
         imageView = findViewById(R.id.shipLayout)
+        messageListener()
     }
 
     override fun onRequestPermissionsResult(
@@ -133,6 +141,8 @@ class LevelJumpActivity : AppCompatActivity() {
         gameLevelExtraInfo.setlLevel(4)
         gameLevelExtraInfo.setFlag(false)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
+        listener?.remove()
+        listener = null
         startActivity(intent)
     }
 
@@ -144,6 +154,36 @@ class LevelJumpActivity : AppCompatActivity() {
         audioRecord.stop()
         audioRecord.release()
         isRecording = false
+    }
+
+    private var listener: ListenerRegistration? = null
+    fun messageListener(){
+        val db = FirebaseFirestore.getInstance()
+        val username = gameLevelExtraInfo.myUsername
+        println("Retrieve dell'username dall'activity photo level : "+ username)
+        val docMessagesRef = db.collection("messages").document(username)
+        listener = docMessagesRef.addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+            if (e != null) {
+                Log.w(ContentValues.TAG, "Listen failed.", e)
+                return@EventListener
+            }
+            println("Snapshot attuale" + snapshot)
+
+            if (snapshot != null && snapshot.exists()) {
+
+                val myfield = snapshot.getString("lastMessage")
+                if ( !(myfield.equals("Chat created!")) ){
+                    Toast.makeText(
+                        baseContext, myfield,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            } else {
+                Log.d(ContentValues.TAG, "Current data: null")
+                //Log.d(TAG, "Document ID: " + docLobbyRef.id)
+            }
+        })
     }
 }
 

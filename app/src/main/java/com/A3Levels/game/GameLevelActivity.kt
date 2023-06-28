@@ -34,6 +34,8 @@ class GameLevelActivity : AppCompatActivity(){
     private var counterLevel : Int = 0;
     private var listener: ListenerRegistration? = null
 
+    lateinit var username : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Init
@@ -51,6 +53,8 @@ class GameLevelActivity : AppCompatActivity(){
         counterLevel = gameLevelExtraInfo.myLevel
         println("Check sul flag su onCreate : " +gameLevelExtraInfo.myFlag)
         println("Check sul livello : " +gameLevelExtraInfo.myLevel)
+        //username = gameLevelExtraInfo.myUsername
+        //println("Check sull'username ad ogni avvio di GameLevelActivity  : " +username)
         set_game_UI(gameLevelExtraInfo.myFlag)
 
         /*
@@ -61,6 +65,21 @@ class GameLevelActivity : AppCompatActivity(){
         *       Visualizzazione end match + attivazione listener
         *   }
         * */
+        binding.btnMsg1.setOnClickListener{
+            messagePost(1)
+        }
+        binding.btnMsg2.setOnClickListener{
+            messagePost(2)
+        }
+        binding.btnMsg3.setOnClickListener{
+            messagePost(3)
+        }
+        binding.btnMsg4.setOnClickListener{
+            messagePost(4)
+        }
+        binding.btnMsg5.setOnClickListener{
+            messagePost(5)
+        }
 
     }
 
@@ -220,34 +239,29 @@ class GameLevelActivity : AppCompatActivity(){
         when(counterLevel){
             1 -> {
                 val intent = Intent(this, LevelPhotoActivity::class.java)
-                //intent.putExtra("lobbyId", lobbyId)
-                //intent.putExtra("username", username)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
                 startActivity(intent)
                 }
             2 -> {
                 val intent = Intent(this, StrongboxLevelActivity::class.java)
-                //intent.putExtra("lobbyId", lobbyId)
-                //intent.putExtra("username", username)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
                 gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
                 startActivity(intent)
             }
 
             3 -> {
                 val intent = Intent(this, LevelJumpActivity::class.java)
-                //intent.putExtra("lobbyId", lobbyId)
-                //intent.putExtra("username", username)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
                 startActivity(intent)
             }
             4 -> {
                 val intent = Intent(this, SquareLevelActivity::class.java)
-                //intent.putExtra("lobbyId", lobbyId)
-                //intent.putExtra("username", username)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
                 startActivity(intent)
             }
             5 -> {
                 val intent = Intent(this, BallActivity::class.java)
-                //intent.putExtra("lobbyId", lobbyId)
-                //intent.putExtra("username", username)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
                 startActivity(intent)
             }
             6 -> {
@@ -262,7 +276,7 @@ class GameLevelActivity : AppCompatActivity(){
     private fun advancedPost(){
         /* Retrieve dell'username */
         val time = Random.nextInt(from = 10, until = 60).toString()
-        val username = gameLevelExtraInfo.myUsername
+        username = gameLevelExtraInfo.myUsername
         if(counterLevel-1 == 1){
             // Post sempre uguale
             val objectphoto = gameLevelExtraInfo.myObjectInPhoto
@@ -290,7 +304,34 @@ class GameLevelActivity : AppCompatActivity(){
         }
 
     }
+    private fun messagePost(idMessage : Int){
+        username = gameLevelExtraInfo.myUsername
+        lateinit var message : String
+        when(idMessage){
+            1 -> {
+                message = binding.btnMsg1.text.toString()
+                println(" Messaggio che prende dall'UI : "+ message)
+            }
+            2 -> {
+                message = binding.btnMsg2.text.toString()
+            }
+            3 -> {
+                message = binding.btnMsg3.text.toString()
+            }
+            4 -> {
+                message = binding.btnMsg4.text.toString()
+            }
+            5 -> {
+                message = binding.btnMsg5.text.toString()
+            }
+        }
 
+        val jsonObject = JSONObject()
+        jsonObject.put("player_id",username)
+        jsonObject.put("lobby_id",lobbyId)
+        jsonObject.put("message",message)
+        RequestsHTTP.httpPUTsendMessage(jsonObject)
+    }
 
     private fun setupListener(){
 

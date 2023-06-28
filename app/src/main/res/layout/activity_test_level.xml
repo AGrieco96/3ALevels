@@ -83,14 +83,14 @@
         android:layout_height="match_parent"
         android:background="#00FFFFFF"
         android:backgroundTint="#00FFFFFF"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical">
@@ -127,7 +127,87 @@
                 android:textColor="@color/ui_general_main"
                 android:textSize="20sp" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/msg"
+                android:fontFamily="@font/kenvector_future_thin"
+                android:gravity="center"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/boxMsg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_msg_1"
+                    android:layout_width="310dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/kenvector_future_thin"
+                    android:gravity="center"
+                    android:scaleX="1"
+                    android:text="@string/message_1"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_msg_2"
+                    android:layout_width="310dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/kenvector_future_thin"
+                    android:gravity="center"
+                    android:scaleX="1"
+                    android:text="@string/message_2"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_msg_3"
+                    android:layout_width="310dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/kenvector_future_thin"
+                    android:gravity="center"
+                    android:scaleX="1"
+                    android:text="@string/message_3"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_msg_4"
+                    android:layout_width="310dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/kenvector_future_thin"
+                    android:gravity="center"
+                    android:scaleX="1"
+                    android:text="@string/message_4"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_msg_5"
+                    android:layout_width="310dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/kenvector_future_thin"
+                    android:gravity="center"
+                    android:scaleX="1"
+                    android:text="@string/message_5"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
+
     </FrameLayout>
 
     <FrameLayout
@@ -137,7 +217,7 @@
 
         android:background="@color/design_default_color_on_secondary"
         android:backgroundTint="@color/design_default_color_on_secondary"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -190,6 +270,8 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
+
     </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

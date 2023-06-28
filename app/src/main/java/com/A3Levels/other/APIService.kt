@@ -18,4 +18,7 @@ interface APIService {
     @PUT("$URL/ai")
     suspend fun photoAI(@Body requestBody: RequestBody): Response<ResponseBody>
 
+    @PUT("$URL/send-message")
+    suspend fun sendMessage(@Body requestBody: RequestBody): Response<ResponseBody>
+
 }
