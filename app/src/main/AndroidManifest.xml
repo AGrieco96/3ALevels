@@ -73,7 +73,7 @@
             android:name=".game.SquareLevelActivity"
             android:exported="false" />
         <activity
-            android:name=".PyramidActivity"
+            android:name=".graphics.PyramidActivity"
             android:exported="false" />
 
     </application>

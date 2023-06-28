@@ -11,7 +11,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
-import com.A3Levels.PyramidActivity
+import com.A3Levels.graphics.PyramidActivity
 import com.A3Levels.R
 import com.A3Levels.auth.GoogleSignInActivity
 import com.A3Levels.databinding.ActivityTestLevelBinding
