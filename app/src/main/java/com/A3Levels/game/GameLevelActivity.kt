@@ -94,34 +94,41 @@ class GameLevelActivity : AppCompatActivity(){
             set_endgame_UI()
         }else{
             setPersonalInfoLevelUI()
-            // Create a AlphaAnimation object
-            val animation = AlphaAnimation(1.0f,0.0f)
-            // Set the animation properties
-            animation.duration = 6000
-            animation.fillAfter = true
-            animation.interpolator = LinearInterpolator()
-            // Set the animation listener
-            animation.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {
-                    binding.layoutTutorial.visibility = View.VISIBLE
-                    binding.layoutEnd.visibility = View.GONE
-                    //binding.layoutGame.visibility = View.INVISIBLE
-                    //binding.buttonEnd.visibility = View.GONE
-                    //binding.timerTextView.visibility = View.INVISIBLE
-                }
-                override fun onAnimationEnd(animation: Animation) {
-                    // Do something when the animation ends
-                    binding.layoutTutorial.visibility = View.GONE
-                    //binding.layoutGame.visibility = View.VISIBLE
-                    //binding.buttonEnd.visibility = View.VISIBLE
-                    //binding.timerTextView.visibility = View.VISIBLE
-                    //gameLevels[counterTest].startTimer(this@GameLevelActivity )
-                    startLevel()
-                }
-                override fun onAnimationRepeat(animation: Animation) {}
-            })
+            val animation = createAnimation()
             binding.layoutTutorial.startAnimation(animation)
         }
+    }
+
+    fun createAnimation(): AlphaAnimation{
+        println("Eseguo il create Animation?")
+        // Create a AlphaAnimation object
+        val animation = AlphaAnimation(1.0f,0.0f)
+        // Set the animation properties
+        animation.duration = 6000
+        animation.fillAfter = true
+        animation.interpolator = LinearInterpolator()
+        // Set the animation listener
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+                println("On Animation Start")
+                binding.layoutTutorial.visibility = View.VISIBLE
+                binding.layoutEnd.visibility = View.GONE
+                //binding.layoutGame.visibility = View.INVISIBLE
+                //binding.buttonEnd.visibility = View.GONE
+                //binding.timerTextView.visibility = View.INVISIBLE
+            }
+            override fun onAnimationEnd(animation: Animation) {
+                // Do something when the animation ends
+                binding.layoutTutorial.visibility = View.GONE
+                //binding.layoutGame.visibility = View.VISIBLE
+                //binding.buttonEnd.visibility = View.VISIBLE
+                //binding.timerTextView.visibility = View.VISIBLE
+                //gameLevels[counterTest].startTimer(this@GameLevelActivity )
+                startLevel()
+            }
+            override fun onAnimationRepeat(animation: Animation) {}
+        })
+        return animation
     }
 
     fun setPersonalInfoLevelUI(){
