@@ -1,5 +1,7 @@
 package com.A3Levels
 
+import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
@@ -10,7 +12,10 @@ import com.google.firebase.ktx.Firebase
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.TranslateAnimation
+import com.A3Levels.graphics.PyramidActivity
 
+import android.os.Handler
+import android.os.Looper
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animation) {
                 // Finish the activity when the animation ends
                 // finish()
-                val intent = Intent(this@MainActivity, LoginEmailActivity::class.java)
+                val intent = Intent(this@MainActivity, PyramidActivity::class.java)
                 //intent.putExtra("level", 1)
                 //intent.putExtra("flag",true)
                 startActivity(intent)
