@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animation) {
                 // Finish the activity when the animation ends
                 // finish()
-                val intent = Intent(this@MainActivity, StrongboxLevelActivity::class.java)
+                val intent = Intent(this@MainActivity, HomeActivity::class.java)
                 //intent.putExtra("level", 1)
                 //intent.putExtra("flag",true)
                 startActivity(intent)
