@@ -130,8 +130,9 @@ class LevelJumpActivity : AppCompatActivity() {
 
         // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
         // intent.putExtra("username", username) - # del livello etc.
-        intent.putExtra("level",4)
-        intent.putExtra("flag",false)
+        gameLevelExtraInfo.setlLevel(4)
+        gameLevelExtraInfo.setFlag(false)
+        gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
         startActivity(intent)
     }
 

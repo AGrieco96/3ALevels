@@ -220,6 +220,7 @@ class GameLevelActivity : AppCompatActivity(){
                 val intent = Intent(this, StrongboxLevelActivity::class.java)
                 //intent.putExtra("lobbyId", lobbyId)
                 //intent.putExtra("username", username)
+                gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
                 startActivity(intent)
             }
 

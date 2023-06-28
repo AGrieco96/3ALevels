@@ -132,10 +132,9 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
         // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
         val intent = Intent(this, GameLevelActivity::class.java)
 
-        // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
-        // intent.putExtra("username", username) - # del livello etc.
-        intent.putExtra("level",5)
-        intent.putExtra("flag",false)
+        gameLevelExtraInfo.setlLevel(5)
+        gameLevelExtraInfo.setFlag(false)
+        gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
         startActivity(intent)
     }
 

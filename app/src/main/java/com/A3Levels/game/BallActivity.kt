@@ -157,8 +157,8 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
 
     fun endGame(){
         // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
+        // INSERIRE ACTIVITY PER LA WIN / LOSE
         val intent = Intent(this, HomeActivity::class.java)
-
         // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
         // intent.putExtra("username", username) - # del livello etc.
         //intent.putExtra("level",5)
