@@ -203,6 +203,7 @@ class GameLevelActivity : AppCompatActivity(){
 
         // Handler
         advancedPost()
+
         if ( counterLevel != 6 )
             setupListener()
         else
@@ -280,7 +281,7 @@ class GameLevelActivity : AppCompatActivity(){
             RequestsHTTP.httpPOSTphotoAI(jsonObject)
 
         }else {
-            //Post per il photo level
+            //HTTP Request for others level
             val jsonObject = JSONObject()
             jsonObject.put("lobby_id", lobbyId)
             jsonObject.put("player_id", username)

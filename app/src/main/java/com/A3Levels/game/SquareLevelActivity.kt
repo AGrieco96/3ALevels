@@ -85,13 +85,17 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
             }
 
             if((upDown.toInt() == finalUpDown) && (leftRight.toInt() == finalLeftRight) && flag) {
-                color = Color.GREEN
                 flag = false
                 startTimer()
-
-            } else {
-                color = Color.RED
             }
+
+            if(!((upDown.toInt() == finalUpDown) && (leftRight.toInt() == finalLeftRight))) {
+                color = Color.RED
+            }else{
+                color = Color.GREEN
+            }
+
+
 
             // Changes the colour of the square when reaches the final position
             square.setBackgroundColor(color)

@@ -98,6 +98,8 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     }
 
 
+
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onSensorChanged(sensorEvent: SensorEvent) {
         //Current coordinates of the ball
@@ -151,6 +153,8 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
 
         if ( (ball!!.x >= 400 && ball!!.x <= 540) && (ball!!.y >= 955 && ball!!.y <= 1095) ){
             println(" HAI VINTOOOOOOOOOOOOOOOOOOOO")
+            //Removes the listener when the app is not in use
+            sensorManager.unregisterListener(this)
             endGame()
         }
     }
