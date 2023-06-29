@@ -2,6 +2,8 @@ package com.A3Levels.game
 
 import android.os.Handler
 import android.os.Looper
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 class gameLevelExtraInfo {
 
@@ -50,6 +52,7 @@ class gameLevelExtraInfo {
             myTime = time
         }
 
+        /*
         //Counter
         var Counter_P1: Int = 0
         var Counter_P2: Int = 0
@@ -60,6 +63,7 @@ class gameLevelExtraInfo {
             Counter_P2 = counter
         }
 
+         */
 
     }
 
@@ -70,14 +74,6 @@ class gameLevelExtraInfo {
     private var deciseconds = 0
     var seconds = 0
     var milliseconds = 0
-
-    fun myGetSeconds(): Int {
-        return seconds
-    }
-    fun myGetMilliseconds(): Int {
-        return milliseconds
-    }
-
 
     // Timer logic handler
     private val updateTimer = object : Runnable {
@@ -100,7 +96,6 @@ class gameLevelExtraInfo {
         handler.post(updateTimer)
     }
     fun stopTimer() {
-        println("Entro dentro stop timer?")
         handler.removeCallbacks(updateTimer)
         val timerSeconds = seconds
         val timerMilliseconds = milliseconds
@@ -117,6 +112,67 @@ class gameLevelExtraInfo {
     interface TimerUpdateListener {
         fun onTimerUpdate(minutes: Int, seconds: Int, milliseconds: Int)
         fun onTimerFinished(seconds: Int, milliseconds: Int)
+    }
+
+
+    data class CounterValues(val player1Counter: Int, val player2Counter: Int)
+    suspend fun retrieveCounter(): CounterValues {
+        val db = FirebaseFirestore.getInstance()
+
+        val lobbyId = gameLevelExtraInfo.myLobbyID
+        var player1:String = gameLevelExtraInfo.myUsername
+        var player2:String = ""
+        var player_1Counter:Int = 0
+        var player_2Counter:Int = 0
+
+        val docLobbyRef = db.collection("lobbies").document(lobbyId).get().await()
+        if (docLobbyRef.exists()) {
+            val lobbieData = docLobbyRef.data
+            player1 = (lobbieData?.get("player_1") as? String).toString()
+            player2 = (lobbieData?.get("player_2") as? String).toString()
+            println("Players: $player1 + $player2")
+        }
+
+        val docGamesRef = db.collection("games").document(lobbyId).get().await()
+        if (docGamesRef.exists()) {
+            val gameData = docGamesRef.data
+            val counter1 = (gameData?.get(player1) as? Map<*, *>)?.get("counter")
+            val counter2 = (gameData?.get(player2) as? Map<*, *>)?.get("counter")
+            player_1Counter = counter1?.toString()?.toIntOrNull() ?: 0
+            player_2Counter = counter2?.toString()?.toIntOrNull() ?: 0
+        }
+
+        /*
+        val docLobbyRef = db.collection("lobbies").document(lobbyId)
+        docLobbyRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()){
+                val lobbieData = documentSnapshot.data
+                player1 = (lobbieData?.get("player_1") as? String).toString()
+                player2 = (lobbieData?.get("player_2") as? String).toString()
+                println("Players : "+player1+" + "+player2)
+            }
+        }
+        val docGamesRef = db.collection("games").document(lobbyId)
+        docGamesRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists() && documentSnapshot != null ) {
+
+                val gameData = documentSnapshot.data
+                val counter_1 = (gameData?.get(player1) as? Map<*, *>)?.get("counter")
+                val counter_2 = (gameData?.get(player2) as? Map<*, *>)?.get("counter")
+                player_1Counter = counter_1?.toString()?.toIntOrNull() ?: 0
+                player_2Counter = counter_2?.toString()?.toIntOrNull() ?: 0
+
+            } else {
+                // Il documento non esiste
+            }
+
+        }.addOnFailureListener { exception ->
+            // Gestisci l'errore in caso di fallimento della lettura
+        }
+
+         */
+
+        return CounterValues(player_1Counter, player_2Counter)
     }
 
 }

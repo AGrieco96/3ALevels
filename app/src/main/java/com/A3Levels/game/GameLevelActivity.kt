@@ -45,7 +45,7 @@ class GameLevelActivity : AppCompatActivity(){
     var flagMessage:Boolean = true
 
     // Variable for counter UI
-    data class CounterValues(val player1Counter: Int, val player2Counter: Int)
+    private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
 
@@ -163,21 +163,21 @@ class GameLevelActivity : AppCompatActivity(){
         }
     }
     private fun set_endgame_UI(){
-
+        // UI changes
         binding.layoutTutorial.visibility = View.GONE
         binding.layoutEnd.visibility = View.VISIBLE
-
+        binding.timerEndView.text = gameLevelExtraInfo.myTime
         // Handler
         advancedPost()
-
-        coroutineScope.launch {
-            val counterValues = retrieveCounter()
-            var player1Counter:Int = counterValues.player1Counter.toInt()
-            var player2Counter:Int = counterValues.player2Counter.toInt()
-            gameLevelExtraInfo.setMyCounter_P1(player1Counter)
-            gameLevelExtraInfo.setMyCounter_P2(player2Counter)
-        }
-
+        /*
+            coroutineScope.launch {
+                val counterValues = retrieveCounter()
+                var player1Counter:Int = counterValues.player1Counter.toInt()
+                var player2Counter:Int = counterValues.player2Counter.toInt()
+                gameLevelExtraInfo.setMyCounter_P1(player1Counter)
+                gameLevelExtraInfo.setMyCounter_P2(player2Counter)
+            }
+        */
         if ( counterLevel != 6 )
             setupListener()
         else
@@ -394,6 +394,7 @@ class GameLevelActivity : AppCompatActivity(){
     }
     */
 
+    /*
     private suspend fun retrieveCounter(): CounterValues {
         val db = FirebaseFirestore.getInstance()
 
@@ -452,9 +453,11 @@ class GameLevelActivity : AppCompatActivity(){
 
         return CounterValues(player_1Counter, player_2Counter)
     }
+    */
     private fun checkWinner(){
+
         coroutineScope.launch {
-            val counterValues = retrieveCounter()
+            val counterValues = gameExtraInfo.retrieveCounter()
             val player1Counter = counterValues.player1Counter
             val player2Counter = counterValues.player2Counter
 
@@ -467,6 +470,7 @@ class GameLevelActivity : AppCompatActivity(){
                 gameLevelExtraInfo.setFlagVictory(false)
             }
         }
+
     }
 
     override fun onDestroy() {

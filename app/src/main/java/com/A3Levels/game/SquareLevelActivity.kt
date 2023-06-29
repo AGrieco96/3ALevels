@@ -18,6 +18,9 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Timer
 import java.util.TimerTask
 import kotlin.random.Random
@@ -41,6 +44,7 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevel
 
     // Singleton
     private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,10 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevel
         setUpSensorStuff()
         messageListener()
         updateCounterUI()
+
+        // Timer Handle
+        gameExtraInfo.setTimerUpdateListener(this)
+        gameExtraInfo.startTimer()
     }
     override fun onTimerUpdate(minutes: Int, seconds: Int, milliseconds: Int) {
         binding.timerTextView8.text = String.format("%02d:%02d.%02d", minutes, seconds, milliseconds)
@@ -68,8 +76,13 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevel
         gameLevelExtraInfo.setmyTime(finalTime)
     }
     fun updateCounterUI(){
-        binding.textCounterP1.text = gameLevelExtraInfo.Counter_P1.toString()
-        binding.textCounterP2.text = gameLevelExtraInfo.Counter_P2.toString()
+        coroutineScope.launch {
+            val counterValues =  gameExtraInfo.retrieveCounter()
+            val player1Counter = counterValues.player1Counter
+            val player2Counter = counterValues.player2Counter
+            binding.textCounterP1.text = player1Counter.toString()
+            binding.textCounterP2.text = player2Counter.toString()
+        }
     }
     private fun setUpSensorStuff() {
         // Create the sensor manager

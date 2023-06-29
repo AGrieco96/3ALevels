@@ -25,16 +25,20 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LevelJumpActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateListener {
 
     private lateinit var audioRecord: AudioRecord
-    //private lateinit var imageView: ImageView
     private lateinit var imageView : FrameLayout
     private var isRecording = false
     private lateinit var binding: ActivityLevelJumpBinding
+
     // Singleton
     private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +59,6 @@ class LevelJumpActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateLis
             startRecording()
         }
 
-        //binding.niagara.visibility = View.INVISIBLE
-
-        //imageView = findViewById(R.id.characterImageView)
         imageView = findViewById(R.id.shipLayout)
         messageListener()
 
@@ -77,8 +78,13 @@ class LevelJumpActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateLis
         gameLevelExtraInfo.setmyTime(finalTime)
     }
     fun updateCounterUI(){
-        binding.textCounterP1.text = gameLevelExtraInfo.Counter_P1.toString()
-        binding.textCounterP2.text = gameLevelExtraInfo.Counter_P2.toString()
+        coroutineScope.launch {
+            val counterValues =  gameExtraInfo.retrieveCounter()
+            val player1Counter = counterValues.player1Counter
+            val player2Counter = counterValues.player2Counter
+            binding.textCounterP1.text = player1Counter.toString()
+            binding.textCounterP2.text = player2Counter.toString()
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -149,8 +155,6 @@ class LevelJumpActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateLis
                 }
             }
         }.start()
-
-
     }
 
     fun endGame(){

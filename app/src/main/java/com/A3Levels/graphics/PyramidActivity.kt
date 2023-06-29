@@ -39,12 +39,9 @@ class PyramidActivity : AppCompatActivity() {
             Log.e("openglcube", "OpenGL ES 3.0 not supported on device.  Exiting...")
             finish()
         }
-
         binding.buttonHome.setOnClickListener {
             goHome()
         }
-
-
     }
 
     // Execution flow function
@@ -60,8 +57,6 @@ class PyramidActivity : AppCompatActivity() {
             binding.result.text = "LOSER"
         }
     }
-
-
 
     //OpenGL Function
     private fun detectOpenGLES30(): Boolean {

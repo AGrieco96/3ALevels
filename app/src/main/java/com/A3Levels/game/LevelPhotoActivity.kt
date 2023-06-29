@@ -74,7 +74,6 @@ class LevelPhotoActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateLi
         messageListener()
 
         // Timer Handle
-
         gameExtraInfo.setTimerUpdateListener(this)
         gameExtraInfo.startTimer()
     }
