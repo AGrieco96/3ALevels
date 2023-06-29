@@ -116,11 +116,12 @@ class gameLevelExtraInfo {
 
 
     data class CounterValues(val player1Counter: Int, val player2Counter: Int)
-    suspend fun retrieveCounter(): CounterValues {
+    suspend fun retrieveCounter(lobbyId: String, player:String): CounterValues {
         val db = FirebaseFirestore.getInstance()
 
-        val lobbyId = gameLevelExtraInfo.myLobbyID
-        var player1:String = gameLevelExtraInfo.myUsername
+        //val lobbyId = gameLevelExtraInfo.myLobbyID
+        //var player1:String = gameLevelExtraInfo.myUsername
+        var player1:String = player
         var player2:String = ""
         var player_1Counter:Int = 0
         var player_2Counter:Int = 0
@@ -128,8 +129,12 @@ class gameLevelExtraInfo {
         val docLobbyRef = db.collection("lobbies").document(lobbyId).get().await()
         if (docLobbyRef.exists()) {
             val lobbieData = docLobbyRef.data
-            player1 = (lobbieData?.get("player_1") as? String).toString()
-            player2 = (lobbieData?.get("player_2") as? String).toString()
+            var playerCloud = (lobbieData?.get("player_1") as? String).toString()
+            if( player1.equals(playerCloud)) {
+                player2 = (lobbieData?.get("player_2") as? String).toString()
+            }else
+                player2 = (lobbieData?.get("player_1") as? String).toString()
+
             println("Players: $player1 + $player2")
         }
 

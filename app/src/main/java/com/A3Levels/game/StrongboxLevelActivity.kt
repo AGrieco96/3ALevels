@@ -28,7 +28,7 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener, gameLev
     private lateinit var binding : ActivityStrongboxLevelBinding
     private lateinit var sensorManager: SensorManager
     private lateinit var arrow: ImageView
-    private val finalGrade = 60F//210F
+    private val finalGrade = 210F
     private var flag : Boolean = true
     private var grade = 0F
 
@@ -65,7 +65,7 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener, gameLev
     }
     fun updateCounterUI(){
         coroutineScope.launch {
-            val counterValues =  gameExtraInfo.retrieveCounter()
+            val counterValues =  gameExtraInfo.retrieveCounter(gameLevelExtraInfo.myLobbyID, gameLevelExtraInfo.myUsername)
             val player1Counter = counterValues.player1Counter
             val player2Counter = counterValues.player2Counter
             binding.textCounterP1.text = player1Counter.toString()

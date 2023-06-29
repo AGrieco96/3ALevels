@@ -62,6 +62,8 @@ class MainActivity : AppCompatActivity() {
                 // finish()
                 val intent = Intent(this@MainActivity, LoginEmailActivity::class.java)
                 //gameLevelExtraInfo.setUsername("Nardoz33")
+                //gameLevelExtraInfo.setLobbyId("7")
+                //gameLevelExtraInfo.setUsername("testMultiplayer")
                 //intent.putExtra("level", 1)
                 //intent.putExtra("flag",true)
                 startActivity(intent)

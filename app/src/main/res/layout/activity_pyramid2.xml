@@ -6,114 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".graphics.PyramidActivity">
 
-    <TextView
-        android:id="@+id/timerTextView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/kenvector_future"
-        android:text="00:00"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="14sp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <FrameLayout
         android:id="@+id/pyramid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </FrameLayout>
-
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/kenvector_future_thin"
-        android:text=" "
-        android:textColor="@color/ui_general_main"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="@+id/pyramid"
-        app:layout_constraintEnd_toEndOf="@+id/pyramid"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pyramid"
-        app:layout_constraintVertical_bias="0.24000001" />
 
     <ImageButton
         android:id="@+id/buttonHome"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/pyramid"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/pyramid"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result"
-        app:layout_constraintVertical_bias="0.83"
+
+        app:layout_constraintTop_toTopOf="@+id/pyramid"
+        app:layout_constraintVertical_bias="0.90999997"
         app:srcCompat="@drawable/home" />
 
-    <GridLayout
-        android:id="@+id/layoutGame"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        android:backgroundTint="#00FFFFFF"
-        android:columnCount="2"
-        android:contentDescription="Game Counter"
-        android:rowCount="2"
-        android:visibility="visible"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="265dp"
+        android:layout_height="99dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17000002">
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/kenvector_future_thin"
+                android:textColor="@color/ui_general_main"
+                android:textSize="48sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout3"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kenvector_future_thin"
+                android:text="SCORE : "
+                android:textAlignment="textEnd"
+                android:textColor="@color/ui_general_main"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textScore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/kenvector_future_thin"
+                android:text="1-1"
+                android:textAlignment="textStart"
+                android:textColor="@color/ui_general_main"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pyramid"
+        app:layout_constraintVertical_bias="0.15">
 
         <TextView
-            android:id="@+id/textView1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:fontFamily="@font/kenvector_future"
-            android:text="YOU"
-            android:textAlignment="center"
-            android:textColor="@color/ui_general_main" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:fontFamily="@font/kenvector_future"
-            android:text="P2"
-            android:textAlignment="center"
-            android:textColor="@color/ui_general_main" />
-
-        <TextView
-            android:id="@+id/textCounter_P1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:fontFamily="@font/kenvector_future"
-            android:text="0"
-            android:textAlignment="center"
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/kenvector_future_thin"
+            android:text=" "
             android:textColor="@color/ui_general_main"
-            android:textSize="24sp" />
+            android:textSize="48sp" />
 
-        <TextView
-            android:id="@+id/textCounter_P2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:fontFamily="@font/kenvector_future"
-            android:text="0"
-            android:textAlignment="center"
-            android:textColor="@color/ui_general_main"
-            android:textSize="24sp" />
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    </GridLayout>
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kenvector_future_thin"
+                android:text="SCORE : "
+                android:textColor="@color/ui_general_main"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textScore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/kenvector_future_thin"
+                android:text="TextView"
+                android:textColor="@color/ui_general_main"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>

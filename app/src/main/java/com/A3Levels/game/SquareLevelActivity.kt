@@ -56,7 +56,7 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevel
 
         square = binding.mySquare
         finalPositionText = binding.finalPositionText
-        goal = "Find the up/down $finalUpDown left/right $finalLeftRight position!"
+        goal = "Find the up/down : $finalUpDown \n left/right : $finalLeftRight position!"
         finalPositionText.text = goal
 
         setUpSensorStuff()
@@ -77,7 +77,7 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevel
     }
     fun updateCounterUI(){
         coroutineScope.launch {
-            val counterValues =  gameExtraInfo.retrieveCounter()
+            val counterValues =  gameExtraInfo.retrieveCounter(gameLevelExtraInfo.myLobbyID, gameLevelExtraInfo.myUsername)
             val player1Counter = counterValues.player1Counter
             val player2Counter = counterValues.player2Counter
             binding.textCounterP1.text = player1Counter.toString()
@@ -133,7 +133,7 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevel
 
             // Changes the colour of the square when reaches the final position
             square.setBackgroundColor(color)
-            square.text = "up/down ${upDown.toInt()}\nleft/right ${leftRight.toInt()}"
+            square.text = "up/down ${upDown.toInt()} \n left/right ${leftRight.toInt()}"
         }
     }
 

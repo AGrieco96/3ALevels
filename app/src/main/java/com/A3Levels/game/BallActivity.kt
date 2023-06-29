@@ -122,7 +122,7 @@ class BallActivity : AppCompatActivity() , SensorEventListener, gameLevelExtraIn
     }
     fun updateCounterUI(){
         coroutineScope.launch {
-            val counterValues =  gameExtraInfo.retrieveCounter()
+            val counterValues =  gameExtraInfo.retrieveCounter(gameLevelExtraInfo.myLobbyID, gameLevelExtraInfo.myUsername)
             val player1Counter = counterValues.player1Counter
             val player2Counter = counterValues.player2Counter
             binding.textCounterP1.text = player1Counter.toString()

@@ -166,23 +166,25 @@ class GameLevelActivity : AppCompatActivity(){
         // UI changes
         binding.layoutTutorial.visibility = View.GONE
         binding.layoutEnd.visibility = View.VISIBLE
-        binding.timerEndView.text = gameLevelExtraInfo.myTime
+
+        // Extrapulate second and millisecond from final time in order to display it well
+        val finalTime =  gameLevelExtraInfo.myTime.toInt()
+        val milliseconds = finalTime % 1000
+        val seconds = (finalTime / 1000) % 60
+        println("Milliseconds: $milliseconds")
+        println("Seconds: $seconds")
+        binding.timerEndView.text =  String.format("%02d,%02d s", seconds, milliseconds)
+
         // Handler
         advancedPost()
+
+        setupListener()
         /*
-            coroutineScope.launch {
-                val counterValues = retrieveCounter()
-                var player1Counter:Int = counterValues.player1Counter.toInt()
-                var player2Counter:Int = counterValues.player2Counter.toInt()
-                gameLevelExtraInfo.setMyCounter_P1(player1Counter)
-                gameLevelExtraInfo.setMyCounter_P2(player2Counter)
-            }
-        */
         if ( counterLevel != 6 )
-            setupListener()
+           setupListener()
         else
             startLevel()
-
+        */
     }
     private fun displayMessages(){
         if(flagMessage) {
@@ -321,9 +323,13 @@ class GameLevelActivity : AppCompatActivity(){
                 println("Risultato compare : " +(newLevel==dbLevel))
 
                 if (newLevel==dbLevel) {
-                    set_game_UI(true)
-                    //startLevel()
+                    if ( dbLevel != 6)
+                        set_game_UI(true)
+                    else
+                        startLevel()
+
                 }
+
                 /*
                 val player2 = snapshot.getString("player_1").toString()
                 val flagPlayer:Boolean = player2.isEmpty()
@@ -457,7 +463,7 @@ class GameLevelActivity : AppCompatActivity(){
     private fun checkWinner(){
 
         coroutineScope.launch {
-            val counterValues = gameExtraInfo.retrieveCounter()
+            val counterValues = gameExtraInfo.retrieveCounter(gameLevelExtraInfo.myLobbyID, gameLevelExtraInfo.myUsername)
             val player1Counter = counterValues.player1Counter
             val player2Counter = counterValues.player2Counter
 

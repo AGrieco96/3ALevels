@@ -44,19 +44,40 @@ class PyramidActivity : AppCompatActivity() {
         }
     }
 
+
+
     // Execution flow function
     private fun goHome(){
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
     //UI Function
+
+    private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+
     private fun displayWinnerUI(){
-        if (gameLevelExtraInfo.myflagVictory){
-            binding.result.text = "WINNER"
-        }else{
-            binding.result.text = "LOSER"
+        coroutineScope.launch {
+            val counterValues =  gameExtraInfo.retrieveCounter(gameLevelExtraInfo.myLobbyID, gameLevelExtraInfo.myUsername)
+            val player1Counter = counterValues.player1Counter
+            val player2Counter = counterValues.player2Counter
+            println("player1Counter "+player1Counter + " Player2Counter "+player2Counter)
+            binding.textScore.text = "$player1Counter-$player2Counter"
+            //binding.textCounterP1.text = player1Counter.toString()
+            //binding.textCounterP2.text = player2Counter.toString()
+            if (player1Counter > player2Counter) {
+                //player_1 is always the player who is acting on the telephone
+                //binding.result.text = "WINNER"
+                //gameLevelExtraInfo.setFlagVictory(true)
+                binding.result.text = "WINNER"
+            } else {
+                //binding.result.text = "LOSER"
+                //gameLevelExtraInfo.setFlagVictory(false)
+                binding.result.text = "YOU LOSE"
+            }
         }
     }
+
 
     //OpenGL Function
     private fun detectOpenGLES30(): Boolean {
