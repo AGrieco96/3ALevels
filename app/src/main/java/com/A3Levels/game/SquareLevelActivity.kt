@@ -56,7 +56,7 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevel
 
         square = binding.mySquare
         finalPositionText = binding.finalPositionText
-        goal = "Find the up/down : $finalUpDown \n left/right : $finalLeftRight position!"
+        goal = "Find the correct position : \n up/down : $finalUpDown \n left/right : $finalLeftRight "
         finalPositionText.text = goal
 
         setUpSensorStuff()
