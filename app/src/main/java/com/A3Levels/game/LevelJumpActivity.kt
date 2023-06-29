@@ -168,6 +168,11 @@ class LevelJumpActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateLis
         //stop timer.
         gameExtraInfo.stopTimer()
 
+        // Stop recording audio and release resources
+        audioRecord.stop()
+        audioRecord.release()
+        isRecording = false
+
         val intent = Intent(this, GameLevelActivity::class.java)
         startActivity(intent)
     }
