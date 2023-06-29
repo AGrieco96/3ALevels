@@ -128,7 +128,7 @@
                 android:textSize="20sp" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button"
+                android:id="@+id/displayMessage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
@@ -142,13 +142,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_msg_1"
                     android:layout_width="310dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
+                    android:background="@drawable/container_3"
                     android:fontFamily="@font/kenvector_future_thin"
                     android:gravity="center"
                     android:scaleX="1"
@@ -156,11 +158,12 @@
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textSize="14sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_msg_2"
                     android:layout_width="310dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
+                    android:background="@drawable/container_3"
                     android:fontFamily="@font/kenvector_future_thin"
                     android:gravity="center"
                     android:scaleX="1"
@@ -168,11 +171,12 @@
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textSize="14sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_msg_3"
                     android:layout_width="310dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
+                    android:background="@drawable/container_3"
                     android:fontFamily="@font/kenvector_future_thin"
                     android:gravity="center"
                     android:scaleX="1"
@@ -180,11 +184,12 @@
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textSize="14sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_msg_4"
                     android:layout_width="310dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
+                    android:background="@drawable/container_3"
                     android:fontFamily="@font/kenvector_future_thin"
                     android:gravity="center"
                     android:scaleX="1"
@@ -192,11 +197,12 @@
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textSize="14sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_msg_5"
                     android:layout_width="310dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
+                    android:background="@drawable/container_3"
                     android:fontFamily="@font/kenvector_future_thin"
                     android:gravity="center"
                     android:scaleX="1"

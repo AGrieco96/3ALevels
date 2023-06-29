@@ -15,6 +15,7 @@ import com.A3Levels.graphics.PyramidActivity
 import android.os.Handler
 import android.os.Looper
 import com.A3Levels.game.LobbyActivity
+import com.A3Levels.game.gameLevelExtraInfo
 
 
 class MainActivity : AppCompatActivity() {
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 // Finish the activity when the animation ends
                 // finish()
                 val intent = Intent(this@MainActivity, LoginEmailActivity::class.java)
+                //gameLevelExtraInfo.setUsername("Nardoz33")
                 //intent.putExtra("level", 1)
                 //intent.putExtra("flag",true)
                 startActivity(intent)

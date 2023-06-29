@@ -6,4 +6,114 @@
     android:layout_height="match_parent"
     tools:context=".graphics.PyramidActivity">
 
+    <TextView
+        android:id="@+id/timerTextView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kenvector_future"
+        android:text="00:00"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/pyramid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kenvector_future_thin"
+        android:text=" "
+        android:textColor="@color/ui_general_main"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pyramid"
+        app:layout_constraintEnd_toEndOf="@+id/pyramid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pyramid"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageButton
+        android:id="@+id/buttonHome"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/pyramid"
+        app:layout_constraintEnd_toEndOf="@+id/pyramid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result"
+        app:layout_constraintVertical_bias="0.83"
+        app:srcCompat="@drawable/home" />
+
+    <GridLayout
+        android:id="@+id/layoutGame"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:columnCount="2"
+        android:contentDescription="Game Counter"
+        android:rowCount="2"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="YOU"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="P2"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main" />
+
+        <TextView
+            android:id="@+id/textCounter_P1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textCounter_P2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:fontFamily="@font/kenvector_future"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/ui_general_main"
+            android:textSize="24sp" />
+
+    </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

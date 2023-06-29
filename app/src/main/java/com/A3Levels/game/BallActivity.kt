@@ -26,7 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
 
-class BallActivity : AppCompatActivity() , SensorEventListener {
+class BallActivity : AppCompatActivity() , SensorEventListener, gameLevelExtraInfo.TimerUpdateListener {
 
     // Binding
     private lateinit var binding: BallActivityBinding
@@ -55,6 +55,9 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     var displayMetrics: DisplayMetrics? = null
     var devHeight = 0
     var devWidth = 0
+
+    // Singleton
+    private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,8 +101,22 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
         //Set the delay to GAME as that created a less "laggy" experience
 
         messageListener()
+        updateCounterUI()
 
     }
+    override fun onTimerUpdate(minutes: Int, seconds: Int, milliseconds: Int) {
+        binding.timerTextView6.text = String.format("%02d:%02d.%02d", minutes, seconds, milliseconds)
+    }
+    override fun onTimerFinished(seconds: Int, milliseconds: Int) {
+        val finalTime = ((seconds * 1000) + milliseconds).toString()
+        println("finalTime $finalTime")
+        gameLevelExtraInfo.setmyTime(finalTime)
+    }
+    fun updateCounterUI(){
+        binding.textCounterP1.text = gameLevelExtraInfo.Counter_P1.toString()
+        binding.textCounterP2.text = gameLevelExtraInfo.Counter_P2.toString()
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onSensorChanged(sensorEvent: SensorEvent) {
@@ -162,14 +179,17 @@ class BallActivity : AppCompatActivity() , SensorEventListener {
     }
 
     fun endGame(){
-        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
-        // INSERIRE ACTIVITY PER LA WIN / LOSE
-        val intent = Intent ( this, GameLevelActivity::class.java)
+        // End of GameLogic
         gameLevelExtraInfo.setlLevel(6)
         gameLevelExtraInfo.setFlag(false)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
         listener?.remove()
         listener = null
+
+        //stop timer.
+        gameExtraInfo.stopTimer()
+
+        val intent = Intent ( this, GameLevelActivity::class.java)
         startActivity(intent)
     }
 

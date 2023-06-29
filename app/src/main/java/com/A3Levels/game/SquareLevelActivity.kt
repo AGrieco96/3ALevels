@@ -23,7 +23,7 @@ import java.util.TimerTask
 import kotlin.random.Random
 
 
-class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
+class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevelExtraInfo.TimerUpdateListener {
 
     private lateinit var binding : AccelerometerActivityBinding
 
@@ -39,7 +39,8 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
     private var leftRight : Float = 0F
     private var upDown : Float = 0F
 
-    //up/down tra 9 e -9
+    // Singleton
+    private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +57,20 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
 
         setUpSensorStuff()
         messageListener()
+        updateCounterUI()
     }
-
+    override fun onTimerUpdate(minutes: Int, seconds: Int, milliseconds: Int) {
+        binding.timerTextView8.text = String.format("%02d:%02d.%02d", minutes, seconds, milliseconds)
+    }
+    override fun onTimerFinished(seconds: Int, milliseconds: Int) {
+        val finalTime = ((seconds * 1000) + milliseconds).toString()
+        println("finalTime $finalTime")
+        gameLevelExtraInfo.setmyTime(finalTime)
+    }
+    fun updateCounterUI(){
+        binding.textCounterP1.text = gameLevelExtraInfo.Counter_P1.toString()
+        binding.textCounterP2.text = gameLevelExtraInfo.Counter_P2.toString()
+    }
     private fun setUpSensorStuff() {
         // Create the sensor manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -133,13 +146,17 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener {
     }
 
     fun endGame(){
-        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
-        val intent = Intent(this, GameLevelActivity::class.java)
+        // End of GameLogic
         gameLevelExtraInfo.setlLevel(5)
         gameLevelExtraInfo.setFlag(false)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
         listener?.remove()
         listener = null
+
+        //stop timer.
+        gameExtraInfo.stopTimer()
+
+        val intent = Intent(this, GameLevelActivity::class.java)
         startActivity(intent)
     }
 

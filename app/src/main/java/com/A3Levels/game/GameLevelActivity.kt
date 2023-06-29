@@ -1,5 +1,8 @@
 package com.A3Levels.game
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
@@ -21,6 +24,11 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import org.json.JSONObject
 import kotlin.random.Random
 
@@ -33,8 +41,13 @@ class GameLevelActivity : AppCompatActivity(){
     //private var flagMatch : Boolean = true;
     private var counterLevel : Int = 0;
     private var listener: ListenerRegistration? = null
-
     lateinit var username : String
+    var flagMessage:Boolean = true
+
+    // Variable for counter UI
+    data class CounterValues(val player1Counter: Int, val player2Counter: Int)
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +56,6 @@ class GameLevelActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         FirebaseApp.initializeApp(this)
-
-        //init()
 
 
         //Retrieve the level in order to launch the correct activity.
@@ -81,78 +92,50 @@ class GameLevelActivity : AppCompatActivity(){
             messagePost(5)
         }
 
-    }
-
-    /*
-    private fun startTimer() {
-        handler.post(updateTimer)
-    }
-
-    private fun stopTimer() {
-        handler.removeCallbacks(updateTimer)
-        seconds = 0
-        deciseconds = 0
-        milliseconds = 0
-    }
-    */
-
-    // setupInit Function
-    /*
-    fun init(){
-        counterLevel = intent.getIntExtra("level",0)
-        if (counterLevel == 1) {
-            println("Stringa che deve essere uguale all'username  : "+ gameLevelExtraInfo.myUsername)
-            lobbyId = intent.getStringExtra("lobbyId").toString()
-            username = intent.getStringExtra("username").toString()
-            println("Username   :   "+username)
-            flagMatch = intent.getBooleanExtra("flag",true )
+        binding.displayMessage.setOnClickListener{
+            displayMessages()
         }
     }
-    */
+
     // UI Function
     fun set_game_UI(flagMatch: Boolean){
         if(!(flagMatch)){
             set_endgame_UI()
         }else{
             setPersonalInfoLevelUI()
-            val animation = createAnimation()
-            binding.layoutTutorial.startAnimation(animation)
+            val animator = createAnimation()
+            animator.start()
         }
     }
+    private fun createAnimation(): Animator {
+        println("Eseguo il createAnimation?")
 
-    fun createAnimation(): AlphaAnimation{
-        println("Eseguo il create Animation?")
+        val animator = ValueAnimator.ofFloat(1.0f, 0.0f)
+        animator.duration = 6000
+        animator.interpolator = LinearInterpolator()
 
-        // Create a AlphaAnimation object
-        val animation = AlphaAnimation(1.0f,0.0f)
-        // Set the animation properties
-        animation.duration = 6000
-        animation.fillAfter = true
-        animation.interpolator = LinearInterpolator()
-        // Set the animation listener
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {
+        animator.addUpdateListener { animation ->
+            val value = animation.animatedValue as Float
+            //Apply effect
+            binding.layoutTutorial.alpha = value
+        }
+
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator) {
                 println("On Animation Start")
                 binding.layoutTutorial.visibility = View.VISIBLE
                 binding.layoutEnd.visibility = View.GONE
-                //binding.layoutGame.visibility = View.INVISIBLE
-                //binding.buttonEnd.visibility = View.GONE
-                //binding.timerTextView.visibility = View.INVISIBLE
             }
-            override fun onAnimationEnd(animation: Animation) {
-                // Do something when the animation ends
+
+            override fun onAnimationEnd(animation: Animator) {
+                println("On Animation End")
                 binding.layoutTutorial.visibility = View.GONE
-                //binding.layoutGame.visibility = View.VISIBLE
-                //binding.buttonEnd.visibility = View.VISIBLE
-                //binding.timerTextView.visibility = View.VISIBLE
-                //gameLevels[counterTest].startTimer(this@GameLevelActivity )
                 startLevel()
             }
-            override fun onAnimationRepeat(animation: Animation) {}
         })
-        return animation
-    }
 
+        return animator
+    }
     fun setPersonalInfoLevelUI(){
 
         binding.layoutTutorial.findViewById<TextView>(R.id.levelText).text = counterLevel.toString()
@@ -180,110 +163,49 @@ class GameLevelActivity : AppCompatActivity(){
         }
     }
     private fun set_endgame_UI(){
-        // Retrieve level information from firestore
-        /*
-        FirebaseApp.initializeApp(this)
-        val db = FirebaseFirestore.getInstance()
-        val gamesRef = db.collection("games").document(lobbyId)
-        gamesRef.get()
-            .addOnCompleteListener --> Rende la chiamata asincrona.
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    livello = documentSnapshot.get("level").toString()
-                    println("Livello documento " + livello )
-                } else {
-                    Log.d(TAG, "Il documento non esiste")
-                }
-            }
-            .addOnFailureListener{ exception ->
-                Log.e(TAG,"Error getting level ID: $exception")
-            }
-        */
-        //binding.timerTextView2.text = String.format("%02d:%02d.%02d", seconds / 60, seconds % 60, milliseconds / 10)
-        //var finalTime = ((seconds*1000)+milliseconds).toString()
 
-        /*
-        // Create JSON using JSONObject
-        val jsonObject = JSONObject()
-        jsonObject.put("lobby_id", lobbyId)
-        jsonObject.put("player_id", intent.getStringExtra("username"))
-        //jsonObject.put("level", livello)
-        jsonObject.put("time", finalTime)
-        RequestsHTTP.httpPOSTGameUpdate(jsonObject)
-
-        stopTimer()
-        // Setup UI for the ending of the level.
-        */
         binding.layoutTutorial.visibility = View.GONE
         binding.layoutEnd.visibility = View.VISIBLE
-        //binding.layoutGame.visibility = View.GONE
-        //binding.buttonEnd.visibility = View.INVISIBLE
-        //binding.timerTextView.visibility = View.INVISIBLE
 
         // Handler
         advancedPost()
+
+        coroutineScope.launch {
+            val counterValues = retrieveCounter()
+            var player1Counter:Int = counterValues.player1Counter.toInt()
+            var player2Counter:Int = counterValues.player2Counter.toInt()
+            gameLevelExtraInfo.setMyCounter_P1(player1Counter)
+            gameLevelExtraInfo.setMyCounter_P2(player2Counter)
+        }
 
         if ( counterLevel != 6 )
             setupListener()
         else
             startLevel()
-        //set_game_UI(true)
 
     }
-
-    // Execution Flow Function
-    fun startLevel(){
-        listener?.remove()
-        listener = null
-        println("Livello che sta per essere startato : "+counterLevel)
-        when(counterLevel){
-            1 -> {
-                val intent = Intent(this, LevelPhotoActivity::class.java)
-                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
-                startActivity(intent)
-                }
-            2 -> {
-                val intent = Intent(this, StrongboxLevelActivity::class.java)
-                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
-                gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
-                startActivity(intent)
-            }
-
-            3 -> {
-                val intent = Intent(this, LevelJumpActivity::class.java)
-                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
-                startActivity(intent)
-            }
-            4 -> {
-                val intent = Intent(this, SquareLevelActivity::class.java)
-                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
-                startActivity(intent)
-            }
-            5 -> {
-                val intent = Intent(this, BallActivity::class.java)
-                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
-                startActivity(intent)
-            }
-            6 -> {
-                //* Display the end game
-                val intent = Intent ( this, PyramidActivity::class.java)
-                startActivity(intent)
-            }
+    private fun displayMessages(){
+        if(flagMessage) {
+            binding.boxMsg.visibility = View.VISIBLE
+            flagMessage = false
+        }
+        else {
+            binding.boxMsg.visibility = View.GONE
+            flagMessage = true
         }
 
     }
-
+    // Function over the network
     private fun advancedPost(){
         /* Retrieve dell'username */
-        val time = Random.nextInt(from = 10, until = 60).toString()
+        //val time = Random.nextInt(from = 10, until = 60).toString()
         username = gameLevelExtraInfo.myUsername
+        val time = gameLevelExtraInfo.myTime
+
         if(counterLevel-1 == 1){
             // Post sempre uguale
             val objectphoto = gameLevelExtraInfo.myObjectInPhoto
             val images = gameLevelExtraInfo.myImage
-
-            //var objectphoto = intent.getStringExtra("object").toString()
-            //var images = intent.getStringExtra("image").toString()
 
             // Create JSON using JSONObject
             val jsonObject = JSONObject()
@@ -310,7 +232,6 @@ class GameLevelActivity : AppCompatActivity(){
         when(idMessage){
             1 -> {
                 message = binding.btnMsg1.text.toString()
-                println(" Messaggio che prende dall'UI : "+ message)
             }
             2 -> {
                 message = binding.btnMsg2.text.toString()
@@ -333,6 +254,48 @@ class GameLevelActivity : AppCompatActivity(){
         RequestsHTTP.httpPUTsendMessage(jsonObject)
     }
 
+    // Execution Flow Function
+    fun startLevel(){
+        listener?.remove()
+        listener = null
+        println("Livello che sta per essere startato : "+counterLevel)
+        when(counterLevel){
+            1 -> {
+                val intent = Intent(this, LevelPhotoActivity::class.java)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
+                startActivity(intent)
+            }
+            2 -> {
+                val intent = Intent(this, StrongboxLevelActivity::class.java)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
+                gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
+                startActivity(intent)
+            }
+
+            3 -> {
+                val intent = Intent(this, LevelJumpActivity::class.java)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
+                startActivity(intent)
+            }
+            4 -> {
+                val intent = Intent(this, SquareLevelActivity::class.java)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
+                startActivity(intent)
+            }
+            5 -> {
+                val intent = Intent(this, BallActivity::class.java)
+                gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
+                startActivity(intent)
+            }
+            6 -> {
+                checkWinner()
+                //* Display the end game
+                val intent = Intent ( this, PyramidActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+    }
     private fun setupListener(){
 
         val db = FirebaseFirestore.getInstance()
@@ -358,10 +321,8 @@ class GameLevelActivity : AppCompatActivity(){
                 println("Risultato compare : " +(newLevel==dbLevel))
 
                 if (newLevel==dbLevel) {
-                    println("Entro qui ")
-                    //set_game_UI(true)
-
-                    startLevel()
+                    set_game_UI(true)
+                    //startLevel()
                 }
                 /*
                 val player2 = snapshot.getString("player_1").toString()
@@ -384,5 +345,133 @@ class GameLevelActivity : AppCompatActivity(){
 
     }
 
+    /*
+    private fun checkWinner(){
+        val db = FirebaseFirestore.getInstance()
+
+        val lobbyId = gameLevelExtraInfo.myLobbyID
+        var player1:String = gameLevelExtraInfo.myUsername
+        var player2:String = ""
+        var player_1Counter:Int = 0
+        var player_2Counter:Int = 0
+
+        val docLobbyRef = db.collection("lobbies").document(lobbyId)
+        docLobbyRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()){
+                val lobbieData = documentSnapshot.data
+                player1 = (lobbieData?.get("player_1") as? String).toString()
+                player2 = (lobbieData?.get("player_2") as? String).toString()
+                println("Players : "+player1+" + "+player2)
+            }
+        }
+        val docGamesRef = db.collection("games").document(lobbyId)
+        docGamesRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists() && documentSnapshot != null ) {
+
+                val gameData = documentSnapshot.data
+                val counter_1 = (gameData?.get(player1) as? Map<*, *>)?.get("counter")
+                val counter_2 = (gameData?.get(player2) as? Map<*, *>)?.get("counter")
+                player_1Counter = counter_1?.toString()?.toIntOrNull() ?: 0
+                player_2Counter = counter_2?.toString()?.toIntOrNull() ?: 0
+
+                if(player_1Counter > player_2Counter){
+                    //player_1 is always the player who is acting on the telephone
+                    //binding.result.text = "WINNER"
+                    gameLevelExtraInfo.setFlagVictory(true)
+                }else {
+                    //binding.result.text = "LOSER"
+                    gameLevelExtraInfo.setFlagVictory(false)
+                }
+
+            } else {
+                // Il documento non esiste
+            }
+
+        }.addOnFailureListener { exception ->
+            // Gestisci l'errore in caso di fallimento della lettura
+        }
+
+    }
+    */
+
+    private suspend fun retrieveCounter(): CounterValues {
+        val db = FirebaseFirestore.getInstance()
+
+        val lobbyId = gameLevelExtraInfo.myLobbyID
+        var player1:String = gameLevelExtraInfo.myUsername
+        var player2:String = ""
+        var player_1Counter:Int = 0
+        var player_2Counter:Int = 0
+
+        val docLobbyRef = db.collection("lobbies").document(lobbyId).get().await()
+        if (docLobbyRef.exists()) {
+            val lobbieData = docLobbyRef.data
+            player1 = (lobbieData?.get("player_1") as? String).toString()
+            player2 = (lobbieData?.get("player_2") as? String).toString()
+            println("Players: $player1 + $player2")
+        }
+
+        val docGamesRef = db.collection("games").document(lobbyId).get().await()
+        if (docGamesRef.exists()) {
+            val gameData = docGamesRef.data
+            val counter1 = (gameData?.get(player1) as? Map<*, *>)?.get("counter")
+            val counter2 = (gameData?.get(player2) as? Map<*, *>)?.get("counter")
+            player_1Counter = counter1?.toString()?.toIntOrNull() ?: 0
+            player_2Counter = counter2?.toString()?.toIntOrNull() ?: 0
+        }
+
+        /*
+        val docLobbyRef = db.collection("lobbies").document(lobbyId)
+        docLobbyRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()){
+                val lobbieData = documentSnapshot.data
+                player1 = (lobbieData?.get("player_1") as? String).toString()
+                player2 = (lobbieData?.get("player_2") as? String).toString()
+                println("Players : "+player1+" + "+player2)
+            }
+        }
+        val docGamesRef = db.collection("games").document(lobbyId)
+        docGamesRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists() && documentSnapshot != null ) {
+
+                val gameData = documentSnapshot.data
+                val counter_1 = (gameData?.get(player1) as? Map<*, *>)?.get("counter")
+                val counter_2 = (gameData?.get(player2) as? Map<*, *>)?.get("counter")
+                player_1Counter = counter_1?.toString()?.toIntOrNull() ?: 0
+                player_2Counter = counter_2?.toString()?.toIntOrNull() ?: 0
+
+            } else {
+                // Il documento non esiste
+            }
+
+        }.addOnFailureListener { exception ->
+            // Gestisci l'errore in caso di fallimento della lettura
+        }
+
+         */
+
+        return CounterValues(player_1Counter, player_2Counter)
+    }
+    private fun checkWinner(){
+        coroutineScope.launch {
+            val counterValues = retrieveCounter()
+            val player1Counter = counterValues.player1Counter
+            val player2Counter = counterValues.player2Counter
+
+            if (player1Counter > player2Counter) {
+                //player_1 is always the player who is acting on the telephone
+                //binding.result.text = "WINNER"
+                gameLevelExtraInfo.setFlagVictory(true)
+            } else {
+                //binding.result.text = "LOSER"
+                gameLevelExtraInfo.setFlagVictory(false)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineScope.cancel() // Cancella la coroutine quando l'attività viene distrutta
+    }
 
 }

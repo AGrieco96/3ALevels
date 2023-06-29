@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-class LevelPhotoActivity : AppCompatActivity() {
+class LevelPhotoActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateListener {
 
     private lateinit var viewBinding: ActivityPhotoLevelBinding
 
@@ -44,6 +44,9 @@ class LevelPhotoActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     lateinit var objectInPhoto: String
     private var listener: ListenerRegistration? = null
+
+    // Singleton
+    private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +72,24 @@ class LevelPhotoActivity : AppCompatActivity() {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         messageListener()
+
+        // Timer Handle
+
+        gameExtraInfo.setTimerUpdateListener(this)
+        gameExtraInfo.startTimer()
     }
+
+    // Update UI
+    override fun onTimerUpdate(minutes: Int, seconds: Int, milliseconds: Int) {
+        viewBinding.timerTextView3.text = String.format("%02d:%02d.%02d", minutes, seconds, milliseconds)
+    }
+    override fun onTimerFinished(seconds: Int, milliseconds: Int) {
+        val finalTime = ((seconds * 1000) + milliseconds).toString()
+        println("finalTime $finalTime")
+        gameLevelExtraInfo.setmyTime(finalTime)
+    }
+
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
@@ -179,30 +199,19 @@ class LevelPhotoActivity : AppCompatActivity() {
 
     private fun sendPhoto(imageString : String) {
 
-
-        // Create JSON using JSONObject
-        //val jsonObject = JSONObject()
-        //jsonObject.put("object", objectInPhoto)
-        //jsonObject.put("image", imageString)
-        //jsonObject.put("lobby_id",)
-        //jsonObject.put("player_id",)
-        //jsonObject.put("time",)
-        //RequestsHTTP.httpPOSTphotoAI(jsonObject)
-
-        //var lobbyId = intent.getStringExtra("lobbyId").toString()
-        //var username = intent.getStringExtra("username").toString()
-
-        //println("result" + result)
-
-        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
         // Set the new variable to share
         gameLevelExtraInfo.setlLevel(2)
         gameLevelExtraInfo.setFlag(false)
         gameLevelExtraInfo.setObjectInPhoto(objectInPhoto)
         gameLevelExtraInfo.setImage(imageString)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
+        gameLevelExtraInfo.setUsername(gameLevelExtraInfo.myUsername)
         listener?.remove()
         listener = null
+
+        //stop timer.
+        gameExtraInfo.stopTimer()
+
         val intent = Intent(this, GameLevelActivity::class.java)
         startActivity(intent)
 
@@ -260,4 +269,6 @@ class LevelPhotoActivity : AppCompatActivity() {
             }
         })
     }
+
+
 }

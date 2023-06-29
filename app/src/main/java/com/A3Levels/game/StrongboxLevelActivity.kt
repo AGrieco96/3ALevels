@@ -20,7 +20,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import java.util.Timer
 import java.util.TimerTask
 
-class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
+class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener, gameLevelExtraInfo.TimerUpdateListener {
 
     private lateinit var binding : ActivityStrongboxLevelBinding
     private lateinit var sensorManager: SensorManager
@@ -29,6 +29,8 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
     private var flag : Boolean = true
     private var grade = 0F
 
+    // Singleton
+    private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +42,27 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
 
         startCompass()
         messageListener()
+
+        // Timer Handle
+        gameExtraInfo.setTimerUpdateListener(this)
+        gameExtraInfo.startTimer()
+
+        updateCounterUI()
+
     }
 
+    override fun onTimerUpdate(minutes: Int, seconds: Int, milliseconds: Int) {
+        binding.timerTextView4.text = String.format("%02d:%02d.%02d", minutes, seconds, milliseconds)
+    }
+    override fun onTimerFinished(seconds: Int, milliseconds: Int) {
+        val finalTime = ((seconds * 1000) + milliseconds).toString()
+        println("finalTime $finalTime")
+        gameLevelExtraInfo.setmyTime(finalTime)
+    }
+    fun updateCounterUI(){
+        binding.textCounterP1.text = gameLevelExtraInfo.Counter_P1.toString()
+        binding.textCounterP2.text = gameLevelExtraInfo.Counter_P2.toString()
+    }
     private fun startCompass(){
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -103,13 +124,18 @@ class StrongboxLevelActivity : AppCompatActivity(), SensorEventListener {
 
     fun endGame(){
         // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
-        val intent = Intent(this, GameLevelActivity::class.java)
         gameLevelExtraInfo.setlLevel(3)
         gameLevelExtraInfo.setFlag(false)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
         listener?.remove()
         listener = null
+
+        //stop timer.
+        gameExtraInfo.stopTimer()
+
+        val intent = Intent(this, GameLevelActivity::class.java)
         startActivity(intent)
+
     }
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         return

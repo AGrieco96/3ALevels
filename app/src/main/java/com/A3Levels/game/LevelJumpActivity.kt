@@ -26,13 +26,15 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
-class LevelJumpActivity : AppCompatActivity() {
+class LevelJumpActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateListener {
 
     private lateinit var audioRecord: AudioRecord
     //private lateinit var imageView: ImageView
     private lateinit var imageView : FrameLayout
     private var isRecording = false
     private lateinit var binding: ActivityLevelJumpBinding
+    // Singleton
+    private val gameExtraInfo: gameLevelExtraInfo = gameLevelExtraInfo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +60,25 @@ class LevelJumpActivity : AppCompatActivity() {
         //imageView = findViewById(R.id.characterImageView)
         imageView = findViewById(R.id.shipLayout)
         messageListener()
+
+        // Timer Handle
+        gameExtraInfo.setTimerUpdateListener(this)
+        gameExtraInfo.startTimer()
+
+        updateCounterUI()
+    }
+
+    override fun onTimerUpdate(minutes: Int, seconds: Int, milliseconds: Int) {
+        binding.timerTextView5.text = String.format("%02d:%02d.%02d", minutes, seconds, milliseconds)
+    }
+    override fun onTimerFinished(seconds: Int, milliseconds: Int) {
+        val finalTime = ((seconds * 1000) + milliseconds).toString()
+        println("finalTime $finalTime")
+        gameLevelExtraInfo.setmyTime(finalTime)
+    }
+    fun updateCounterUI(){
+        binding.textCounterP1.text = gameLevelExtraInfo.Counter_P1.toString()
+        binding.textCounterP2.text = gameLevelExtraInfo.Counter_P2.toString()
     }
 
     override fun onRequestPermissionsResult(
@@ -133,16 +154,17 @@ class LevelJumpActivity : AppCompatActivity() {
     }
 
     fun endGame(){
-        // End of GameLogic , so come back to the GameLevelActivity, for the sake of the execution flow
-        val intent = Intent(this, GameLevelActivity::class.java)
-
-        // Gli dovremmo passare alcuni parametri, come se deve visualizzare o meno lo start o la fine del tutorial.
-        // intent.putExtra("username", username) - # del livello etc.
+        // End of GameLogic
         gameLevelExtraInfo.setlLevel(4)
         gameLevelExtraInfo.setFlag(false)
         gameLevelExtraInfo.setLobbyId(gameLevelExtraInfo.myLobbyID)
         listener?.remove()
         listener = null
+
+        //stop timer.
+        gameExtraInfo.stopTimer()
+
+        val intent = Intent(this, GameLevelActivity::class.java)
         startActivity(intent)
     }
 
