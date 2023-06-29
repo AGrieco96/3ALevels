@@ -129,8 +129,6 @@ class SquareLevelActivity : AppCompatActivity() , SensorEventListener, gameLevel
                 color = Color.GREEN
             }
 
-
-
             // Changes the colour of the square when reaches the final position
             square.setBackgroundColor(color)
             square.text = "up/down ${upDown.toInt()} \n left/right ${leftRight.toInt()}"
