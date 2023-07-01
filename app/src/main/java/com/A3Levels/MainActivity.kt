@@ -14,6 +14,9 @@ import com.A3Levels.graphics.PyramidActivity
 
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import com.A3Levels.game.LobbyActivity
 import com.A3Levels.game.gameLevelExtraInfo
 
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         Firebase.auth.signOut()
         //setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         startAnimation()
     }
@@ -76,5 +80,7 @@ class MainActivity : AppCompatActivity() {
         binding.logoText.startAnimation(animation)
 
     }
+
+
 
 }

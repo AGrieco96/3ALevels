@@ -41,6 +41,7 @@ class LevelPhotoActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateLi
 
     private var imageCapture: ImageCapture? = null
     private val objectList = listOf("chair", "bottle", "cellular", "television", "key", "wallet")
+
     private lateinit var cameraExecutor: ExecutorService
     lateinit var objectInPhoto: String
     private var listener: ListenerRegistration? = null
@@ -64,7 +65,8 @@ class LevelPhotoActivity : AppCompatActivity(), gameLevelExtraInfo.TimerUpdateLi
         }
 
         //Setup
-        objectInPhoto = objectList[(0..5).random()]
+        //objectInPhoto = objectList[(0..5).random()]
+        objectInPhoto = "cellular"          // ONLY FOR DEMO PURPOSE
         viewBinding.objectToSearch.setText(objectInPhoto.toString())
 
 

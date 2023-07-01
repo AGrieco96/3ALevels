@@ -27,6 +27,9 @@ class HomeActivity : AppCompatActivity() {
     data class User(
         val displayName: String? = null
     )
+
+    private var backgroundMusicServiceIntent: Intent? = null
+
     private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,10 @@ class HomeActivity : AppCompatActivity() {
                 Log.d(TAG,"Error getting document: ", exception)
             }
         }
+
+        // Start music services
+        backgroundMusicServiceIntent = Intent(this, BackgroundMusicService::class.java)
+        startService(backgroundMusicServiceIntent)
 
         binding.buttonOption.setOnClickListener {
             display_options()
@@ -101,6 +108,14 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra("username", username)
         startActivity(intent)
     }
+
+    override fun onDestroy() {
+        if (isFinishing) {
+            stopService(backgroundMusicServiceIntent)
+        }
+        super.onDestroy()
+    }
+
 
 
 }
