@@ -14,7 +14,7 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
-const val URL = "https://nasty-mammals-sniff.loca.lt"
+const val URL = "https://breezy-jokes-travel.loca.lt"
 
 class RequestsHTTP {
     companion object {
